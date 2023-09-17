@@ -17,5 +17,11 @@ module.exports = {
     "react/jsx-uses-react": ["off"],
     "react/no-unescaped-entities": ["off"],
     "@typescript-eslint/explicit-function-return-type": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
   },
 };
