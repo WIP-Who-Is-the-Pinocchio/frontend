@@ -1,10 +1,11 @@
 import React from "react";
+import LoginFormInput from "@components/LoginFormInput";
 
 function AdminLogin() {
   return (
     <>
-      <div className="bg-blue-500 text-white p-4">
-        This is a Tdddailwind CSS component!
+      <div>
+        <LoginFormInput label="아이디" id="id" type="text" />
       </div>
     </>
   );
