@@ -4,7 +4,7 @@
 export default function GomaoPage() {
   return (
     <div className="flex">
-      <div>여긴 바로 ㄱㅁㅇ</div>
+      <div className="bg-gray-500">여긴 바로 ㄱㅁㅇ</div>
       <img src="./src/assets/gomao.png" />
     </div>
   );
