@@ -14,4 +14,11 @@ export default defineConfig({
       "@router": path.resolve(__dirname, "./src/router"),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "./tailwind.css";`,
+      },
+    },
+  },
 });
