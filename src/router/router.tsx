@@ -2,6 +2,9 @@ import { Outlet, createBrowserRouter } from "react-router-dom";
 import MainPage from "@pages/MainPage";
 import GomaoPage from "@pages/Gomao/Gomao";
 import AdminLogin from "@pages/Admin/AdminLogin";
+import AdminLayout from "@pages/Admin/AdminLayout";
+import AdminDashboard from "@pages/Admin/AdminDashboard";
+
 export const routers = createBrowserRouter([
   {
     path: "/",
@@ -18,6 +21,16 @@ export const routers = createBrowserRouter([
       {
         path: "adminLogin",
         element: <AdminLogin />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        index: true,
+        element: <AdminDashboard />,
       },
     ],
   },
