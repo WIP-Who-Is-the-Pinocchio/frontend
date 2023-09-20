@@ -9,8 +9,10 @@ interface DataInputProps {
 function LoginFormInput({ label, type, id }: DataInputProps) {
   return (
     <>
-      <label htmlFor={label}></label>
-      <input type={type} id={id} />
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <label htmlFor={id}>{label}</label>
+        <input type={type} id={id} />
+      </div>
     </>
   );
 }
