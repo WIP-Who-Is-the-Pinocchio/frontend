@@ -42,7 +42,7 @@ function NewMemberUploader() {
             </li>
           </ul>
         </nav>
-        <div>
+        <div className="pt-5">
           <UploadTab focusedTab={focusedTab} />
         </div>
       </div>
