@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 
 type Politician = {
@@ -7,9 +7,17 @@ type Politician = {
 
 function ExcelUploader() {
   const [isUploaded, setIsUploaded] = useState(false);
-  const [excelData, setExcelData] = useState<Politician[]>();
+  const [excelData, setExcelData] = useState<Politician[] | null>(null);
   let keyArr: string[] = [];
   if (excelData) keyArr = Object.keys(excelData[0]);
+
+  useEffect(() => {
+    if (excelData) {
+      setIsUploaded(true);
+    } else {
+      setIsUploaded(false);
+    }
+  }, [excelData]);
 
   const fileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -33,6 +41,10 @@ function ExcelUploader() {
     reader.readAsBinaryString(file);
   };
 
+  const resetHandler = () => {
+    setExcelData(null);
+  };
+
   if (!isUploaded) {
     return (
       <div className="flex items-center justify-center w-full">
@@ -50,9 +62,9 @@ function ExcelUploader() {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
               />
             </svg>
@@ -72,8 +84,76 @@ function ExcelUploader() {
         </label>
       </div>
     );
-  }
-  return <div>ExcelUploader</div>;
+  } else
+    return (
+      <>
+        <div className="relative overflow-x-auto h-[32rem] overflow-scroll whitespace-nowrap shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left text-gray-500 ">
+            <thead className="text-xs text-gray-700 border-b border-gray-200 bg-gray-50 sticky top-0 z-20">
+              <th
+                scope="col"
+                className="px-6 py-3 whitespace-nowrap bg-white sticky left-0 z-10"
+              >
+                {keyArr[1]}
+              </th>
+              {keyArr.slice(2).map((key) => (
+                <th scope="col" className="px-6 py-3 whitespace-nowrap" key={key}>
+                  {key}
+                </th>
+              ))}
+              <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                삭제
+              </th>
+            </thead>
+            <tbody>
+              {excelData && (
+                <>
+                  {excelData.map((data, index) => (
+                    <tr key={data["이름"]} className="bg-white border-b">
+                      <th
+                        scope="row"
+                        className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap bg-white sticky left-0 z-10 drop-shadow-[0px_5px_5px_rgba(0,0,0,0.25)] "
+                      >
+                        <div
+                          style={{ backgroundImage: `url(${data[keyArr[0]]})` }}
+                          className={`w-10 h-10 border border-gray-200 rounded-full  bg-cover bg-top`}
+                        />
+                        <div className="pl-3">
+                          <div className="text-[14px] font-semibold">
+                            {data[keyArr[1]]}
+                          </div>
+                        </div>
+                      </th>
+                      {keyArr.slice(2).map((key) => (
+                        <td key={key} className="text-[12px] px-6 py-4 whitespace-nowrap">
+                          {data[key]}
+                        </td>
+                      ))}
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <p className="text-[14px] text-violet-600  hover:underline cursor-pointer">
+                          삭제
+                        </p>
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex items-center justify-between pb-4 bg-white py-7">
+          <div>
+            <button
+              className="flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-[13px] px-3 py-1.5 "
+              type="button"
+              onClick={resetHandler}
+            >
+              초기화
+            </button>
+          </div>
+        </div>
+      </>
+    );
 }
 
 export default ExcelUploader;
