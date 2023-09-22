@@ -76,8 +76,8 @@ function ExcelUploader() {
                 d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
               />
             </svg>
-            <p className="mb-2 text-medium text-gray-500 ">
-              <span className="font-semibold">클릭하여 업로드</span> or drag and drop
+            <p className="mb-2 text-medium text-gray-500 font-semibold">
+              클릭하여 업로드
             </p>
             <p className="text-xs text-gray-500 ">
               xlsx, xlsm, xls, numbers 등 Excel worksheet 포맷 파일
@@ -97,7 +97,7 @@ function ExcelUploader() {
       <>
         <div className="relative overflow-x-auto h-[32rem] overflow-scroll whitespace-nowrap shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left text-gray-500 ">
-            <thead className="text-xs text-gray-700 border-b border-gray-200 bg-gray-50 sticky top-0 z-20">
+            <thead className="text-xs text-gray-700 bg-gray-50 sticky top-0 z-20 shadow-[0px_3px_15px_-4px_rgba(0,0,0,.15)]">
               <th
                 scope="col"
                 className="px-6 py-3 whitespace-nowrap bg-white sticky left-0 z-10"
@@ -120,7 +120,7 @@ function ExcelUploader() {
                     <tr key={data["이름"]} className="bg-white border-b">
                       <th
                         scope="row"
-                        className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap bg-white sticky left-0 z-10 drop-shadow-[0px_5px_5px_rgba(0,0,0,0.25)] "
+                        className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap bg-white sticky left-0 z-10 shadow-[5px_0px_8px_-4px_rgba(0,0,0,.15)]"
                       >
                         <div
                           style={{ backgroundImage: `url(${data[keyArr[0]]})` }}
@@ -139,7 +139,7 @@ function ExcelUploader() {
                       ))}
                       <td className="px-6 py-4 whitespace-nowrap">
                         <p
-                          className="text-[14px] text-violet-600  hover:underline cursor-pointer"
+                          className="text-[14px] text-purple-600  hover:underline cursor-pointer"
                           onClick={() => deleteItem(index)}
                         >
                           삭제
@@ -153,15 +153,19 @@ function ExcelUploader() {
           </table>
         </div>
         <div className="flex items-center justify-between pb-4 bg-white py-7">
-          <div>
-            <button
-              className="flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-[13px] px-3 py-1.5 "
-              type="button"
-              onClick={resetHandler}
-            >
-              초기화
-            </button>
-          </div>
+          <button
+            className="flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-[13px] px-3 py-1.5 "
+            type="button"
+            onClick={resetHandler}
+          >
+            초기화
+          </button>
+          <button
+            className="flex items-center justify-center w-20 text-white bg-purple-300 focus:outline-none hover:bg-gray-300 focus:ring-1 focus:ring-gray-200 font-medium rounded-lg text-[13px] px-3 py-1.5 "
+            type="button"
+          >
+            업로드
+          </button>
         </div>
       </>
     );
