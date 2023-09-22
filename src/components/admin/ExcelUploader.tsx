@@ -41,6 +41,14 @@ function ExcelUploader() {
     reader.readAsBinaryString(file);
   };
 
+  const deleteItem = (index: number) => {
+    setExcelData((prev) => {
+      const newList = prev?.slice(0, index).concat(prev.slice(index + 1));
+      if (newList === undefined) return null;
+      return newList;
+    });
+  };
+
   const resetHandler = () => {
     setExcelData(null);
   };
@@ -130,7 +138,10 @@ function ExcelUploader() {
                         </td>
                       ))}
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <p className="text-[14px] text-violet-600  hover:underline cursor-pointer">
+                        <p
+                          className="text-[14px] text-violet-600  hover:underline cursor-pointer"
+                          onClick={() => deleteItem(index)}
+                        >
                           삭제
                         </p>
                       </td>
