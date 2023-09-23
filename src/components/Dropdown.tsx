@@ -19,19 +19,19 @@ const Dropdown = ({ items, selectedItem, setSelectedItem }: DropdownProps) => {
       <div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="bg-gray-300 text-black rounded px-4 py-2"
+          className="w-24 h-8 mr-10 text-black border rounded"
         >
-          {selectedItem || "Toggle Dropdown"}
+          {selectedItem}
         </button>
       </div>
       {isOpen && (
-        <div className="absolute mt-2 w-56 rounded-md shadow-lg bg-white z-10">
-          <div className="rounded-md ring-1 ring-black ring-opacity-5">
+        <div className="absolute mt-2 w-24 rounded-md bg-white z-10">
+          <div className="rounded-md text-center ring-1 ring-black ring-opacity-5">
             {items.map((item, index) => (
               <div
                 key={index}
                 onClick={() => handleSelect(item)}
-                className="text-black block px-4 py-2 text-sm hover:bg-gray-200 cursor-pointer"
+                className="text-black block px-4 py-2 hover:bg-purple-50 cursor-pointer"
               >
                 {item}
               </div>
