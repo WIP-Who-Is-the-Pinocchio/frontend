@@ -22,9 +22,16 @@ const minHeight = {
   "3/4": "75%",
 };
 
+const width = {
+  "1/16": "6.25%",
+  "2/16": "12.5%",
+  "3/16": "18.75%",
+};
+
 export const tailwindStyle = {
   colors,
   fontSize,
   borderRadius,
   minHeight,
+  width,
 };
