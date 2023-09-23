@@ -17,8 +17,14 @@ const borderRadius = {
   lg: "0.6rem",
 };
 
+const minHeight = {
+  "1/2": "50%",
+  "3/4": "75%",
+};
+
 export const tailwindStyle = {
   colors,
   fontSize,
   borderRadius,
+  minHeight,
 };
