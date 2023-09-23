@@ -5,6 +5,7 @@ import GomaoPage from "@pages/Gomao/Gomao";
 import AdminLogin from "@pages/Admin/AdminLogin";
 import AdminLayout from "@pages/Admin/AdminLayout";
 import AdminDashboard from "@pages/Admin/AdminDashboard";
+import AdminSearch from "@pages/Admin/AdminSearch";
 
 export const routers: RemixRouter = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ export const routers: RemixRouter = createBrowserRouter([
       {
         path: "adminLogin",
         element: <AdminLogin />,
+      },
+      {
+        path: "admin_search",
+        element: <AdminSearch />,
       },
     ],
   },
