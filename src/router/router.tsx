@@ -51,7 +51,7 @@ export const routers: RemixRouter = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <div>여긴됨?</div>,
+            element: <div>관리자 로그인</div>,
           },
           {
             path: "gomgom",
