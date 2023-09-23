@@ -1,4 +1,4 @@
-interface MemberType {
+export interface MemberType {
   이름: string;
   당선횟수: string;
   지역구: string;
