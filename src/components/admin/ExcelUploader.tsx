@@ -51,18 +51,27 @@ function ExcelUploader() {
   };
 
   const importFile = async (file: File) => {
-    /* get data as an ArrayBuffer */
+    //fileReader 객체 생성 (파일을 비동기적으로 읽을 수 있는 객체)
     const reader = new FileReader();
 
+    //파일 읽기 완료 후에 실행할 콜백함수
     reader.onload = (e) => {
-      const data = e?.target?.result;
+      if (!e.target) return;
+      //첨부된 파일 data
+      const data = e.target.result;
+      //data를 이진(binary)형식으로 읽고 워크북(엑셀 파일)로 변환
       const workbook = XLSX.read(data, { type: "binary" });
+      //워크북(엑셀파일) 첫번째 시트 이름 읽어옴
       const sheetName = workbook.SheetNames[0]; // Assuming the first sheet is the one you want to read
+      //워크북(엑셀파일) 첫번째 시트 읽어옴
       const worksheet = workbook.Sheets[sheetName];
+      //선택한 첫번째 시트를 json 형식으로 변환 - 시트의 데이터를 객체의 배열로 변환함
       const parsedData = XLSX.utils.sheet_to_json(worksheet);
+      //저장
       setExcelData(parsedData as MPDataType[]);
     };
 
+    //선택한 파일을 이진 문자열 형태로 읽음
     reader.readAsBinaryString(file);
   };
 
