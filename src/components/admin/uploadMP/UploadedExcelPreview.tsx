@@ -37,21 +37,23 @@ function UploadedExcelPreview({
       <div className="relative overflow-x-auto h-[32rem] overflow-scroll whitespace-nowrap shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-gray-500 ">
           <thead className="text-xs text-gray-700 bg-gray-50 sticky top-0 z-20 shadow-[0px_3px_15px_-4px_rgba(0,0,0,.15)]">
-            <th
-              scope="col"
-              className="px-6 py-3 whitespace-nowrap bg-white sticky left-0"
-            >
-              {MPDataKeys[1]}
-            </th>
-            {MPDataKeys.slice(2).map((key) => (
-              <th scope="col" className="px-6 py-3 whitespace-nowrap" key={key}>
-                {key}
+            <tr>
+              <th
+                scope="col"
+                className="px-6 py-3 whitespace-nowrap bg-white sticky left-0"
+              >
+                {MPDataKeys[1]}
               </th>
-            ))}
-            <th
-              scope="col"
-              className="px-6 py-3 whitespace-nowrap bg-white sticky right-0 z-10"
-            ></th>
+              {MPDataKeys.slice(2).map((key) => (
+                <th scope="col" className="px-6 py-3 whitespace-nowrap" key={key}>
+                  {key}
+                </th>
+              ))}
+              <th
+                scope="col"
+                className="px-6 py-3 whitespace-nowrap bg-white sticky right-0 z-10"
+              ></th>
+            </tr>
           </thead>
           <tbody>
             {excelData && (
