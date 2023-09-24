@@ -67,6 +67,11 @@ function ExcelUploader() {
   };
 
   const deleteItem = (index: number) => {
+    if (!excelData) return;
+    const isConfirmed = confirm(
+      `${excelData[index]["이름"]} 의원 정보를 삭제하시겠습니까?`,
+    );
+    if (!isConfirmed) return;
     setExcelData((prev) => {
       const newList = prev?.slice(0, index).concat(prev.slice(index + 1));
       if (newList === undefined) return null;
@@ -92,6 +97,10 @@ function ExcelUploader() {
 
     // 엑셀 파일 다운로드
     XLSX.writeFile(wb, excelFileName);
+  };
+
+  const clickSubmitButtonHandler = () => {
+    alert("작업 예정 😉");
   };
 
   if (!isUploaded) {
@@ -168,7 +177,7 @@ function ExcelUploader() {
             <thead className="text-xs text-gray-700 bg-gray-50 sticky top-0 z-20 shadow-[0px_3px_15px_-4px_rgba(0,0,0,.15)]">
               <th
                 scope="col"
-                className="px-6 py-3 whitespace-nowrap bg-white sticky left-0 z-10"
+                className="px-6 py-3 whitespace-nowrap bg-white sticky left-0"
               >
                 {MPDataKeys[1]}
               </th>
@@ -177,9 +186,10 @@ function ExcelUploader() {
                   {key}
                 </th>
               ))}
-              <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                삭제
-              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 whitespace-nowrap bg-white sticky right-0 z-10"
+              ></th>
             </thead>
             <tbody>
               {excelData && (
@@ -205,13 +215,13 @@ function ExcelUploader() {
                           {data[key]}
                         </td>
                       ))}
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <p
-                          className="text-[14px] text-purple-600  hover:underline cursor-pointer"
+                      <td className="px-6 py-4 bg-white whitespace-nowrap sticky right-0 z-10">
+                        <button
+                          className="bg-stone-100 border border-red-400 text-[12px] text-red-500 rounded py-1 px-2"
                           onClick={() => deleteItem(index)}
                         >
                           삭제
-                        </p>
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -229,6 +239,7 @@ function ExcelUploader() {
             초기화
           </button>
           <button
+            onClick={clickSubmitButtonHandler}
             className="flex items-center justify-center w-20 text-white bg-purple-300 focus:outline-none hover:bg-gray-300 focus:ring-1 focus:ring-gray-200 font-medium rounded-lg text-[13px] px-3 py-1.5 "
             type="button"
           >
