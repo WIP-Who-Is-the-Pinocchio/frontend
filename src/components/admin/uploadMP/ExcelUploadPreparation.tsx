@@ -29,6 +29,9 @@ const ExcelUploadPreparation = ({ setExcelData }: ExcelUploadPreparationPropsTyp
     //fileReader 객체 생성 (파일을 비동기적으로 읽을 수 있는 객체)
     const reader = new FileReader();
 
+    //선택한 파일을 이진 문자열 형태로 읽음
+    reader.readAsBinaryString(file);
+
     //파일 읽기 완료 후에 실행할 콜백함수
     reader.onload = (e) => {
       if (!e.target) return;
@@ -41,13 +44,22 @@ const ExcelUploadPreparation = ({ setExcelData }: ExcelUploadPreparationPropsTyp
       //워크북(엑셀파일) 첫번째 시트 읽어옴
       const worksheet = workbook.Sheets[sheetName];
       //선택한 첫번째 시트를 json 형식으로 변환 - 시트의 데이터를 객체의 배열로 변환함
-      const parsedData = XLSX.utils.sheet_to_json(worksheet);
-      //저장
-      setExcelData(parsedData as MPDataType[]);
-    };
+      const parsedData: MPDataType[] = XLSX.utils.sheet_to_json(worksheet);
 
-    //선택한 파일을 이진 문자열 형태로 읽음
-    reader.readAsBinaryString(file);
+      if (fileValidator(parsedData)) setExcelData(parsedData);
+    };
+  };
+
+  const fileValidator = (excelData: MPDataType[]) => {
+    if (excelData.length === 0) {
+      alert("파일에 내용이 없습니다.");
+      return false;
+    } else if (!MPDataKeys.every((key) => Object.keys(excelData[0]).includes(key))) {
+      alert("필수 포함 항목이 누락되었습니다. 업로드 유의사항을 확인해주세요.");
+      return false;
+    }
+
+    return true;
   };
 
   return (
