@@ -1,15 +1,40 @@
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 
-type Politician = {
+type MPDataType = {
   [key: string]: string;
 };
 
+const MPDataKeys = [
+  "프로필",
+  "이름",
+  "지역구",
+  "소속정당",
+  "당선횟수",
+  "상임위원회",
+  "총공약수",
+  "완료",
+  "추진중",
+  "보류",
+  "폐기",
+  "기타",
+  "국정공약",
+  "지역공약",
+  "입법공약",
+  "재정공약",
+  "임기내",
+  "임기후",
+  "지속사업",
+  "신규사업",
+  "필요입법공약총수",
+  "필요재정총액",
+  "확보재정총액",
+  "집행재정총액",
+];
+
 function ExcelUploader() {
   const [isUploaded, setIsUploaded] = useState(false);
-  const [excelData, setExcelData] = useState<Politician[] | null>(null);
-  let keyArr: string[] = [];
-  if (excelData) keyArr = Object.keys(excelData[0]);
+  const [excelData, setExcelData] = useState<MPDataType[] | null>(null);
 
   useEffect(() => {
     if (excelData) {
@@ -35,7 +60,7 @@ function ExcelUploader() {
       const sheetName = workbook.SheetNames[0]; // Assuming the first sheet is the one you want to read
       const worksheet = workbook.Sheets[sheetName];
       const parsedData = XLSX.utils.sheet_to_json(worksheet);
-      setExcelData(parsedData as Politician[]);
+      setExcelData(parsedData as MPDataType[]);
     };
 
     reader.readAsBinaryString(file);
@@ -51,6 +76,22 @@ function ExcelUploader() {
 
   const resetHandler = () => {
     setExcelData(null);
+  };
+
+  const downloadExampleFile = () => {
+    const excelFileName = "국회의원 신규 업로드 양식.xlsx";
+
+    // 새로운 워크북(엑셀 파일) 생성
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+
+    // 데이터를 담을 시트(테이블) 생성
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([MPDataKeys]);
+
+    // 시트를 워크북에 추가
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    // 엑셀 파일 다운로드
+    XLSX.writeFile(wb, excelFileName);
   };
 
   if (!isUploaded) {
@@ -109,7 +150,10 @@ function ExcelUploader() {
           </ul>
           <p className="text-[14px] text-gray-700">
             국회의원 신규 업로드 양식 -&nbsp;
-            <span className="underline decoration-1 cursor-pointer text-blue-500">
+            <span
+              onClick={downloadExampleFile}
+              className="underline decoration-1 cursor-pointer text-blue-500"
+            >
               다운로드
             </span>
           </p>
@@ -126,9 +170,9 @@ function ExcelUploader() {
                 scope="col"
                 className="px-6 py-3 whitespace-nowrap bg-white sticky left-0 z-10"
               >
-                {keyArr[1]}
+                {MPDataKeys[1]}
               </th>
-              {keyArr.slice(2).map((key) => (
+              {MPDataKeys.slice(2).map((key) => (
                 <th scope="col" className="px-6 py-3 whitespace-nowrap" key={key}>
                   {key}
                 </th>
@@ -147,16 +191,16 @@ function ExcelUploader() {
                         className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap bg-white sticky left-0 z-10 shadow-[5px_0px_8px_-4px_rgba(0,0,0,.15)]"
                       >
                         <div
-                          style={{ backgroundImage: `url(${data[keyArr[0]]})` }}
+                          style={{ backgroundImage: `url(${data[MPDataKeys[0]]})` }}
                           className={`w-10 h-10 border border-gray-200 rounded-full  bg-cover bg-top`}
                         />
                         <div className="pl-3">
                           <div className="text-[14px] font-semibold">
-                            {data[keyArr[1]]}
+                            {data[MPDataKeys[1]]}
                           </div>
                         </div>
                       </th>
-                      {keyArr.slice(2).map((key) => (
+                      {MPDataKeys.slice(2).map((key) => (
                         <td key={key} className="text-[12px] px-6 py-4 whitespace-nowrap">
                           {data[key]}
                         </td>
