@@ -1,11 +1,14 @@
-// import gomao from "@assets/gomao.svg";
-// import checkbox from "../../assets/gomao.png";
+import React from "react";
 
-export default function GomaoPage() {
+interface GomaoPageProps {}
+
+const GomaoPage: React.FC<GomaoPageProps> = () => {
   return (
     <div className="flex">
       <div className="bg-dw-100 text-sm">여긴 바로 ㄱㅁㅇ</div>
       <img src="./src/assets/gomao.png" />
     </div>
   );
-}
+};
+
+export default GomaoPage;

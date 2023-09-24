@@ -1,0 +1,28 @@
+import { Config } from "tailwindcss";
+
+const config = {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        sk: "#e6e6e6",
+        hr: "#f6f6f6",
+        dw: "#0224b3",
+        "dw-100": "#94e8ff",
+      },
+      fontSize: {
+        sm: "0.7rem",
+        md: "1.0rem",
+        lg: "1.3rem",
+      },
+      borderRadius: {
+        sm: "0.25rem",
+        md: "0.4rem",
+        lg: "0.6rem",
+      },
+    },
+  },
+  plugins: [],
+} as Config;
+
+export default config;

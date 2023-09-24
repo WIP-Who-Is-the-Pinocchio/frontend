@@ -1,6 +1,7 @@
+import React from "react";
 import { Outlet } from "react-router-dom";
 
-const AdminLayout = () => {
+const AdminLayout: React.FC = () => {
   // 여기에 admin 레이아웃 스타일이나 구성을 추가할 수 있습니다.
   return (
     <div className="admin-layout">
