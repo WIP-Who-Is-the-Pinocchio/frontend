@@ -7,7 +7,7 @@ enum TabType {
   Excel = "excel",
 }
 
-function NewMemberUploader() {
+function NewMPUploader() {
   const [focusedTab, setFocuseTab] = useState<string>(TabType.Excel);
 
   const tabChangeHandler = (tab: string) => {
@@ -52,7 +52,7 @@ function NewMemberUploader() {
   );
 }
 
-export default NewMemberUploader;
+export default NewMPUploader;
 
 const UploadTab = ({ focusedTab }: { focusedTab: string }) => {
   if (focusedTab === TabType.Form) {
