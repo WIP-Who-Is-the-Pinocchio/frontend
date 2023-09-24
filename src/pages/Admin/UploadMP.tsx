@@ -1,13 +1,13 @@
 import { useState } from "react";
-import FormUploader from "@components/admin/FormUploader";
-import ExcelUploader from "@components/admin/ExcelUploader";
+import FormUploader from "@components/admin/uploadMP/FormUploader";
+import ExcelUploader from "@components/admin/uploadMP/ExcelUploader";
 
 enum TabType {
   Form = "form",
   Excel = "excel",
 }
 
-function NewMPUploader() {
+function UploadMP() {
   const [focusedTab, setFocuseTab] = useState<string>(TabType.Excel);
 
   const tabChangeHandler = (tab: string) => {
@@ -52,7 +52,7 @@ function NewMPUploader() {
   );
 }
 
-export default NewMPUploader;
+export default UploadMP;
 
 const UploadTab = ({ focusedTab }: { focusedTab: string }) => {
   if (focusedTab === TabType.Form) {
