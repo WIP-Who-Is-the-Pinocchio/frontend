@@ -1,7 +1,5 @@
 const colors = {
-  sk: "#e6e6e6",
-  dw: "#0224b3",
-  "dw-100": "#94e8ff",
+  "light-grey": "#e6e6e6",
   violet50: "#f5f3ff",
   violet100: "#ede9fe",
   violet200: "#ddd6fe",
