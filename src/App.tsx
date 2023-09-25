@@ -1,12 +1,13 @@
+import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { routers } from "@router/router";
 
-export default function App() {
+const App: React.FC = () => {
   return (
-    <>
-      <div>
-        <RouterProvider router={routers} />
-      </div>
-    </>
+    <div>
+      <RouterProvider router={routers} />
+    </div>
   );
-}
+};
+
+export default App;

@@ -6,6 +6,15 @@ import AdminLogin from "@pages/Admin/AdminLogin";
 import AdminLayout from "@pages/Admin/AdminLayout";
 import AdminDashboard from "@pages/Admin/AdminDashboard";
 
+const LayOutWrapper: React.FC = () => {
+  return (
+    <div>
+      <h1>헤더 ㄱㅁㅇ</h1>
+      <Outlet />
+    </div>
+  );
+};
+
 export const routers: RemixRouter = createBrowserRouter([
   {
     path: "/",
@@ -51,7 +60,7 @@ export const routers: RemixRouter = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <div>여긴됨?</div>,
+            element: <div>관리자 로그인</div>,
           },
           {
             path: "gomgom",
@@ -62,12 +71,3 @@ export const routers: RemixRouter = createBrowserRouter([
     ],
   },
 ]);
-
-function LayOutWrapper() {
-  return (
-    <div>
-      <h1>헤더 ㄱㅁㅇ</h1>
-      <Outlet />
-    </div>
-  );
-}

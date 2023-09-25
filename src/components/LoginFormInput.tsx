@@ -6,13 +6,13 @@ interface DataInputProps {
   id: string;
 }
 
-function LoginFormInput({ label, type, id }: DataInputProps) {
+const LoginFormInput: React.FC<DataInputProps> = ({ label, type, id }) => {
   return (
     <>
       <label htmlFor={label}></label>
       <input type={type} id={id} />
     </>
   );
-}
+};
 
 export default LoginFormInput;
