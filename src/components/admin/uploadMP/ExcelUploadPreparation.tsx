@@ -1,30 +1,15 @@
+import React from "react";
 import * as XLSX from "xlsx";
 import { MPDataKeys } from "./ExcelUploader";
 import { MPDataType } from "./ExcelUploader";
 
-interface ExcelUploadPreparationPropsType {
+interface ExcelUploadPreparationProps {
   setExcelData: React.Dispatch<React.SetStateAction<MPDataType[] | null>>;
 }
 
-const ExcelUploadPreparation = ({ setExcelData }: ExcelUploadPreparationPropsType) => {
-  const downloadExampleFile = () => {
-    const excelFileName = "국회의원 신규 업로드 양식.xlsx";
-    // 새로운 워크북(엑셀 파일) 생성
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    // 데이터를 담을 시트(테이블) 생성
-    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([MPDataKeys]);
-    // 시트를 워크북에 추가
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    // 엑셀 파일 다운로드
-    XLSX.writeFile(wb, excelFileName);
-  };
-
-  const fileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const file = e.target.files[0];
-    importFile(file);
-  };
-
+const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
+  setExcelData,
+}) => {
   const importFile = async (file: File) => {
     //fileReader 객체 생성 (파일을 비동기적으로 읽을 수 있는 객체)
     const reader = new FileReader();
@@ -50,6 +35,12 @@ const ExcelUploadPreparation = ({ setExcelData }: ExcelUploadPreparationPropsTyp
     };
   };
 
+  const fileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    importFile(file);
+  };
+
   const fileValidator = (excelData: MPDataType[]) => {
     if (excelData.length === 0) {
       alert("파일에 내용이 없습니다.");
@@ -60,6 +51,18 @@ const ExcelUploadPreparation = ({ setExcelData }: ExcelUploadPreparationPropsTyp
     }
 
     return true;
+  };
+
+  const downloadExampleFile = () => {
+    const excelFileName = "국회의원 신규 업로드 양식.xlsx";
+    // 새로운 워크북(엑셀 파일) 생성
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    // 데이터를 담을 시트(테이블) 생성
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([MPDataKeys]);
+    // 시트를 워크북에 추가
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    // 엑셀 파일 다운로드
+    XLSX.writeFile(wb, excelFileName);
   };
 
   return (

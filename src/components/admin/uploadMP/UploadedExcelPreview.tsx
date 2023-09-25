@@ -1,14 +1,15 @@
+import React from "react";
 import { MPDataKeys } from "./ExcelUploader";
 import { MPDataType } from "./ExcelUploader";
 
-interface UploadedExcelPreviewPropsType {
+interface UploadedExcelPreviewProps {
   excelData: MPDataType[] | null;
   setExcelData: React.Dispatch<React.SetStateAction<MPDataType[] | null>>;
 }
-function UploadedExcelPreview({
+const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
   excelData,
   setExcelData,
-}: UploadedExcelPreviewPropsType) {
+}) => {
   const deleteItem = (index: number) => {
     if (!excelData) return;
 
@@ -112,6 +113,6 @@ function UploadedExcelPreview({
       </div>
     </>
   );
-}
+};
 
 export default UploadedExcelPreview;

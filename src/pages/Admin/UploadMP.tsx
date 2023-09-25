@@ -7,7 +7,16 @@ enum TabType {
   Excel = "excel",
 }
 
-function UploadMP() {
+const SelectedTab = ({ focusedTab }: { focusedTab: string }) => {
+  if (focusedTab === TabType.Form) {
+    return <FormUploader />;
+  } else if (focusedTab === TabType.Excel) {
+    return <ExcelUploader />;
+  }
+  return null;
+};
+
+const UploadMP = () => {
   const [focusedTab, setFocuseTab] = useState<string>(TabType.Excel);
 
   const tabChangeHandler = (tab: string) => {
@@ -45,20 +54,11 @@ function UploadMP() {
           </ul>
         </nav>
         <div className="pt-5">
-          <UploadTab focusedTab={focusedTab} />
+          <SelectedTab focusedTab={focusedTab} />
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default UploadMP;
-
-const UploadTab = ({ focusedTab }: { focusedTab: string }) => {
-  if (focusedTab === TabType.Form) {
-    return <FormUploader />;
-  } else if (focusedTab === TabType.Excel) {
-    return <ExcelUploader />;
-  }
-  return null;
-};

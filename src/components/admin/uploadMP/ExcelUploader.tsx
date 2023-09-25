@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import ExcelUploadPreparation from "./ExcelUploadPreparation";
 import UploadedExcelPreview from "./UploadedExcelPreview";
 
-export type MPDataType = {
+export interface MPDataType {
   [key: string]: string;
-};
+}
 
 export const MPDataKeys = [
   "프로필",
@@ -33,7 +33,7 @@ export const MPDataKeys = [
   "집행재정총액",
 ];
 
-function ExcelUploader() {
+const ExcelUploader = () => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [excelData, setExcelData] = useState<MPDataType[] | null>(null);
 
@@ -50,6 +50,6 @@ function ExcelUploader() {
   } else {
     return <ExcelUploadPreparation setExcelData={setExcelData} />;
   }
-}
+};
 
 export default ExcelUploader;
