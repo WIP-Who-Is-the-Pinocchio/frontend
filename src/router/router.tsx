@@ -1,20 +1,14 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
-import { Router as RemixRouter } from "@remix-run/router/dist/router";
 import MainPage from "@pages/MainPage";
 import GomaoPage from "@pages/Gomao/Gomao";
 import AdminLogin from "@pages/Admin/AdminLogin";
 import AdminLayout from "@pages/Admin/AdminLayout";
 import AdminDashboard from "@pages/Admin/AdminDashboard";
 
-export const routers: RemixRouter = createBrowserRouter([
+export const routers = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <div>
-        <div>{window.location.pathname}</div>
-        <LayOutWrapper />
-      </div>
-    ),
+    element: <LayOutWrapper />,
     children: [
       {
         index: true,
@@ -25,39 +19,18 @@ export const routers: RemixRouter = createBrowserRouter([
         element: <GomaoPage />,
       },
       {
-        path: "adminLogin",
+        path: "/admin/login",
         element: <AdminLogin />,
       },
     ],
   },
   {
-    path: "admin",
-    element: (
-      <div>
-        <div>
-          {window.location.pathname}
-          <AdminLayout />
-        </div>
-      </div>
-    ),
+    path: "/admin",
+    element: <AdminLayout />,
     children: [
       {
         index: true,
         element: <AdminDashboard />,
-      },
-      {
-        path: "login",
-        element: <AdminLogin />,
-        children: [
-          {
-            index: true,
-            element: <div>관리자 로그인</div>,
-          },
-          {
-            path: "gomgom",
-            element: <div>곰곰뜨면성공</div>,
-          },
-        ],
       },
     ],
   },
@@ -66,7 +39,7 @@ export const routers: RemixRouter = createBrowserRouter([
 function LayOutWrapper() {
   return (
     <div>
-      <h1>헤더 ㄱㅁㅇ</h1>
+      {/* <h1>헤더 ㄱㅁㅇ</h1> */}
       <Outlet />
     </div>
   );
