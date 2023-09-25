@@ -2,8 +2,8 @@ interface LoginFormInput {
   label: string;
   type: string;
   id: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const LoginFormInput: React.FC<LoginFormInput> = ({

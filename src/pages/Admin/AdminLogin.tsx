@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LoginFormInput from "@components/LoginFormInput";
 import ButtonBox from "@components/Button";
 import logo from "@assets/wipLogo.svg";
-import Modal from "@components/Modal/Modal.tsx";
+import ValidationMessage from "@utils/ValidaionMessage";
+import { isEmpty } from "@utils/loginValidation";
+import { getUserData, User } from "../../data/LoginTest";
 
 const AdminLogin: React.FC = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showMessages, setShowMessages] = useState(false);
+  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
+  const [isLoginAttempted, setIsLoginAttempted] = useState(false);
+  const navigate = useNavigate();
 
   const getFormChanger =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>
@@ -15,44 +21,72 @@ const AdminLogin: React.FC = () => {
       setter(e.target.value);
     };
 
+  //로그인 로직
   const handleLogin = () => {
-    //로그인 로직
-    // console.log(id, password);
-    setIsModalOpen(true);
+    setIsLoginAttempted(true);
+    const account = getUserData().find(
+      (account: User) => account.id === id && account.password === password,
+    );
+
+    if (account) {
+      // 유효한 아이디와 비밀번호일 때 로그인 로직 수행
+      setIsLoginSuccess(true);
+      setShowMessages(true);
+      navigate("/");
+
+      //로그인 후 값 초기화
+      setId("");
+      setPassword("");
+    } else if (isEmpty(id) || isEmpty(password)) {
+      setShowMessages(true);
+      setIsLoginSuccess(false);
+    }
   };
+
   return (
-    <>
-      {isModalOpen && (
-        <Modal closeModal={() => setIsModalOpen(false)}>
-          <div>모달 내용입니다.</div>
-        </Modal>
-      )}
-      <div className="flex justify-center items-center min-h-[100vh] ">
-        <div className="flex flex-col items-start p-4 justify-center w-[378px] min-h-200 bg-[#faf5ff] rounded">
-          <div className="w-full">
-            <img src={logo} alt="wip logo" />
-            <div className="font-semibold  text-xl my-2">로그인</div>
-            <LoginFormInput
-              label="아이디"
-              id="id"
-              type="text"
-              placeholder="아이디를 입력해주세요"
-              onChange={getFormChanger(setId)}
-            />
-            <LoginFormInput
-              label="비밀번호"
-              id="password"
-              type="password"
-              placeholder="비밀번호를 입력해주세요"
-              onChange={getFormChanger(setPassword)}
-            />
-            <div className="my-3">
-              <ButtonBox btnName="로그인" width="w-full" onClick={handleLogin} />
+    <div className="flex justify-center items-center min-h-[100vh] ">
+      <div className="flex flex-col items-start p-4 justify-center w-[378px] min-h-200 bg-[#faf5ff] rounded">
+        <div className="w-full">
+          <img src={logo} alt="wip logo" />
+          <div className="font-semibold  text-xl my-2">로그인</div>
+
+          <LoginFormInput
+            label="아이디"
+            id="id"
+            type="text"
+            placeholder="아이디를 입력해주세요"
+            onChange={getFormChanger(setId)}
+          />
+          <ValidationMessage
+            show={showMessages}
+            check={isEmpty(id)}
+            message={"* 아이디를 입력해주세요."}
+          />
+
+          <LoginFormInput
+            label="비밀번호"
+            id="password"
+            type="password"
+            placeholder="비밀번호를 입력해주세요"
+            onChange={getFormChanger(setPassword)}
+          />
+          <ValidationMessage
+            show={showMessages}
+            check={isEmpty(password)}
+            message={"* 비밀번호를 입력해주세요."}
+          />
+          {!isLoginSuccess && !isEmpty(id) && !isEmpty(password) && isLoginAttempted && (
+            <div className="text-red-500 text-[10px] font-medium">
+              * 아이디와 비밀번호를 확인해주세요
             </div>
+          )}
+
+          <div className="my-3">
+            <ButtonBox btnName="로그인" width="w-full" onClick={handleLogin} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default AdminLogin;
