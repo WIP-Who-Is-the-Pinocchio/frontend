@@ -1,11 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import LoginFormInput from "@components/LoginFormInput";
 import ButtonBox from "@components/Button";
 import logo from "@assets/wipLogo.svg";
+import Modal from "@components/Modal/Modal.tsx";
 
-function AdminLogin() {
+const AdminLogin: React.FC = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const getFormChanger =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>
@@ -15,10 +17,16 @@ function AdminLogin() {
 
   const handleLogin = () => {
     //로그인 로직
-    console.log(id, password);
+    // console.log(id, password);
+    setIsModalOpen(true);
   };
   return (
     <>
+      {isModalOpen && (
+        <Modal closeModal={() => setIsModalOpen(false)}>
+          <div>모달 내용입니다.</div>
+        </Modal>
+      )}
       <div className="flex justify-center items-center min-h-[100vh] ">
         <div className="flex flex-col items-start p-4 justify-center w-[378px] min-h-200 bg-[#faf5ff] rounded">
           <div className="w-full">
@@ -46,5 +54,5 @@ function AdminLogin() {
       </div>
     </>
   );
-}
+};
 export default AdminLogin;

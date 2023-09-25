@@ -4,7 +4,7 @@ interface ButtonBoxProps {
   onClick: () => void;
 }
 
-export default function ButtonBox({ width, btnName, onClick }: ButtonBoxProps) {
+const ButtonBox: React.FC<ButtonBoxProps> = ({ width, btnName, onClick }) => {
   return (
     <button
       onClick={onClick}
@@ -13,4 +13,6 @@ export default function ButtonBox({ width, btnName, onClick }: ButtonBoxProps) {
       {btnName}
     </button>
   );
-}
+};
+
+export default ButtonBox;
