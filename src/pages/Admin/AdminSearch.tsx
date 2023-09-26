@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEventHandler } from "react";
 
 import Dropdown from "@components/Dropdown";
 import { memberData, MemberType } from "@assets/datas/memberData";
@@ -8,7 +8,7 @@ const AdminSearch = () => {
   const [selectedItem, setSelectedItem] = useState<string>("이름");
   const [displayData, setDisplayData] = useState<MemberType[]>([]);
 
-  const searchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const searchValueChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const currentValue = e.target.value;
     setSearchValue(() => currentValue);
   };
@@ -22,6 +22,11 @@ const AdminSearch = () => {
       }
       return false;
     });
+  };
+
+  // setSelectItem 핸들러
+  const handlerSelectItem = (item: string) => {
+    setSelectedItem(item);
   };
 
   // 검색 버튼 클릭했을 떄, 데이터 변하도록
@@ -38,7 +43,7 @@ const AdminSearch = () => {
           <Dropdown
             items={["이름", "당선횟수", "소속정당", "지역구"]}
             selectedItem={selectedItem}
-            setSelectedItem={setSelectedItem}
+            onSelectedItem={handlerSelectItem}
           />
           <input
             value={searchValue}
