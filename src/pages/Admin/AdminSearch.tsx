@@ -4,7 +4,7 @@ import Dropdown from "@components/Dropdown";
 import { memberData, MemberType } from "@assets/datas/memberData";
 
 const AdminSearch = () => {
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState("");
   const [selectedItem, setSelectedItem] = useState<string>("이름");
   const [displayData, setDisplayData] = useState<MemberType[]>([]);
 
@@ -36,7 +36,7 @@ const AdminSearch = () => {
   };
 
   return (
-    <div className="bg-purple-50 w-screen h-screen p-10">
+    <div className="bg-purple-50 w-screen p-10">
       <div className="flex justify-between items-center bg-white w-full h-10 rounded-lg p-10 mb-10">
         <div>국회의원 검색</div>
         <div>
