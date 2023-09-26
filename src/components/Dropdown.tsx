@@ -1,16 +1,16 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 
 interface DropdownProps {
   items: string[];
   selectedItem: string;
-  setSelectedItem: Dispatch<SetStateAction<string>>;
+  onSelectedItem: (selectItem: string) => void;
 }
 
-const Dropdown = ({ items, selectedItem, setSelectedItem }: DropdownProps) => {
+const Dropdown = ({ items, selectedItem, onSelectedItem }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (item: string) => {
-    setSelectedItem(item);
+    onSelectedItem(item);
     setIsOpen(false);
   };
 
