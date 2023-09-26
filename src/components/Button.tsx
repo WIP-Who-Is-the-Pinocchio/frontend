@@ -21,7 +21,7 @@ const ButtonBox: React.FC<ButtonBoxProps> = ({
   };
   return (
     <button
-      className={`${colorClasses[color]} text-white font-semibold  py-1 px-1 rounded ${width}`}
+      className={`${colorClasses[color]} text-white font-semibold  p-[5px] rounded ${width} text-sm`}
       onClick={onClick}
     >
       {btnName}

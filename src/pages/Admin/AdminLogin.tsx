@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LoginFormInput from "@components/LoginFormInput";
 import ButtonBox from "@components/Button";
 import logo from "@assets/wipLogo.svg";
-import ValidationMessage from "@utils/ValidaionMessage";
+import ValidationMessage from "@components/ValidaionMessage";
 import { isEmpty } from "@utils/loginValidation";
 import { getUserData, User } from "../../data/LoginTest";
 
@@ -49,10 +49,10 @@ const AdminLogin: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center min-h-[100vh] ">
-      <div className="flex flex-col items-start p-4 justify-center w-[358px] min-h-200 bg-[#faf5ff] rounded">
-        <div className="w-full">
-          <img src={logo} alt="wip logo" />
-          <div className="font-semibold  text-xl my-[10px]">로그인</div>
+      <div className="flex flex-col items-center p-4 justify-center w-[358px] min-h-200 bg-[#faf5ff] rounded">
+        <div className="w-[90%] ">
+          <img className="m-[8px]" src={logo} alt="wip logo" />
+          <div className="font-semibold  text-[18px] m-[8px]">로그인</div>
 
           <LoginFormInput
             label="아이디"
@@ -85,18 +85,18 @@ const AdminLogin: React.FC = () => {
             </div>
           )}
 
-          <div className="my-[20px]">
+          <div className="m-[10px]">
             <ButtonBox btnName="로그인" width="w-full" onClick={handleLogin} />
           </div>
 
-          <div className=" w-full flex justify-items-center items-center ">
-            <div className="w-[33%] h-[0]  mx-[5px] border-solid border-[1px] border-grey-100"></div>
+          <div className=" w-full flex justify-center items-center ">
+            <div className="w-[28%] h-[0]  mx-[7px] border-solid border-[1px] border-grey-100"></div>
             <div style={{ fontSize: "10px", zoom: 0.8 }}>
               <p className="text-slate-400">아직 회원이 아니신가요?</p>
             </div>
-            <div className="w-[33%] h-[0] mx-[5px] border-solid border-[1px] border-grey-100"></div>
+            <div className="w-[28%] h-[0] mx-[7px] border-solid border-[1px] border-grey-100"></div>
           </div>
-          <div className="my-[20px]">
+          <div className="m-[10px]">
             <ButtonBox
               btnName="회원가입"
               width="w-full"

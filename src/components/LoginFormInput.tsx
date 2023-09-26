@@ -14,12 +14,12 @@ const LoginFormInput: React.FC<LoginFormInput> = ({
   onChange,
 }) => {
   return (
-    <div className="flex flex-col my-3 ">
-      <label className="text-sm font-normal text-slate-400 my-1" htmlFor={id}>
+    <div className="flex flex-col m-[10px] ">
+      <label className="text-[10px] font-normal text-slate-400 my-1" htmlFor={id}>
         {label}
       </label>
       <input
-        className="rounded py-1 px-1  h-7 placeholder:text-xs  focus:outline-none"
+        className="rounded p-[5px] h-[25px] placeholder:text-[10px]  focus:outline-none"
         type={type}
         id={id}
         placeholder={placeholder}
