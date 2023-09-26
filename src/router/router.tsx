@@ -29,10 +29,6 @@ export const routers: RemixRouter = createBrowserRouter([
         path: "adminLogin",
         element: <AdminLogin />,
       },
-      {
-        path: "admin_search",
-        element: <AdminSearch />,
-      },
     ],
   },
   {
@@ -63,6 +59,10 @@ export const routers: RemixRouter = createBrowserRouter([
             element: <div>곰곰뜨면성공</div>,
           },
         ],
+      },
+      {
+        path: "search",
+        element: <AdminSearch />,
       },
     ],
   },
