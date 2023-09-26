@@ -4,7 +4,7 @@ import GomaoPage from "@pages/Gomao/Gomao";
 import AdminLogin from "@pages/Admin/AdminLogin";
 import AdminLayout from "@pages/Admin/AdminLayout";
 import AdminDashboard from "@pages/Admin/AdminDashboard";
-
+import AdminSignUp from "@pages/Admin/AdminSignUp";
 export const routers = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +21,10 @@ export const routers = createBrowserRouter([
       {
         path: "/admin/login",
         element: <AdminLogin />,
+      },
+      {
+        path: "/admin/signup",
+        element: <AdminSignUp />,
       },
     ],
   },

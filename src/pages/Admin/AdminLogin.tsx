@@ -43,12 +43,16 @@ const AdminLogin: React.FC = () => {
     }
   };
 
+  const handleGoToSignUp = () => {
+    navigate("/admin/signup");
+  };
+
   return (
     <div className="flex justify-center items-center min-h-[100vh] ">
-      <div className="flex flex-col items-start p-4 justify-center w-[378px] min-h-200 bg-[#faf5ff] rounded">
+      <div className="flex flex-col items-start p-4 justify-center w-[358px] min-h-200 bg-[#faf5ff] rounded">
         <div className="w-full">
           <img src={logo} alt="wip logo" />
-          <div className="font-semibold  text-xl my-2">로그인</div>
+          <div className="font-semibold  text-xl my-[10px]">로그인</div>
 
           <LoginFormInput
             label="아이디"
@@ -81,8 +85,24 @@ const AdminLogin: React.FC = () => {
             </div>
           )}
 
-          <div className="my-3">
+          <div className="my-[20px]">
             <ButtonBox btnName="로그인" width="w-full" onClick={handleLogin} />
+          </div>
+
+          <div className=" w-full flex justify-items-center items-center ">
+            <div className="w-[33%] h-[0]  mx-[5px] border-solid border-[1px] border-grey-100"></div>
+            <div style={{ fontSize: "10px", zoom: 0.8 }}>
+              <p className="text-slate-400">아직 회원이 아니신가요?</p>
+            </div>
+            <div className="w-[33%] h-[0] mx-[5px] border-solid border-[1px] border-grey-100"></div>
+          </div>
+          <div className="my-[20px]">
+            <ButtonBox
+              btnName="회원가입"
+              width="w-full"
+              color="violet-500"
+              onClick={handleGoToSignUp}
+            />
           </div>
         </div>
       </div>
