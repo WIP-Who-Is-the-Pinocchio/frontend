@@ -1,6 +1,5 @@
 import React from "react";
-import { MPDataKeys } from "./ExcelUploader";
-import { MPDataType } from "./ExcelUploader";
+import { MPDataType, MPDataKeys } from "./types";
 
 interface UploadedExcelPreviewProps {
   excelData: MPDataType[];

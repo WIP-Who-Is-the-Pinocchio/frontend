@@ -1,8 +1,7 @@
 import React from "react";
 import * as XLSX from "xlsx";
-import { MPDataKeys } from "./ExcelUploader";
-import { MPDataType } from "./ExcelUploader";
 import { ChangeEventHandler } from "react";
+import { MPDataType, MPDataKeys } from "./types";
 
 interface ExcelUploadPreparationProps {
   onUpdateExcelData: (excel: MPDataType[]) => void;
