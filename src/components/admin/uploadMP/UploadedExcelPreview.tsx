@@ -28,13 +28,13 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
 
   return (
     <>
-      <div className="relative overflow-x-auto h-[32rem] overflow-scroll whitespace-nowrap shadow-md">
-        <table className="w-full text-[14px] text-left text-gray-500 ">
-          <thead className="text-[12px] text-gray-700 bg-gray-50 sticky top-0 z-20 shadow-[0px_3px_15px_-4px_rgba(0,0,0,.15)]">
+      <div className="relative h-[32rem] whitespace-nowrap overflow-x-auto overflow-scroll shadow-md">
+        <table className="w-full text-gray-500 text-[14px] text-left">
+          <thead className="sticky top-0 z-20 bg-gray-50 text-[12px] text-gray-700 shadow-[0px_3px_15px_-4px_rgba(0,0,0,.15)]">
             <tr>
               <th
                 scope="col"
-                className="px-[24px] py-[12px] whitespace-nowrap bg-white sticky left-0"
+                className="sticky left-0 bg-white px-[24px] py-[12px] whitespace-nowrap"
               >
                 {MPDataKeys[1]}
               </th>
@@ -49,7 +49,7 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
               ))}
               <th
                 scope="col"
-                className="px-[24px] py-[12px] whitespace-nowrap bg-white sticky right-0 z-10"
+                className="sticky right-0 z-10 px-[24px] py-[12px] bg-white whitespace-nowrap"
               ></th>
             </tr>
           </thead>
@@ -61,11 +61,11 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
                 <tr key={name + index} className="bg-white border-b">
                   <th
                     scope="row"
-                    className="flex items-center px-[24px] py-[12px] text-gray-900 whitespace-nowrap bg-white sticky left-0 z-10 shadow-[5px_0px_8px_-4px_rgba(0,0,0,.15)]"
+                    className="flex items-center sticky left-0 z-10 px-[24px] py-[12px] bg-white text-gray-900 whitespace-nowrap shadow-[5px_0px_8px_-4px_rgba(0,0,0,.15)]"
                   >
                     <div
                       style={{ backgroundImage: `url(${profile})` }}
-                      className={`w-[40px] h-[40px] border border-gray-200 rounded-full  bg-cover bg-top`}
+                      className={`w-[40px] h-[40px] border border-gray-200 rounded-full bg-cover bg-top`}
                     />
                     <div className="pl-[12px]">
                       <div className="text-[14px] font-semibold">{name}</div>
@@ -74,14 +74,14 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
                   {MPDataKeys.slice(2).map((key) => (
                     <td
                       key={key}
-                      className="text-[12px] px-[24px] py-[12px] whitespace-nowrap"
+                      className="px-[24px] py-[12px] text-[12px] whitespace-nowrap"
                     >
                       {data[key]}
                     </td>
                   ))}
-                  <td className="px-[24px] py-[12px] bg-white whitespace-nowrap sticky right-0 z-10">
+                  <td className="sticky right-0 z-10 px-[24px] py-[12px] bg-white whitespace-nowrap">
                     <button
-                      className="bg-stone-100 border border-red-400 text-[12px] text-red-500 rounded py-[4px] px-[8px]"
+                      className="py-[4px] px-[8px] border border-red-400 rounded bg-stone-100 text-[12px] text-red-500"
                       onClick={() => handleClickDeleteButton(index)}
                     >
                       삭제
@@ -93,17 +93,17 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
           </tbody>
         </table>
       </div>
-      <div className="flex items-center justify-between pb-[16px] bg-white py-[28px]">
+      <div className="flex justify-between items-center py-[28px] pb-[16px] bg-white">
         <button
           type="button"
-          className="flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-[13px] px-[12px] py-[6px]"
+          className="flex justify-center items-center px-[12px] py-[6px] border border-gray-300 rounded-lg bg-white text-[13px] text-gray-500 font-medium hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200"
           onClick={handleClickResetButton}
         >
           초기화
         </button>
         <button
           type="button"
-          className="flex items-center justify-center w-20 text-white bg-purple-300 focus:outline-none hover:bg-gray-300 focus:ring-1 focus:ring-gray-200 font-medium rounded-lg text-[13px] px-[12px] py-[6px]"
+          className="flex justify-center items-center w-20 px-[12px] py-[6px] rounded-lg bg-purple-400 text-[13px] text-white font-medium focus:outline-none hover:bg-gray-300 focus:ring-1 focus:ring-gray-200"
           onClick={handleClickUploadButton}
         >
           업로드

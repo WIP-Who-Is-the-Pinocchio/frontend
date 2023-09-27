@@ -13,19 +13,19 @@ const UploadMP: React.FC<UploadMPProps> = () => {
   };
 
   return (
-    <div className="bg-purple-50 w-screen h-screen p-[40px]">
-      <div className="bg-white w-full h-full rounded-lg p-[40px]">
-        <div className="text-[24px] text-slate-950 font-semibold text-stone-800 pb-[20px]">
+    <div className="w-screen h-screen p-[40px] bg-purple-50">
+      <div className="w-full h-full p-[40px] bg-white rounded-lg">
+        <div className="pb-[20px] text-[24px] font-semibold text-stone-800">
           국회의원 신규 업로드
         </div>
-        <nav className="text-base font-medium text-center text-gray-500 border-b border-gray-200 ">
+        <nav className="border-b border-gray-200 text-[16px] font-medium text-gray-500 text-center">
           <ul className="flex flex-wrap -mb-px">
             <li
               className={twMerge(
                 "px-[16px] py-[12px] cursor-pointer",
                 focusedTab === TabType.EXCEL
                   ? "border-b-[2px] border-purple-200 text-purple-500"
-                  : "hover:text-gray-600 hover:border-gray-300",
+                  : "hover:border-gray-300 hover:text-gray-600",
               )}
               onClick={() => handleClickTab(TabType.EXCEL)}
             >
@@ -36,7 +36,7 @@ const UploadMP: React.FC<UploadMPProps> = () => {
                 "px-[16px] py-[12px] cursor-pointer",
                 focusedTab === TabType.FORM
                   ? "border-b-[2px] border-purple-200 text-purple-500"
-                  : "hover:text-gray-600 hover:border-gray-300",
+                  : "hover:border-gray-300 hover:text-gray-600",
               )}
               onClick={() => handleClickTab(TabType.FORM)}
             >
