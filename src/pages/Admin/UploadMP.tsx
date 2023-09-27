@@ -2,7 +2,9 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import SelectedTab from "@components/admin/uploadMP/SelectedTab";
 
-const UploadMP = () => {
+interface UploadMPProps {}
+
+const UploadMP: React.FC<UploadMPProps> = () => {
   const [focusedTab, setFocusedTab] = useState<TabType>(TabType.EXCEL);
 
   const handleClickTab = (tab: TabType) => {

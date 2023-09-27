@@ -5,7 +5,7 @@ interface SelectedTabProps {
   focusedTab: TabType;
 }
 
-const SelectedTab = ({ focusedTab }: SelectedTabProps) => {
+const SelectedTab: React.FC<SelectedTabProps> = ({ focusedTab }) => {
   if (focusedTab === TabType.FORM) {
     return <FormUploader />;
   }

@@ -33,7 +33,9 @@ export const MPDataKeys = [
   "집행재정총액",
 ];
 
-const ExcelUploader = () => {
+interface ExcelUploaderProps {}
+
+const ExcelUploader: React.FC<ExcelUploaderProps> = () => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [excelData, setExcelData] = useState<MPDataType[] | null>(null);
 
