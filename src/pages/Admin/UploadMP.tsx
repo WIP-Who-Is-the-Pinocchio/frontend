@@ -1,27 +1,12 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import FormUploader from "@components/admin/uploadMP/FormUploader";
-import ExcelUploader from "@components/admin/uploadMP/ExcelUploader";
-
-enum TabType {
-  Form = "form",
-  Excel = "excel",
-}
-
-const SelectedTab = ({ focusedTab }: { focusedTab: string }) => {
-  if (focusedTab === TabType.Form) {
-    return <FormUploader />;
-  } else if (focusedTab === TabType.Excel) {
-    return <ExcelUploader />;
-  }
-  return null;
-};
+import SelectedTab from "@components/admin/uploadMP/SelectedTab";
 
 const UploadMP = () => {
-  const [focusedTab, setFocuseTab] = useState<string>(TabType.Excel);
+  const [focusedTab, setFocusedTab] = useState<TabType>(TabType.EXCEL);
 
-  const tabChangeHandler = (tab: string) => {
-    setFocuseTab(tab);
+  const tabChangeHandler = (tab: TabType) => {
+    setFocusedTab(tab);
   };
 
   return (
@@ -35,22 +20,22 @@ const UploadMP = () => {
             <li
               className={twMerge(
                 "px-4 py-3 cursor-pointer",
-                focusedTab === TabType.Excel
+                focusedTab === TabType.EXCEL
                   ? "border-b-2 border-purple-200 text-purple-500"
                   : "hover:text-gray-600 hover:border-gray-300",
               )}
-              onClick={() => tabChangeHandler(TabType.Excel)}
+              onClick={() => tabChangeHandler(TabType.EXCEL)}
             >
               업로드
             </li>
             <li
               className={twMerge(
                 "px-4 py-3 cursor-pointer",
-                focusedTab === TabType.Form
+                focusedTab === TabType.FORM
                   ? "border-b-2 border-purple-200 text-purple-500"
                   : "hover:text-gray-600 hover:border-gray-300",
               )}
-              onClick={() => tabChangeHandler(TabType.Form)}
+              onClick={() => tabChangeHandler(TabType.FORM)}
             >
               직접 입력
             </li>

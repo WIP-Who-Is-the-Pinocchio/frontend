@@ -5,7 +5,7 @@ import GomaoPage from "@pages/Gomao/Gomao";
 import AdminLogin from "@pages/Admin/AdminLogin";
 import AdminLayout from "@pages/Admin/AdminLayout";
 import AdminDashboard from "@pages/Admin/AdminDashboard";
-import NewMPUploader from "@pages/Admin/UploadMP";
+import UploadMP from "@pages/Admin/UploadMP";
 
 export const routers: RemixRouter = createBrowserRouter([
   {
@@ -41,7 +41,7 @@ export const routers: RemixRouter = createBrowserRouter([
       },
       {
         path: "uploadMP",
-        element: <NewMPUploader />,
+        element: <UploadMP />,
       },
       {
         path: "login",
