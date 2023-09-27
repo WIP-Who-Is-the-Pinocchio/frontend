@@ -2,6 +2,7 @@ import React from "react";
 import * as XLSX from "xlsx";
 import { ChangeEventHandler } from "react";
 import { MPDataType, MPDataKeys } from "./types";
+import uploadIcon from "@assets/icon/upload.svg";
 
 interface ExcelUploadPreparationProps {
   onUpdateExcelData: (excel: MPDataType[]) => void;
@@ -77,21 +78,7 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
           className="flex flex-col items-center justify-center w-full h-[256px] border-[2px] border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100 "
         >
           <div className="flex flex-col items-center justify-center pt-[20px] pb-[24px]">
-            <svg
-              className="w-[32px] h-[32px] mb-[16px] text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 16"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-              />
-            </svg>
+            <img className="mb-[5px]" src={uploadIcon} alt="업로드" />
             <p className="mb-[8px] text-medium text-gray-500 font-semibold">
               클릭하여 업로드
             </p>
