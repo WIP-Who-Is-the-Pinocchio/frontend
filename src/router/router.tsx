@@ -6,6 +6,7 @@ import AdminLogin from "@pages/Admin/AdminLogin";
 import AdminLayout from "@pages/Admin/AdminLayout";
 import AdminDashboard from "@pages/Admin/AdminDashboard";
 import AdminSearch from "@pages/Admin/AdminSearch";
+import UploadMP from "@pages/Admin/UploadMP";
 
 export const routers: RemixRouter = createBrowserRouter([
   {
@@ -33,18 +34,15 @@ export const routers: RemixRouter = createBrowserRouter([
   },
   {
     path: "admin",
-    element: (
-      <div>
-        <div>
-          {window.location.pathname}
-          <AdminLayout />
-        </div>
-      </div>
-    ),
+    element: <AdminLayout />,
     children: [
       {
         index: true,
         element: <AdminDashboard />,
+      },
+      {
+        path: "uploadMP",
+        element: <UploadMP />,
       },
       {
         path: "login",
