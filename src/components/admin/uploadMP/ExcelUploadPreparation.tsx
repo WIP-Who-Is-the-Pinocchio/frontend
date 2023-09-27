@@ -3,6 +3,7 @@ import * as XLSX from "xlsx";
 import { ChangeEventHandler } from "react";
 import { MPDataType, MPDataKeys } from "./types";
 import uploadIcon from "@assets/icon/upload.svg";
+import checkIcon from "@assets/icon/check.svg";
 
 interface ExcelUploadPreparationProps {
   onUpdateExcelData: (excel: MPDataType[]) => void;
@@ -94,7 +95,10 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
         </label>
       </div>
       <div className=" w-full p-[16px] my-[20px] border border-purple-300 rounded bg-violet-50 text-gray-800">
-        <h3 className="text-[15px] font-medium ">엑셀 업로드 유의사항</h3>
+        <div className="flex gap-[5px]">
+          <img className="w-[20px] ml-[-5px]" src={checkIcon} />
+          <h3 className="text-[15px] font-medium ">엑셀 업로드 유의사항</h3>
+        </div>
         <ul className="my-[8px] text-[14px] text-gray-700 list-disc list-inside">
           <li>시트의 1행은 헤더(열 제목)로 구성되어있어야 합니다.</li>
           <li>시트가 2개 이상인 경우 첫번째 시트만 업로드됩니다.</li>
