@@ -31,17 +31,17 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
       //선택한 첫번째 시트를 json 형식으로 변환 - 시트의 데이터를 객체의 배열로 변환함
       const parsedData: MPDataType[] = XLSX.utils.sheet_to_json(worksheet);
 
-      if (fileValidator(parsedData)) setExcelData(parsedData);
+      if (validateFile(parsedData)) setExcelData(parsedData);
     };
   };
 
-  const fileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeExcelFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
     importFile(file);
   };
 
-  const fileValidator = (excelData: MPDataType[]) => {
+  const validateFile = (excelData: MPDataType[]) => {
     if (excelData.length === 0) {
       alert("파일에 내용이 없습니다.");
       return false;
@@ -53,7 +53,7 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
     return true;
   };
 
-  const downloadExampleFile = () => {
+  const handleClickDownloadExampleFile = () => {
     const excelFileName = "국회의원 신규 업로드 양식.xlsx";
     // 새로운 워크북(엑셀 파일) 생성
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
@@ -99,7 +99,7 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
             id="dropzone-file"
             type="file"
             className="hidden"
-            onChange={(e) => fileChangeHandler(e)}
+            onChange={handleChangeExcelFile}
           />
         </label>
       </div>
@@ -121,7 +121,7 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
         <p className="text-[14px] text-gray-700">
           국회의원 신규 업로드 양식 -&nbsp;
           <span
-            onClick={downloadExampleFile}
+            onClick={handleClickDownloadExampleFile}
             className="underline decoration-1 cursor-pointer text-blue-500"
           >
             다운로드

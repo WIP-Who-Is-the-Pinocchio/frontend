@@ -5,7 +5,7 @@ import SelectedTab from "@components/admin/uploadMP/SelectedTab";
 const UploadMP = () => {
   const [focusedTab, setFocusedTab] = useState<TabType>(TabType.EXCEL);
 
-  const tabChangeHandler = (tab: TabType) => {
+  const handleClickTab = (tab: TabType) => {
     setFocusedTab(tab);
   };
 
@@ -24,7 +24,7 @@ const UploadMP = () => {
                   ? "border-b-2 border-purple-200 text-purple-500"
                   : "hover:text-gray-600 hover:border-gray-300",
               )}
-              onClick={() => tabChangeHandler(TabType.EXCEL)}
+              onClick={() => handleClickTab(TabType.EXCEL)}
             >
               업로드
             </li>
@@ -35,7 +35,7 @@ const UploadMP = () => {
                   ? "border-b-2 border-purple-200 text-purple-500"
                   : "hover:text-gray-600 hover:border-gray-300",
               )}
-              onClick={() => tabChangeHandler(TabType.FORM)}
+              onClick={() => handleClickTab(TabType.FORM)}
             >
               직접 입력
             </li>

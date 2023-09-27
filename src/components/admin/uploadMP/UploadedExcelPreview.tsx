@@ -10,7 +10,7 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
   excelData,
   setExcelData,
 }) => {
-  const deleteItem = (index: number) => {
+  const handleClickDeleteButton = (index: number) => {
     if (!excelData) return;
 
     const isConfirmed = confirm(
@@ -25,11 +25,11 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
     });
   };
 
-  const resetHandler = () => {
+  const handleClickResetButton = () => {
     setExcelData(null);
   };
 
-  const clickSubmitButtonHandler = () => {
+  const handleClickUploadButton = () => {
     alert("작업 예정 😉");
   };
 
@@ -83,7 +83,7 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
                     <td className="px-6 py-4 bg-white whitespace-nowrap sticky right-0 z-10">
                       <button
                         className="bg-stone-100 border border-red-400 text-[12px] text-red-500 rounded py-1 px-2"
-                        onClick={() => deleteItem(index)}
+                        onClick={() => handleClickDeleteButton(index)}
                       >
                         삭제
                       </button>
@@ -99,12 +99,12 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
         <button
           className="flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-[13px] px-3 py-1.5 "
           type="button"
-          onClick={resetHandler}
+          onClick={handleClickResetButton}
         >
           초기화
         </button>
         <button
-          onClick={clickSubmitButtonHandler}
+          onClick={handleClickUploadButton}
           className="flex items-center justify-center w-20 text-white bg-purple-300 focus:outline-none hover:bg-gray-300 focus:ring-1 focus:ring-gray-200 font-medium rounded-lg text-[13px] px-3 py-1.5 "
           type="button"
         >
