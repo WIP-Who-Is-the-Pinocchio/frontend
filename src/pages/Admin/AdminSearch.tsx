@@ -3,7 +3,9 @@ import { useState, ChangeEventHandler } from "react";
 import Dropdown from "@components/Dropdown";
 import { memberData, MemberType } from "@assets/datas/memberData";
 
-const AdminSearch = () => {
+interface AdminSearchProps {}
+
+const AdminSearch: React.FC<AdminSearchProps> = () => {
   const [searchValue, setSearchValue] = useState("");
   const [selectedItem, setSelectedItem] = useState<string>("이름");
   const [displayData, setDisplayData] = useState<MemberType[]>([]);
