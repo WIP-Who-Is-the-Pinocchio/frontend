@@ -37,20 +37,25 @@ interface ExcelUploaderProps {}
 
 const ExcelUploader: React.FC<ExcelUploaderProps> = () => {
   const [isUploaded, setIsUploaded] = useState(false);
-  const [excelData, setExcelData] = useState<MPDataType[] | null>(null);
+  const [excelData, setExcelData] = useState<MPDataType[]>([]);
 
   useEffect(() => {
-    if (excelData) {
-      setIsUploaded(true);
-    } else {
-      setIsUploaded(false);
-    }
+    setIsUploaded(Boolean(excelData.length > 0));
   }, [excelData]);
 
+  const handleUpdateExcelData = (excel: MPDataType[]) => {
+    setExcelData(excel);
+  };
+
   if (isUploaded) {
-    return <UploadedExcelPreview excelData={excelData} setExcelData={setExcelData} />;
+    return (
+      <UploadedExcelPreview
+        excelData={excelData}
+        onUpdateExcelData={handleUpdateExcelData}
+      />
+    );
   } else {
-    return <ExcelUploadPreparation setExcelData={setExcelData} />;
+    return <ExcelUploadPreparation onUpdateExcelData={handleUpdateExcelData} />;
   }
 };
 

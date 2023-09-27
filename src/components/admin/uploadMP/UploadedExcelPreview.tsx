@@ -3,30 +3,24 @@ import { MPDataKeys } from "./ExcelUploader";
 import { MPDataType } from "./ExcelUploader";
 
 interface UploadedExcelPreviewProps {
-  excelData: MPDataType[] | null;
-  setExcelData: React.Dispatch<React.SetStateAction<MPDataType[] | null>>;
+  excelData: MPDataType[];
+  onUpdateExcelData: (excel: MPDataType[]) => void;
 }
 const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
   excelData,
-  setExcelData,
+  onUpdateExcelData,
 }) => {
   const handleClickDeleteButton = (index: number) => {
-    if (!excelData) return;
-
     const isConfirmed = confirm(
       `${excelData[index]["이름"]} 의원 정보를 삭제하시겠습니까?`,
     );
     if (!isConfirmed) return;
 
-    setExcelData((prev) => {
-      const newList = prev?.slice(0, index).concat(prev.slice(index + 1));
-      if (newList === undefined) return null;
-      return newList;
-    });
+    onUpdateExcelData([...excelData.slice(0, index), ...excelData.slice(index + 1)]);
   };
 
   const handleClickResetButton = () => {
-    setExcelData(null);
+    onUpdateExcelData([]);
   };
 
   const handleClickUploadButton = () => {
@@ -104,9 +98,9 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
           초기화
         </button>
         <button
-          onClick={handleClickUploadButton}
           className="flex items-center justify-center w-20 text-white bg-purple-300 focus:outline-none hover:bg-gray-300 focus:ring-1 focus:ring-gray-200 font-medium rounded-lg text-[13px] px-3 py-1.5 "
           type="button"
+          onClick={handleClickUploadButton}
         >
           업로드
         </button>

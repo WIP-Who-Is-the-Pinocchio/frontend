@@ -1,5 +1,6 @@
 import FormUploader from "@components/admin/uploadMP/FormUploader";
 import ExcelUploader from "@components/admin/uploadMP/ExcelUploader";
+import { TabType } from "./types";
 
 interface SelectedTabProps {
   focusedTab: TabType;

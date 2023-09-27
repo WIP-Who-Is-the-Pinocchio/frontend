@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import SelectedTab from "@components/admin/uploadMP/SelectedTab";
+import { TabType } from "@components/admin/uploadMP/types";
 
 interface UploadMPProps {}
 

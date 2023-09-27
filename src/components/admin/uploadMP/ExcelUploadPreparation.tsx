@@ -2,15 +2,16 @@ import React from "react";
 import * as XLSX from "xlsx";
 import { MPDataKeys } from "./ExcelUploader";
 import { MPDataType } from "./ExcelUploader";
+import { ChangeEventHandler } from "react";
 
 interface ExcelUploadPreparationProps {
-  setExcelData: React.Dispatch<React.SetStateAction<MPDataType[] | null>>;
+  onUpdateExcelData: (excel: MPDataType[]) => void;
 }
 
 const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
-  setExcelData,
+  onUpdateExcelData,
 }) => {
-  const importFile = async (file: File) => {
+  const importFile = (file: File) => {
     //fileReader 객체 생성 (파일을 비동기적으로 읽을 수 있는 객체)
     const reader = new FileReader();
 
@@ -31,12 +32,14 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
       //선택한 첫번째 시트를 json 형식으로 변환 - 시트의 데이터를 객체의 배열로 변환함
       const parsedData: MPDataType[] = XLSX.utils.sheet_to_json(worksheet);
 
-      if (validateFile(parsedData)) setExcelData(parsedData);
+      if (validateFile(parsedData)) onUpdateExcelData(parsedData);
     };
   };
 
-  const handleChangeExcelFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
+  const handleChangeExcelFile: ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (!e.target.files) {
+      return;
+    }
     const file = e.target.files[0];
     importFile(file);
   };
@@ -45,7 +48,9 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
     if (excelData.length === 0) {
       alert("파일에 내용이 없습니다.");
       return false;
-    } else if (!MPDataKeys.every((key) => Object.keys(excelData[0]).includes(key))) {
+    }
+
+    if (!MPDataKeys.every((key) => Object.keys(excelData[0]).includes(key))) {
       alert("필수 포함 항목이 누락되었습니다. 업로드 유의사항을 확인해주세요.");
       return false;
     }
