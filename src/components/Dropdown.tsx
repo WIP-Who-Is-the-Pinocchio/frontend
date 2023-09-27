@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 
 interface DropdownProps {
   items: string[];
@@ -6,7 +6,7 @@ interface DropdownProps {
   onSelectedItem: (selectItem: string) => void;
 }
 
-const Dropdown = ({ items, selectedItem, onSelectedItem }: DropdownProps) => {
+const Dropdown: FC<DropdownProps> = ({ items, selectedItem, onSelectedItem }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (item: string) => {
