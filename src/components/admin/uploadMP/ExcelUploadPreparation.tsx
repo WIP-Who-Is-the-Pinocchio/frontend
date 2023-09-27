@@ -50,6 +50,7 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
       return false;
     }
 
+    // 엑셀 데이터 객체에 필수 필드가 모두 포함되어있는지 확인
     if (!MPDataKeys.every((key) => Object.keys(excelData[0]).includes(key))) {
       alert("필수 포함 항목이 누락되었습니다. 업로드 유의사항을 확인해주세요.");
       return false;
