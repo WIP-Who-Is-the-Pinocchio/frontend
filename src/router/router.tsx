@@ -5,6 +5,7 @@ import GomaoPage from "@pages/Gomao/Gomao";
 import AdminLogin from "@pages/Admin/AdminLogin";
 import AdminLayout from "@pages/Admin/AdminLayout";
 import AdminDashboard from "@pages/Admin/AdminDashboard";
+import AdminSearch from "@pages/Admin/AdminSearch";
 import UploadMP from "@pages/Admin/UploadMP";
 
 export const routers: RemixRouter = createBrowserRouter([
@@ -56,6 +57,10 @@ export const routers: RemixRouter = createBrowserRouter([
             element: <div>곰곰뜨면성공</div>,
           },
         ],
+      },
+      {
+        path: "search",
+        element: <AdminSearch />,
       },
     ],
   },
