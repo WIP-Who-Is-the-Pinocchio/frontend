@@ -71,17 +71,15 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
   };
 
   return (
-    <div className="max-w-[768px] flex flex-col  m-auto">
+    <div className="flex flex-col max-w-[768px]  m-auto">
       <div className=" w-full">
         <label
           htmlFor="dropzone-file"
-          className="flex flex-col items-center justify-center w-full h-[256px] border-[2px] border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100 "
+          className="flex flex-col justify-center items-center w-full h-[256px] border-[2px] border-gray-300 border-dashed rounded-lg bg-gray-50  hover:bg-gray-100 cursor-pointer"
         >
-          <div className="flex flex-col items-center justify-center pt-[20px] pb-[24px]">
+          <div className="flex flex-col justify-center items-center pt-[20px] pb-[24px]">
             <img className="mb-[5px]" src={uploadIcon} alt="업로드" />
-            <p className="mb-[8px] text-medium text-gray-500 font-semibold">
-              클릭하여 업로드
-            </p>
+            <p className="mb-[8px] font-semibold text-gray-500 ">클릭하여 업로드</p>
             <p className="text-[12px] text-gray-500 ">
               xlsx, xlsm, xls, numbers 등 Excel worksheet 포맷 파일
             </p>
@@ -94,14 +92,14 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
           />
         </label>
       </div>
-      <div className=" w-full my-[20px] bg-violet-50 p-[16px] border border-purple-300 rounded text-gray-800">
+      <div className=" w-full p-[16px] my-[20px] border border-purple-300 rounded bg-violet-50 text-gray-800">
         <h3 className="text-[15px] font-medium ">엑셀 업로드 유의사항</h3>
-        <ul className="text-gray-700 list-disc list-inside text-[14px] my-[8px]">
+        <ul className="my-[8px] text-[14px] text-gray-700 list-disc list-inside">
           <li>시트의 1행은 헤더(열 제목)로 구성되어있어야 합니다.</li>
           <li>시트가 2개 이상인 경우 첫번째 시트만 업로드됩니다.</li>
           <li className="max-w-[672px]">
             필수 포함 항목:
-            <p className="text-gray-500 ml-[20px]">
+            <p className="ml-[20px] text-gray-500">
               프로필, 이름, 지역구, 소속정당, 당선횟수, 상임위원회, 총공약수, 완료,
               추진중, 보류, 폐기, 기타, 국정공약, 지역공약, 입법공약, 재정공약, 임기내,
               임기후, 지속사업, 신규사업, 필요입법공약총수, 필요재정총액, 확보재정총액,
@@ -112,7 +110,7 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
         <p className="text-[14px] text-gray-700">
           국회의원 신규 업로드 양식 -&nbsp;
           <span
-            className="underline decoration-[1px] cursor-pointer text-blue-500"
+            className="text-blue-500 underline decoration-[1px] cursor-pointer"
             onClick={handleClickDownloadExampleFile}
           >
             다운로드
