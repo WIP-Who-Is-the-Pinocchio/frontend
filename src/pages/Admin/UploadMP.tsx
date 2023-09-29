@@ -13,7 +13,7 @@ const UploadMP: React.FC<UploadMPProps> = () => {
   };
 
   return (
-    <div className="w-screen h-screen p-[40px] bg-purple-50">
+    <div className="w-full h-full min-h-screen p-[40px] bg-purple-50">
       <div className="w-full h-full p-[40px] bg-white rounded-lg">
         <div className="pb-[20px] text-[24px] font-semibold text-stone-800">
           국회의원 신규 업로드
@@ -44,7 +44,7 @@ const UploadMP: React.FC<UploadMPProps> = () => {
             </li>
           </ul>
         </nav>
-        <div className="pt-[20px]">
+        <div className="pt-[20px] max-w-[1024px] mx-auto">
           <SelectedTab focusedTab={focusedTab} />
         </div>
       </div>
