@@ -29,6 +29,8 @@ const AdminSearch: FC<AdminSearchProps> = () => {
       const value = member[selectedItem];
       if (typeof value === "string") {
         return value.includes(searchValue);
+      } else if (typeof value === "number") {
+        return value === Number(searchValue);
       }
       return false;
     });
