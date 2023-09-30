@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ExcelUploadPreparation from "./ExcelUploadPreparation";
 import UploadedExcelPreview from "./UploadedExcelPreview";
-import { MPDataType } from "./types";
+import { MPDataType } from "../types";
 
 interface ExcelUploaderProps {}
 

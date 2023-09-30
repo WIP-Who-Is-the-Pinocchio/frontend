@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler } from "react";
 import * as XLSX from "xlsx";
-import { MPDataType, MPDataKeys } from "./types";
+import { MPDataType, MPDataKeys } from "../types";
 import uploadIcon from "@assets/icon/upload.svg";
 
 interface ExcelUploadPreparationProps {
