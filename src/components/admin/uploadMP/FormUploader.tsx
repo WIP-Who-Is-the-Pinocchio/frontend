@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-
+import tooltipIcon from "@assets/icon/exclamation mark.svg";
 type FormValues = {
   firstName: string;
   lastName: string;
@@ -81,7 +81,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[24px]">
-      <h1 className="p-[20px] text-[20px] font-semibold text-left text-gray-900 bg-white">
+      <h1 className="px-[20px] text-[20px] font-semibold text-left text-gray-900 bg-white">
         기본정보
       </h1>
       <div className="flex justify-center gap-[30px] mb-[24px]">
@@ -102,7 +102,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
         <div className="">
           <div className="flex flex-col gap-[24px]">
             <div>
-              <h3 className="block mb-2 text-[14px] font-medium text-gray-90">이름</h3>
+              <h3 className=" mb-2 text-[14px] font-medium text-gray-90">이름</h3>
               <input
                 id="name"
                 className="w-[300px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
@@ -111,9 +111,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
               />
             </div>
             <div>
-              <h3 className="block mb-2 text-[14px] font-medium text-gray-900">
-                소속정당
-              </h3>
+              <h3 className=" mb-2 text-[14px] font-medium text-gray-900">소속정당</h3>
               <select
                 id="소속정당"
                 className="w-[300px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
@@ -143,10 +141,22 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
       <div>
         <div className="flex flex-col gap-[24px]">
           <div className="flex gap-[20px]">
-            <div className="flex flex-col justify-between flex-1">
-              <h3 className="block text-[14px] mb-2 font-medium text-gray-900 ">
-                상임위원회
-              </h3>
+            <div className="flex-1">
+              <div className="flex items-center gap-[5px] mb-2">
+                <h3 className=" text-[14px]  font-medium text-gray-900 ">상임위원회</h3>
+                <button className="group relative">
+                  <img src={tooltipIcon} alt="도움말" className="w-[12px]" />
+                  <span className="pointer-events-none p-[10px] text-[11px] text-left text-slate-500 group-hover:opacity-100 transition-opacity w-[240px] border bg-white absolute opacity-0 z-10">
+                    의장을 제외한 모든 의원은 하나의 상임위원회의 위원이 되며 다만
+                    의회운영위원회의 위원을 겸할 수 있다. 따라서 어느 상임위원도
+                    의회운영위원이 되는 경우를 제외하고는 다른 상임위원회의 의원이 되는
+                    일은 있을 수 없다. 다만 상임위원은 그 수에 제한없이 특별위원회의
+                    위원을 겸직할 수 있다.
+                    <br />
+                    -의회용어사전
+                  </span>
+                </button>
+              </div>
               <select
                 id="상임위원회"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
@@ -160,20 +170,24 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
               </select>
             </div>
             <div className="flex-1">
-              <h3 className="block text-[14px] mb-2 font-medium text-gray-900 ">
-                위원회 추가입력 (겸직위원의 경우)
+              <h3 className="flex items-center gap-[3px] text-[14px] mb-2 font-medium text-gray-900 ">
+                위원회 추가입력
+                <span className=" text-blue-400 h-full align-middle font-normal text-[12px]">
+                  (선택)
+                </span>
               </h3>
-              <div>
-                <input
-                  id="위원회겸직"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
-                />
-              </div>
+              <input
+                id="위원회겸직"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
+              />
+              <p className="mt-[4px] text-[11px] font-normal text-gray-500">
+                *겸직 위원의 경우에만 작성. 2개 이상은 띄어쓰기로 구분
+              </p>
             </div>
           </div>
           <div className="flex gap-[20px]">
-            <div className="flex flex-col justify-between flex-1">
-              <h3 className="block text-[14px] font-medium text-gray-900 ">지역구</h3>
+            <div className=" flex-1">
+              <h3 className=" text-[14px] font-medium text-gray-900 ">지역구</h3>
               <select
                 id="지역구"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
@@ -187,17 +201,19 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
               </select>
             </div>
             <div className="flex-1">
-              <h3 className="block text-[14px] font-medium text-gray-900 ">세부지역구</h3>
-
+              <h3 className=" text-[14px] font-medium text-gray-900 ">세부지역구</h3>
               <input
-                id="위원회겸직"
+                id="세부지역구"
                 placeholder="예) 안양시 동안구"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
               />
             </div>
-            <div className="flex flex-col justify-between flex-1">
-              <h3 className="block text-[14px] font-medium text-gray-900 ">
-                분구 <span className="text-blue-400 font-normal text-[12px]">(선택)</span>
+            <div className=" flex-1">
+              <h3 className="flex items-center gap-[3px] text-[14px] font-medium text-gray-900 ">
+                분구
+                <span className=" text-blue-400 h-full align-middle font-normal text-[12px]">
+                  (선택)
+                </span>
               </h3>
               <select
                 id="분구"
@@ -210,6 +226,9 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
                   </option>
                 ))}
               </select>
+              <p className="mt-[4px] text-[11px] font-normal text-gray-500">
+                *분구 지역인 경우에만 선택
+              </p>
             </div>
           </div>
         </div>
