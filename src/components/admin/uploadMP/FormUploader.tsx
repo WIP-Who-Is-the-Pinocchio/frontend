@@ -1,5 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import tooltipIcon from "@assets/icon/exclamation mark.svg";
+import React, { ChangeEventHandler, useState } from "react";
+
 type FormValues = {
   firstName: string;
   lastName: string;
@@ -76,8 +78,21 @@ const 재정현황항목리스트 = ["필요재정 총액", "확보재정 총액
 interface FormUploaderProps {}
 
 const FormUploader: React.FC<FormUploaderProps> = () => {
+  const [profileImage, setProfileImage] = useState<File>();
   const { register, handleSubmit } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+
+  const handleSetProfile: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      alert("이미지를 선택해주세요.");
+      return;
+    }
+    setProfileImage(file);
+  };
+  const handleDeleteProfile = () => {
+    setProfileImage(undefined);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[24px]">
@@ -87,42 +102,64 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
       <div className="flex justify-center gap-[30px] mb-[24px]">
         <div className="flex flex-col">
           <h3 className="block mb-2 text-[14px] font-medium text-gray-90">프로필 </h3>
-          <div className="w-[140px] h-full border">
-            <div></div>
+          <div className=" flex justify-center items-center w-[140px] h-full border bg-neutral-100">
+            {profileImage ? (
+              <img
+                src={URL.createObjectURL(profileImage)}
+                className=" object-cover w-full h-full"
+              />
+            ) : (
+              <p className="text-[12px] text-gray-400">프로필 이미지</p>
+            )}
           </div>
           <div className="flex justify-center gap-[5px]">
-            <button className="py-1.5 px-3 mt-[10px] text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
+            <label
+              htmlFor="profileInput"
+              className=" py-1.5 px-3 mt-[10px] text-sm font-medium text-gray-900 focus:outline-none bg-neutral-50 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
+            >
               등록
-            </button>
-            <button className="py-1.5 px-3 mt-[10px] text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
+            </label>
+            <input
+              id="profileInput"
+              type="file"
+              onChange={handleSetProfile}
+              accept="image/*"
+              className="hidden"
+            />
+            <button
+              className="py-1.5 px-3 mt-[10px] text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
+              onClick={handleDeleteProfile}
+            >
               삭제
             </button>
           </div>
         </div>
         <div className="">
-          <div className="flex flex-col gap-[24px]">
+          <div className="flex flex-col gap-[24px] w-[300px]">
             <div>
               <h3 className=" mb-2 text-[14px] font-medium text-gray-90">이름</h3>
               <input
                 id="name"
-                className="w-[300px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
+                className=" h-[43px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
                 placeholder="예) 홍길동"
                 required
               />
             </div>
             <div>
               <h3 className=" mb-2 text-[14px] font-medium text-gray-900">소속정당</h3>
-              <select
-                id="소속정당"
-                className="w-[300px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-              >
-                <option selected>선택해주세요.</option>
-                {정당리스트.map((정당) => (
-                  <option key={정당} value={정당}>
-                    {정당}
-                  </option>
-                ))}
-              </select>
+              <div className="border border-gray-300 rounded-lg bg-gray-50">
+                <select
+                  id="소속정당"
+                  className="border-r-[16px] border-transparent h-[43px] rounded-lg text-gray-900 text-sm block w-full p-2.5"
+                >
+                  <option selected>선택해주세요.</option>
+                  {정당리스트.map((정당) => (
+                    <option key={정당} value={정당}>
+                      {정당}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div>
               <h3 className="block mb-2 text-[14px] font-medium text-gray-900">
@@ -130,7 +167,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
               </h3>
               <input
                 id="당선횟수"
-                className="w-[300px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
+                className=" h-[43px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
                 placeholder="예) 1"
                 required
               />
@@ -146,7 +183,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
                 <h3 className=" text-[14px]  font-medium text-gray-900 ">상임위원회</h3>
                 <button className="group relative">
                   <img src={tooltipIcon} alt="도움말" className="w-[12px]" />
-                  <span className="pointer-events-none p-[10px] text-[11px] text-left text-slate-500 group-hover:opacity-100 transition-opacity w-[240px] border bg-white absolute opacity-0 z-10">
+                  <span className="pointer-events-none p-[10px] text-[11px] text-left text-slate-500 group-hover:opacity-100 transition-opacity w-[290px] border bg-white absolute opacity-0 z-10">
                     의장을 제외한 모든 의원은 하나의 상임위원회의 위원이 되며 다만
                     의회운영위원회의 위원을 겸할 수 있다. 따라서 어느 상임위원도
                     의회운영위원이 되는 경우를 제외하고는 다른 상임위원회의 의원이 되는
@@ -157,17 +194,19 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
                   </span>
                 </button>
               </div>
-              <select
-                id="상임위원회"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-              >
-                <option selected>선택해주세요.</option>
-                {상임위원회리스트.map((상임위원회) => (
-                  <option key={상임위원회} value={상임위원회}>
-                    {상임위원회}
-                  </option>
-                ))}
-              </select>
+              <div className="border border-gray-300 rounded-lg bg-gray-50">
+                <select
+                  id="상임위원회"
+                  className="border-r-[16px] border-transparent h-[43px] rounded-lg text-gray-900 text-sm block w-full p-2.5"
+                >
+                  <option selected>선택해주세요.</option>
+                  {상임위원회리스트.map((상임위원회) => (
+                    <option key={상임위원회} value={상임위원회}>
+                      {상임위원회}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div className="flex-1">
               <h3 className="flex items-center gap-[3px] text-[14px] mb-2 font-medium text-gray-900 ">
@@ -178,7 +217,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
               </h3>
               <input
                 id="위원회겸직"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
+                className="h-[43px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
               />
               <p className="mt-[4px] text-[11px] font-normal text-gray-500">
                 *겸직 위원의 경우에만 작성. 2개 이상은 띄어쓰기로 구분
@@ -188,24 +227,26 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           <div className="flex gap-[20px]">
             <div className=" flex-1">
               <h3 className=" text-[14px] font-medium text-gray-900 ">지역구</h3>
-              <select
-                id="지역구"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-              >
-                <option selected>선택해주세요.</option>
-                {지역구리스트.map((지역구) => (
-                  <option key={지역구} value={지역구}>
-                    {지역구}
-                  </option>
-                ))}
-              </select>
+              <div className="border border-gray-300 rounded-lg bg-gray-50">
+                <select
+                  id="지역구"
+                  className="border-r-[16px] border-transparent h-[43px] rounded-lg text-gray-900 text-sm block w-full p-2.5"
+                >
+                  <option selected>선택해주세요.</option>
+                  {지역구리스트.map((지역구) => (
+                    <option key={지역구} value={지역구}>
+                      {지역구}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div className="flex-1">
               <h3 className=" text-[14px] font-medium text-gray-900 ">세부지역구</h3>
               <input
                 id="세부지역구"
                 placeholder="예) 안양시 동안구"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
+                className="h-[43px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
               />
             </div>
             <div className=" flex-1">
@@ -215,17 +256,19 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
                   (선택)
                 </span>
               </h3>
-              <select
-                id="분구"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-              >
-                <option selected>선택해주세요.</option>
-                {분구리스트.map((분구) => (
-                  <option key={분구} value={분구}>
-                    {분구}
-                  </option>
-                ))}
-              </select>
+              <div className="border border-gray-300 rounded-lg bg-gray-50">
+                <select
+                  id="분구"
+                  className="border-r-[16px] border-transparent h-[43px] rounded-lg text-gray-900 text-sm block w-full p-2.5"
+                >
+                  <option selected>선택해주세요.</option>
+                  {분구리스트.map((분구) => (
+                    <option key={분구} value={분구}>
+                      {분구}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <p className="mt-[4px] text-[11px] font-normal text-gray-500">
                 *분구 지역인 경우에만 선택
               </p>
