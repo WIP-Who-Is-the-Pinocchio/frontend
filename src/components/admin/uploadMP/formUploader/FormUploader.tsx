@@ -8,7 +8,12 @@ import { formResource, Inputs, InputKeys } from "./formUploaderResource";
 interface FormUploaderProps {}
 
 const FormUploader: React.FC<FormUploaderProps> = () => {
-  const { handleSubmit, watch, register } = useForm<Inputs>();
+  const {
+    handleSubmit,
+    watch,
+    register,
+    formState: { errors },
+  } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
   console.log(watch());
   return (
@@ -20,25 +25,24 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
         <ImageSelector />
         <div className="flex flex-col gap-[24px] w-[300px]">
           <TextInputDiv
-            title="이름"
             id={InputKeys.이름}
             placeholder="예) 홍길동"
             required
             register={register}
+            errors={errors}
           />
           <SelectDiv
-            title="소속 정당"
             id={InputKeys.소속정당}
             optionList={formResource.정당리스트}
             required
             register={register}
           />
           <TextInputDiv
-            title="당선 횟수"
             id={InputKeys.당선횟수}
             placeholder="예) 1"
             required
             register={register}
+            errors={errors}
           />
         </div>
       </div>
@@ -46,7 +50,6 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
         <SelectDiv
           id={InputKeys.상임위원회}
           optionList={formResource.상임위원회리스트}
-          title="상임위원회"
           tooltip="의장을 제외한 모든 의원은 하나의 상임위원회의 위원이 되며 다만
                     의회운영위원회의 위원을 겸할 수 있다. 따라서 어느 상임위원도
                     의회운영위원이 되는 경우를 제외하고는 다른 상임위원회의 의원이 되는
@@ -56,28 +59,26 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           register={register}
         />
         <TextInputDiv
-          title="위원회 추가입력"
           id={InputKeys.추가상임위원회}
           caption="겸직 위원의 경우에만 작성. 2개 이상은 띄어쓰기로 구분"
           register={register}
+          errors={errors}
         />
       </div>
       <div className="flex gap-[20px]">
         <SelectDiv
-          title="지역구"
           id={InputKeys.지역구}
           optionList={formResource.지역구리스트}
           required
           register={register}
         />
         <TextInputDiv
-          title="세부 지역구"
           id={InputKeys.세부지역구}
           placeholder="예) 안양시 동안구"
           register={register}
+          errors={errors}
         />
         <SelectDiv
-          title="분구"
           id={InputKeys.분구}
           optionList={formResource.분구리스트}
           caption="분구 지역인 경우에만 선택"

@@ -4,7 +4,6 @@ import { UseFormRegister } from "react-hook-form";
 import { Inputs, InputKeys } from "./formUploaderResource";
 
 interface CustomSelectProps {
-  title: string;
   id: InputKeys;
   optionList: string[];
   required?: boolean | false;
@@ -14,7 +13,6 @@ interface CustomSelectProps {
 }
 
 const SelectDiv: React.FC<CustomSelectProps> = ({
-  title,
   required,
   tooltip,
   id,
@@ -25,7 +23,7 @@ const SelectDiv: React.FC<CustomSelectProps> = ({
   return (
     <div className="flex-1">
       <Title isOptional={!required} tooltip={tooltip}>
-        {title}
+        {id}
       </Title>
       <div className="border border-gray-300 rounded-lg bg-gray-50">
         <select
