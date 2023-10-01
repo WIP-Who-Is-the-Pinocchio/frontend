@@ -19,14 +19,14 @@ const SelectDiv: React.FC<CustomSelectProps> = ({
   caption,
 }) => {
   return (
-    <div className="flex-1 ">
+    <div className="flex-1">
       <Title isOptional={isOptional} tooltip={tooltip}>
         {title}
       </Title>
       <div className="border border-gray-300 rounded-lg bg-gray-50">
         <select
           id={id}
-          className="border-r-[16px] border-transparent h-[43px] rounded-lg text-gray-900 text-sm block w-full p-2.5"
+          className="block w-full h-[43px] p-[10px] border-r-[16px] border-transparent rounded-lg text-[12px] text-gray-900"
         >
           <option selected>선택해주세요.</option>
           {optionList.map((optionItem) => (

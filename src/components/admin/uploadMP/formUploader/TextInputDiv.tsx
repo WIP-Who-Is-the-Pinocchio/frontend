@@ -18,13 +18,13 @@ const TextInputDiv: React.FC<TextInputProps> = ({
   caption,
 }) => {
   return (
-    <div className="flex-1 ">
+    <div className="flex-1">
       <Title isOptional={isOptional} tooltip={tooltip}>
         {title}
       </Title>
       <input
         id={id}
-        className=" h-[44px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
+        className="block w-full h-[44px] p-[10px] border border-gray-300 rounded-lg bg-gray-50 text-[12px] text-gray-900"
         placeholder={placeholder}
         required
       />
