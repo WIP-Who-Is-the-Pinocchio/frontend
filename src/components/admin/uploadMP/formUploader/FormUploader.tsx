@@ -15,14 +15,14 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-  console.log(watch());
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[24px]">
       <h1 className="px-[20px] text-[20px] font-semibold text-left text-gray-900 bg-white">
         기본정보
       </h1>
       <div className="flex justify-center gap-[30px] mb-[24px]">
-        <ImageSelector />
+        <ImageSelector register={register} />
         <div className="flex flex-col gap-[24px] w-[300px]">
           <TextInputDiv
             id={InputKeys.이름}

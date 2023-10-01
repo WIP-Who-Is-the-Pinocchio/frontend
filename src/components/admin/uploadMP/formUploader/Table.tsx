@@ -46,7 +46,7 @@ const Table: React.FC<TableProps> = ({
               {thItem}
             </th>
             {theadList.map((thItem) => (
-              <td key={thItem} className="px-[24px] py-[16px] border">
+              <td key={thItem} className="px-[15px] py-[16px] border">
                 <div className="flex">
                   <input
                     {...register(thItem, { required: true })}
@@ -67,7 +67,7 @@ const Table: React.FC<TableProps> = ({
             비고
           </th>
           {Array.from({ length: theadList.length }).map((_, index) => (
-            <td key={"td" + index} className="px-[24px] py-[16px] border">
+            <td key={"td" + index} className="px-[15px] py-[16px] border">
               <input key={index} type="text" className="w-full outline-none" />
             </td>
           ))}

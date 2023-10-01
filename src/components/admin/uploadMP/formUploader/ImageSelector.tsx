@@ -1,9 +1,13 @@
 import React, { ChangeEventHandler, useState } from "react";
 import Title from "./Title";
+import { UseFormRegister } from "react-hook-form";
+import { Inputs, InputKeys } from "./formUploaderResource";
 
-interface ImageSelectorProps {}
+interface ImageSelectorProps {
+  register: UseFormRegister<Inputs>;
+}
 
-const ImageSelector: React.FC<ImageSelectorProps> = () => {
+const ImageSelector: React.FC<ImageSelectorProps> = ({ register }) => {
   const [profileImage, setProfileImage] = useState<File>();
   const handleSetProfile: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0];
@@ -20,14 +24,17 @@ const ImageSelector: React.FC<ImageSelectorProps> = () => {
   return (
     <div className="flex flex-col">
       <Title>프로필</Title>
-      <div className="flex justify-center items-center w-[150px] h-full border bg-neutral-100">
+      <div className="flex justify-center items-center w-[150px] h-[200px] border bg-neutral-100">
         {profileImage ? (
           <img
             src={URL.createObjectURL(profileImage)}
             className="object-cover w-full h-full"
           />
         ) : (
-          <p className="text-[12px] text-gray-400">프로필 이미지</p>
+          <p className="text-[12px] text-gray-400 text-center">
+            프로필 이미지를 <br />
+            등록해주세요.
+          </p>
         )}
       </div>
       <div className="flex justify-center gap-[5px]">
@@ -40,9 +47,11 @@ const ImageSelector: React.FC<ImageSelectorProps> = () => {
         <input
           id="profileInput"
           type="file"
-          onChange={handleSetProfile}
           accept="image/*"
           className="hidden"
+          {...register(InputKeys.프로필, {
+            onChange: (e) => handleSetProfile(e),
+          })}
         />
         <button
           className="py-[6px] px-[12px] mt-[10px] border border-gray-200 rounded-lg text-[12px] font-medium text-gray-900 bg-neutral-50 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
