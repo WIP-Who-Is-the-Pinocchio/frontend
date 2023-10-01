@@ -1,12 +1,23 @@
 import React from "react";
+import { UseFormRegister } from "react-hook-form";
+import { Inputs, InputKeys } from "./formUploaderResource";
+
 interface TableProps {
   title: string;
   subtitle?: string;
-  theadList: string[];
+  theadList: InputKeys[];
   tbodyList: string[];
   unit?: string;
+  register: UseFormRegister<Inputs>;
 }
-const Table: React.FC<TableProps> = ({ title, subtitle, theadList, tbodyList, unit }) => {
+const Table: React.FC<TableProps> = ({
+  title,
+  subtitle,
+  theadList,
+  tbodyList,
+  unit,
+  register,
+}) => {
   return (
     <table className="w-full border text-[12px] text-gray-500 shadow-md">
       <caption className="p-[20px] bg-white text-[20px] font-semibold text-left text-gray-900">
@@ -19,7 +30,7 @@ const Table: React.FC<TableProps> = ({ title, subtitle, theadList, tbodyList, un
         <tr className="border">
           <th className="border"></th>
           {theadList.map((thItem) => (
-            <th scope="col" className="px-[24px] py-[12px] border">
+            <th key={thItem} scope="col" className="px-[24px] py-[12px] border">
               {thItem}
             </th>
           ))}
@@ -27,17 +38,21 @@ const Table: React.FC<TableProps> = ({ title, subtitle, theadList, tbodyList, un
       </thead>
       <tbody>
         {tbodyList.map((thItem) => (
-          <tr className="bg-white border-b">
+          <tr key={thItem} className="bg-white border-b">
             <th
               scope="row"
               className="px-[24px] py-[16px] font-medium text-gray-900 whitespace-nowrap "
             >
               {thItem}
             </th>
-            {Array.from({ length: theadList.length }).map((_, index) => (
-              <td className="px-[24px] py-[16px] border">
+            {theadList.map((thItem) => (
+              <td key={thItem} className="px-[24px] py-[16px] border">
                 <div className="flex">
-                  <input key={index} type="text" className="w-full outline-none" />
+                  <input
+                    {...register(thItem, { required: true })}
+                    type="text"
+                    className="w-full outline-none"
+                  />
                   {unit && <span>{unit}</span>}
                 </div>
               </td>
@@ -52,7 +67,7 @@ const Table: React.FC<TableProps> = ({ title, subtitle, theadList, tbodyList, un
             비고
           </th>
           {Array.from({ length: theadList.length }).map((_, index) => (
-            <td className="px-[24px] py-[16px] border">
+            <td key={"td" + index} className="px-[24px] py-[16px] border">
               <input key={index} type="text" className="w-full outline-none" />
             </td>
           ))}
