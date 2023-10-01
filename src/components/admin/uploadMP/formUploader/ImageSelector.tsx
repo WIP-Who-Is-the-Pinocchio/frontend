@@ -1,13 +1,14 @@
 import React, { ChangeEventHandler, useState } from "react";
 import Title from "./Title";
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, UseFormResetField } from "react-hook-form";
 import { Inputs, InputKeys } from "./formUploaderResource";
 
 interface ImageSelectorProps {
   register: UseFormRegister<Inputs>;
+  resetField: UseFormResetField<Inputs>;
 }
 
-const ImageSelector: React.FC<ImageSelectorProps> = ({ register }) => {
+const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) => {
   const [profileImage, setProfileImage] = useState<File>();
   const handleSetProfile: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0];
@@ -19,6 +20,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ register }) => {
   };
   const handleDeleteProfile = () => {
     setProfileImage(undefined);
+    resetField("프로필");
   };
 
   return (
