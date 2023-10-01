@@ -8,7 +8,7 @@ interface TableProps {
 }
 const Table: React.FC<TableProps> = ({ title, subtitle, theadList, tbodyList, unit }) => {
   return (
-    <table className="w-full text-[12px] text-gray-500 border shadow-md">
+    <table className="text-[12px] w-full text-gray-500 border shadow-md">
       <caption className="p-[20px] text-[20px] font-semibold text-left text-gray-900 bg-white">
         {title}
         <p className="mt-[4px] text-[11px] font-normal text-gray-500 whitespace-pre-line">
