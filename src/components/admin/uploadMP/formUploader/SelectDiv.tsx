@@ -1,15 +1,15 @@
 import React from "react";
 import Title from "./Title";
 import { UseFormRegister } from "react-hook-form";
-import { Inputs, InputKeys } from "./formUploaderResource";
+import { valueTypes } from "./formUploaderResource";
 
 interface CustomSelectProps {
-  id: InputKeys;
+  id: keyof valueTypes;
   optionList: string[];
   required?: boolean | false;
   tooltip?: string;
   caption?: string;
-  register: UseFormRegister<Inputs>;
+  register: UseFormRegister<valueTypes>;
 }
 
 const SelectDiv: React.FC<CustomSelectProps> = ({

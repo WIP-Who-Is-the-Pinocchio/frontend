@@ -1,4 +1,4 @@
-export type Inputs = {
+export interface valueTypes {
   프로필: File;
   이름: string;
   지역구: string;
@@ -8,56 +8,33 @@ export type Inputs = {
   당선횟수: number;
   상임위원회: string;
   추가상임위원회: string[];
-  총공약수: number;
-  완료: number;
-  추진중: number;
-  보류: number;
-  폐기: number;
-  기타: number;
-  국정공약: number;
-  지역공약: number;
-  입법공약: number;
-  재정공약: number;
-  임기내: number;
-  임기후: number;
-  지속사업: number;
-  신규사업: number;
-  필요입법공약총수: number;
-  입법의결완료공약총수: number;
-  필요재정총액: number;
-  확보재정총액: number;
-  집행재정총액: number;
-};
-
-export enum InputKeys {
-  프로필 = "프로필",
-  이름 = "이름",
-  지역구 = "지역구",
-  세부지역구 = "세부지역구",
-  분구 = "분구",
-  소속정당 = "소속정당",
-  당선횟수 = "당선횟수",
-  상임위원회 = "상임위원회",
-  추가상임위원회 = "추가상임위원회",
-  총공약수 = "총공약수",
-  완료 = "완료",
-  추진중 = "추진중",
-  보류 = "보류",
-  폐기 = "폐기",
-  기타 = "기타",
-  국정공약 = "국정공약",
-  지역공약 = "지역공약",
-  입법공약 = "입법공약",
-  재정공약 = "재정공약",
-  임기내 = "임기내",
-  임기후 = "임기후",
-  지속사업 = "지속사업",
-  신규사업 = "신규사업",
-  필요입법공약총수 = "필요입법공약총수",
-  입법의결완료공약총수 = "입법의결완료공약총수",
-  필요재정총액 = "필요재정총액",
-  확보재정총액 = "확보재정총액",
-  집행재정총액 = "집행재정총액",
+  공약이행현황: {
+    총공약수: number;
+    완료: number;
+    추진중: number;
+    보류: number;
+    폐기: number;
+    기타: number;
+  };
+  성격내용별완료현황: {
+    국정공약: { 완료: number; 전체: number };
+    지역공약: { 완료: number; 전체: number };
+    입법공약: { 완료: number; 전체: number };
+    재정공약: { 완료: number; 전체: number };
+    임기내: { 완료: number; 전체: number };
+    임기후: { 완료: number; 전체: number };
+    지속사업: { 완료: number; 전체: number };
+    신규사업: { 완료: number; 전체: number };
+  };
+  입법현황: {
+    필요입법공약총수: number;
+    입법의결완료공약총수: number;
+  };
+  재정현황: {
+    필요재정총액: number;
+    확보재정총액: number;
+    집행재정총액: number;
+  };
 }
 
 export const formResource = {
@@ -110,48 +87,84 @@ export const formResource = {
     "제주",
   ],
   분구리스트: ["갑", "을", "병", "정", "무"],
-  공약이행현황: {
-    title: "공약 이행 현황",
+  공약이행현황: <ResourceType>{
+    title: "공약이행현황",
     subtitle:
       "총 공약수 = 완료 + 추진 중 + 보류 + 폐기 + 기타 공약 수 (합계가 일치해야 함)",
-    theadList: [
-      InputKeys.총공약수,
-      InputKeys.완료,
-      InputKeys.추진중,
-      InputKeys.보류,
-      InputKeys.폐기,
-      InputKeys.기타,
-    ],
+    theadList: ["총공약수", "완료", "추진중", "보류", "폐기", "기타"],
     tbodyList: ["공약수"],
+    registerField: [
+      "공약이행현황.총공약수",
+      "공약이행현황.완료",
+      "공약이행현황.추진중",
+      "공약이행현황.보류",
+      "공약이행현황.폐기",
+      "공약이행현황.기타",
+    ],
   },
-  성격내용별완료현황: {
-    title: "성격·내용별 공약 이행 완료 현황",
+  성격내용별완료현황: <ResourceType>{
+    title: "성격내용별완료현황",
     subtitle:
       "각 분류별로 완료 공약 수 및 전체 공약수를 기입 (완료 공약수 / 전체 공약수)",
     theadList: [
-      InputKeys.국정공약,
-      InputKeys.지역공약,
-      InputKeys.입법공약,
-      InputKeys.재정공약,
-      InputKeys.임기내,
-      InputKeys.임기후,
-      InputKeys.지속사업,
-      InputKeys.신규사업,
+      "국정공약",
+      "지역공약",
+      "입법공약",
+      "재정공약",
+      "임기내",
+      "임기후",
+      "지속사업",
+      "신규사업",
     ],
-    tbodyList: ["완료/전체"],
+    tbodyList: ["완료 / 전체"],
+    registerField: [
+      "성격내용별완료현황.국정공약",
+      "성격내용별완료현황.지역공약",
+      "성격내용별완료현황.입법공약",
+      "성격내용별완료현황.재정공약",
+      "성격내용별완료현황.임기내",
+      "성격내용별완료현황.임기후",
+      "성격내용별완료현황.지속사업",
+      "성격내용별완료현황.신규사업",
+    ],
   },
-  입법현황: {
-    title: "입법 현황",
+  입법현황: <ResourceType>{
+    title: "입법현황",
     subtitle:
       "필요입법 공약 총 수: 입법이 필요한 공약의 총 수,\n입법 의결 완료 공약 총 수: 입법을 모두 완료(의결)한 공약의 총 수",
-    theadList: [InputKeys.필요입법공약총수, InputKeys.입법의결완료공약총수],
+    theadList: ["필요입법공약총수", "입법의결완료공약총수"],
     tbodyList: ["공약수"],
+    registerField: ["입법현황.필요입법공약총수", "입법현황.입법의결완료공약총수"],
   },
-  재정현황: {
-    title: "재정 현황",
+  재정현황: <ResourceType>{
+    title: "재정현황",
     subtitle: "전체 공약의 재정 현황 합계",
-    theadList: [InputKeys.필요재정총액, InputKeys.확보재정총액, InputKeys.집행재정총액],
+    theadList: ["필요재정총액", "확보재정총액", "집행재정총액"],
     tbodyList: ["금액"],
     unit: "원",
+    registerField: [
+      "재정현황.필요재정총액",
+      "재정현황.확보재정총액",
+      "재정현황.집행재정총액",
+    ],
   },
 };
+
+export interface ResourceType {
+  title: keyof valueTypes;
+  subtitle: string;
+  theadList:
+    | (keyof valueTypes["입법현황"])[]
+    | (keyof valueTypes["성격내용별완료현황"])[]
+    | (keyof valueTypes["공약이행현황"])[]
+    | (keyof valueTypes["재정현황"])[];
+  tbodyList: string[];
+  unit: string;
+  registerField: registerFieldType[];
+}
+
+type registerFieldType =
+  | `공약이행현황.${keyof valueTypes["공약이행현황"]}`
+  | `성격내용별완료현황.${keyof valueTypes["성격내용별완료현황"]}`
+  | `입법현황.${keyof valueTypes["입법현황"]}`
+  | `재정현황.${keyof valueTypes["재정현황"]}`;

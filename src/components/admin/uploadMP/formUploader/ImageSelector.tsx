@@ -1,11 +1,11 @@
 import React, { ChangeEventHandler, useState } from "react";
 import Title from "./Title";
 import { UseFormRegister, UseFormResetField } from "react-hook-form";
-import { Inputs, InputKeys } from "./formUploaderResource";
+import { valueTypes } from "./formUploaderResource";
 
 interface ImageSelectorProps {
-  register: UseFormRegister<Inputs>;
-  resetField: UseFormResetField<Inputs>;
+  register: UseFormRegister<valueTypes>;
+  resetField: UseFormResetField<valueTypes>;
 }
 
 const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) => {
@@ -51,7 +51,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) =
           type="file"
           accept="image/*"
           className="hidden"
-          {...register(InputKeys.프로필, {
+          {...register("프로필", {
             onChange: (e) => handleSetProfile(e),
           })}
         />
