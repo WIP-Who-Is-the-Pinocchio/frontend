@@ -1,16 +1,18 @@
 import React from "react";
-import Title from "./Title";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
-import { valueTypes } from "./formUploaderResource";
+import { InputTypes } from "./formUploaderResource";
+import Title from "./Title";
+
 interface TextInputProps {
-  id: keyof valueTypes;
+  id: keyof InputTypes;
   placeholder?: string;
   required?: boolean;
   tooltip?: string;
   caption?: string;
-  register: UseFormRegister<valueTypes>;
-  errors: FieldErrors<valueTypes>;
+  register: UseFormRegister<InputTypes>;
+  errors: FieldErrors<InputTypes>;
 }
+
 const TextInputDiv: React.FC<TextInputProps> = ({
   id,
   placeholder,

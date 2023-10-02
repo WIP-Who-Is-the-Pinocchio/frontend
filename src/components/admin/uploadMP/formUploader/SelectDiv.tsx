@@ -1,22 +1,22 @@
 import React from "react";
-import Title from "./Title";
 import { UseFormRegister } from "react-hook-form";
-import { valueTypes } from "./formUploaderResource";
+import { InputTypes } from "./formUploaderResource";
+import Title from "./Title";
 
 interface CustomSelectProps {
-  id: keyof valueTypes;
+  id: keyof InputTypes;
   optionList: string[];
   required?: boolean | false;
   tooltip?: string;
   caption?: string;
-  register: UseFormRegister<valueTypes>;
+  register: UseFormRegister<InputTypes>;
 }
 
 const SelectDiv: React.FC<CustomSelectProps> = ({
-  required,
-  tooltip,
   id,
   optionList,
+  required,
+  tooltip,
   caption,
   register,
 }) => {
@@ -28,8 +28,8 @@ const SelectDiv: React.FC<CustomSelectProps> = ({
       <div className="border border-gray-300 rounded-lg bg-gray-50">
         <select
           id={id}
-          {...register(id, { required: required })}
           className="block w-full h-[43px] p-[10px] border-r-[16px] border-transparent rounded-lg text-[12px] text-gray-900"
+          {...register(id, { required: required })}
         >
           <option value={""}>선택해주세요.</option>
           {optionList.map((optionItem) => (

@@ -1,15 +1,16 @@
 import React, { ChangeEventHandler, useState } from "react";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
-import { valueTypes, ResourceType } from "./formUploaderResource";
+import { UseFormRegister } from "react-hook-form";
+import { InputTypes, TableType } from "./formUploaderResource";
 
 interface TableProps {
-  tableResource: ResourceType;
-  register: UseFormRegister<valueTypes>;
+  tableResource: TableType;
+  register: UseFormRegister<InputTypes>;
 }
 const Table: React.FC<TableProps> = ({ tableResource, register }) => {
   const [tableErrorMessage, setTableErrorMessage] = useState("");
-  const { title, subtitle, theadList, tbodyList, unit, registerField } = tableResource;
+  const { title, subtitle, theadList, tbody, unit, registerName } = tableResource;
 
+  //테이블 input error를 하나의 state로 관리하는 핸들러입니다.
   const handleCheckError: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
     if (isNaN(Number(value))) {
@@ -39,49 +40,22 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
           </tr>
         </thead>
         <tbody>
-          {tbodyList.map((thItem) => (
-            <tr key={thItem} className="bg-white border-b">
-              <th
-                scope="row"
-                className="px-[24px] py-[16px] font-medium text-gray-900 whitespace-nowrap "
-              >
-                {thItem}
-              </th>
-              {registerField.map((fieldName) => {
-                return (
-                  <td key={fieldName} className="px-[15px] py-[16px] border">
-                    <div className="flex">
-                      {title === "성격내용별완료현황" ? (
-                        <div className="flex">
-                          <input
-                            {...register(`${fieldName}.완료` as keyof valueTypes, {
-                              required: true,
-                              pattern: {
-                                value: /^[0-9.]*$/,
-                                message: "입력 형식이 올바르지 않습니다.",
-                              },
-                              onChange: (e) => handleCheckError(e),
-                            })}
-                            type="text"
-                            className="w-full pr-[5px] outline-none"
-                          />
-                          <span>/</span>
-                          <input
-                            {...register(`${fieldName}.전체` as keyof valueTypes, {
-                              required: true,
-                              pattern: {
-                                value: /^[0-9.]*$/,
-                                message: "입력 형식이 올바르지 않습니다.",
-                              },
-                              onChange: (e) => handleCheckError(e),
-                            })}
-                            type="text"
-                            className="w-full pl-[5px] outline-none"
-                          />
-                        </div>
-                      ) : (
+          <tr className="bg-white border-b">
+            <th
+              scope="row"
+              className="px-[24px] py-[16px] font-medium text-gray-900 whitespace-nowrap "
+            >
+              {tbody}
+            </th>
+            {registerName.map((name) => {
+              const doubleInput = tbody === "완료 / 전체";
+              return (
+                <td key={name} className="px-[15px] py-[16px] border">
+                  <div className="flex">
+                    {doubleInput ? (
+                      <div className="flex">
                         <input
-                          {...register(fieldName, {
+                          {...register(`${name}.완료` as keyof InputTypes, {
                             required: true,
                             pattern: {
                               value: /^[0-9.]*$/,
@@ -92,14 +66,40 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
                           type="text"
                           className="w-full outline-none"
                         />
-                      )}
-                      {unit && <span>{unit}</span>}
-                    </div>
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
+                        <span className="px-[5px]">/</span>
+                        <input
+                          {...register(`${name}.전체` as keyof InputTypes, {
+                            required: true,
+                            pattern: {
+                              value: /^[0-9.]*$/,
+                              message: "입력 형식이 올바르지 않습니다.",
+                            },
+                            onChange: (e) => handleCheckError(e),
+                          })}
+                          type="text"
+                          className="w-full outline-none"
+                        />
+                      </div>
+                    ) : (
+                      <input
+                        {...register(name, {
+                          required: true,
+                          pattern: {
+                            value: /^[0-9.]*$/,
+                            message: "입력 형식이 올바르지 않습니다.",
+                          },
+                          onChange: (e) => handleCheckError(e),
+                        })}
+                        type="text"
+                        className="w-full outline-none"
+                      />
+                    )}
+                    {unit && <span>{unit}</span>}
+                  </div>
+                </td>
+              );
+            })}
+          </tr>
           <tr className="bg-white border-b">
             <th
               scope="row"

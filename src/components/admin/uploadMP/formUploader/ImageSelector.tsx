@@ -1,15 +1,16 @@
 import React, { ChangeEventHandler, useState } from "react";
-import Title from "./Title";
 import { UseFormRegister, UseFormResetField } from "react-hook-form";
-import { valueTypes } from "./formUploaderResource";
+import { InputTypes } from "./formUploaderResource";
+import Title from "./Title";
 
 interface ImageSelectorProps {
-  register: UseFormRegister<valueTypes>;
-  resetField: UseFormResetField<valueTypes>;
+  register: UseFormRegister<InputTypes>;
+  resetField: UseFormResetField<InputTypes>;
 }
 
 const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) => {
   const [profileImage, setProfileImage] = useState<File>();
+
   const handleSetProfile: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0];
     if (!file) {
@@ -18,6 +19,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) =
     }
     setProfileImage(file);
   };
+
   const handleDeleteProfile = () => {
     setProfileImage(undefined);
     resetField("프로필");
@@ -34,7 +36,8 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) =
           />
         ) : (
           <p className="text-[12px] text-gray-400 text-center">
-            프로필 이미지를 <br />
+            프로필 이미지를
+            <br />
             등록해주세요.
           </p>
         )}

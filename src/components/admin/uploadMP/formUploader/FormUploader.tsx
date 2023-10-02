@@ -1,9 +1,9 @@
 import { useForm, SubmitHandler } from "react-hook-form";
+import { formResource, InputTypes } from "./formUploaderResource";
 import ImageSelector from "./ImageSelector";
 import SelectDiv from "./SelectDiv";
 import TextInputDiv from "./TextInputDiv";
 import Table from "./Table";
-import { formResource, valueTypes } from "./formUploaderResource";
 
 interface FormUploaderProps {}
 
@@ -14,10 +14,9 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     register,
     formState: { errors },
     resetField,
-  } = useForm<valueTypes>();
-  const onSubmit: SubmitHandler<valueTypes> = (data) => console.log(data);
+  } = useForm<InputTypes>();
+  const onSubmit: SubmitHandler<InputTypes> = (data) => console.log(data);
 
-  console.log(watch());
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[24px]">
       <h1 className="px-[20px] text-[20px] font-semibold text-left text-gray-900 bg-white">
