@@ -14,7 +14,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     register,
     formState: { errors },
     resetField,
-  } = useForm<InputTypes>();
+  } = useForm<InputTypes>({ mode: "onChange" }); //실시간 validation을 위해 onChange 모드 설정
   const onSubmit: SubmitHandler<InputTypes> = (data) => console.log(data);
   console.log(watch());
   return (
@@ -38,6 +38,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
             optionList={formResource.정당리스트}
             required
             register={register}
+            errors={errors}
           />
           <TextInputDiv
             id="당선횟수"
@@ -60,6 +61,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
                     위원을 겸직할 수 있다. -의회용어사전"
           required
           register={register}
+          errors={errors}
         />
         <TextInputDiv
           id="추가상임위원회"
@@ -74,6 +76,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           optionList={formResource.지역구리스트}
           required
           register={register}
+          errors={errors}
         />
         <TextInputDiv
           id="세부지역구"
@@ -86,14 +89,18 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           optionList={formResource.분구리스트}
           caption="분구 지역인 경우에만 선택"
           register={register}
+          errors={errors}
         />
       </div>
       <Table tableResource={formResource.공약이행현황} register={register} />
       <Table tableResource={formResource.성격내용별완료현황} register={register} />
       <Table tableResource={formResource.입법현황} register={register} />
       <Table tableResource={formResource.재정현황} register={register} />
-      <div>
-        <input type="submit" />
+      <div className="flex items-center justify-center">
+        <input
+          className="flex justify-center items-center w-[80px] px-[12px] py-[8px] rounded-lg bg-purple-400 text-[13px] text-white font-medium focus:outline-none hover:bg-gray-300 focus:ring-1 focus:ring-gray-200"
+          type="submit"
+        />
       </div>
     </form>
   );

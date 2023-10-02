@@ -27,7 +27,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) =
 
   return (
     <div className="flex flex-col">
-      <Title>프로필</Title>
+      <Title isOptional={true}>프로필</Title>
       <div className="flex justify-center items-center w-[150px] h-[200px] border bg-neutral-100">
         {profileImage ? (
           <img

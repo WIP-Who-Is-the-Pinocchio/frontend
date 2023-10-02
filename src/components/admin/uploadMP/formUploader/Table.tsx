@@ -56,7 +56,7 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
                       <div className="flex">
                         <input
                           type="text"
-                          className="w-full outline-none"
+                          className="w-full text-center outline-none"
                           {...register(`${name}.done` as keyof InputTypes, {
                             required: true,
                             pattern: {
@@ -69,7 +69,7 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
                         <span className="px-[5px]">/</span>
                         <input
                           type="text"
-                          className="w-full outline-none"
+                          className="w-full text-center outline-none"
                           {...register(`${name}.total` as keyof InputTypes, {
                             required: true,
                             pattern: {

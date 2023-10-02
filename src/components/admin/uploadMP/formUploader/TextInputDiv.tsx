@@ -1,4 +1,5 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
 import { InputTypes } from "./formUploaderResource";
 import Title from "./Title";
@@ -31,10 +32,13 @@ const TextInputDiv: React.FC<TextInputProps> = ({
       </Title>
       <input
         id={id}
-        className="block w-full h-[44px] p-[10px] border border-gray-300 rounded-lg bg-gray-50 text-[12px] text-gray-900"
+        className={twMerge(
+          "block w-full h-[44px] p-[10px] border border-gray-300 rounded-lg bg-gray-50 text-[12px] text-gray-900 outline-none",
+          errors[id] && "border-red-400",
+        )}
         placeholder={placeholder}
         {...register(id, {
-          required: required,
+          required: required && "필수 입력란을 작성해주세요.",
           pattern: {
             value: validationRule || /.*/,
             message: "입력 형식이 올바르지 않습니다.",

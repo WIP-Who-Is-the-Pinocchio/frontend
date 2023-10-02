@@ -11,10 +11,12 @@ const Title: React.FC<InputTitleProps> = ({ isOptional, children, tooltip }) => 
   return (
     <h3 className="flex items-center gap-[3px] mb-[8px] text-[14px] font-medium text-gray-900 ">
       {children}
-      {isOptional && (
+      {isOptional ? (
         <span className=" text-blue-400 h-full align-middle font-normal text-[12px]">
           (선택)
         </span>
+      ) : (
+        <span className="text-red-500 ">*</span>
       )}
       {tooltip && (
         <button className="group relative ml-[3px]">
