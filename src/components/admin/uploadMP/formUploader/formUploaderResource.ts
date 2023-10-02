@@ -10,31 +10,64 @@ export interface InputTypes {
   상임위원회: string;
   추가상임위원회: string[];
   공약이행현황: {
-    총공약수: number;
-    완료: number;
-    추진중: number;
-    보류: number;
-    폐기: number;
-    기타: number;
+    총공약수: {
+      value: number;
+      notes: string;
+    };
+    완료: {
+      value: number;
+      notes: string;
+    };
+    추진중: {
+      value: number;
+      notes: string;
+    };
+    보류: {
+      value: number;
+      notes: string;
+    };
+    폐기: {
+      value: number;
+      notes: string;
+    };
+    기타: {
+      value: number;
+      notes: string;
+    };
   };
   성격내용별완료현황: {
-    국정공약: { 완료: number; 전체: number };
-    지역공약: { 완료: number; 전체: number };
-    입법공약: { 완료: number; 전체: number };
-    재정공약: { 완료: number; 전체: number };
-    임기내: { 완료: number; 전체: number };
-    임기후: { 완료: number; 전체: number };
-    지속사업: { 완료: number; 전체: number };
-    신규사업: { 완료: number; 전체: number };
+    국정공약: { done: number; total: number; notes: string };
+    지역공약: { done: number; total: number; notes: string };
+    입법공약: { done: number; total: number; notes: string };
+    재정공약: { done: number; total: number; notes: string };
+    임기내: { done: number; total: number; notes: string };
+    임기후: { done: number; total: number; notes: string };
+    지속사업: { done: number; total: number; notes: string };
+    신규사업: { done: number; total: number; notes: string };
   };
   입법현황: {
-    필요입법공약총수: number;
-    입법의결완료공약총수: number;
+    필요입법공약총수: {
+      value: number;
+      notes: string;
+    };
+    입법의결완료공약총수: {
+      value: number;
+      notes: string;
+    };
   };
   재정현황: {
-    필요재정총액: number;
-    확보재정총액: number;
-    집행재정총액: number;
+    필요재정총액: {
+      value: number;
+      notes: string;
+    };
+    확보재정총액: {
+      value: number;
+      notes: string;
+    };
+    집행재정총액: {
+      value: number;
+      notes: string;
+    };
   };
 }
 

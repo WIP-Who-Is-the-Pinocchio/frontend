@@ -55,7 +55,9 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
                     {doubleInput ? (
                       <div className="flex">
                         <input
-                          {...register(`${name}.완료` as keyof InputTypes, {
+                          type="text"
+                          className="w-full outline-none"
+                          {...register(`${name}.done` as keyof InputTypes, {
                             required: true,
                             pattern: {
                               value: /^[0-9.]*$/,
@@ -63,12 +65,12 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
                             },
                             onChange: (e) => handleCheckError(e),
                           })}
-                          type="text"
-                          className="w-full outline-none"
                         />
                         <span className="px-[5px]">/</span>
                         <input
-                          {...register(`${name}.전체` as keyof InputTypes, {
+                          type="text"
+                          className="w-full outline-none"
+                          {...register(`${name}.total` as keyof InputTypes, {
                             required: true,
                             pattern: {
                               value: /^[0-9.]*$/,
@@ -76,13 +78,13 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
                             },
                             onChange: (e) => handleCheckError(e),
                           })}
-                          type="text"
-                          className="w-full outline-none"
                         />
                       </div>
                     ) : (
                       <input
-                        {...register(name, {
+                        type="text"
+                        className="w-full outline-none"
+                        {...register(`${name}.value` as keyof InputTypes, {
                           required: true,
                           pattern: {
                             value: /^[0-9.]*$/,
@@ -90,8 +92,6 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
                           },
                           onChange: (e) => handleCheckError(e),
                         })}
-                        type="text"
-                        className="w-full outline-none"
                       />
                     )}
                     {unit && <span>{unit}</span>}
@@ -107,9 +107,13 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
             >
               비고
             </th>
-            {Array.from({ length: theadList.length }).map((_, index) => (
-              <td key={"td" + index} className="px-[15px] py-[16px] border">
-                <input key={index} type="text" className="w-full outline-none" />
+            {registerName.map((name) => (
+              <td key={name} className="px-[15px] py-[16px] border">
+                <input
+                  type="text"
+                  className="w-full outline-none"
+                  {...register(`${name}.notes` as keyof InputTypes)}
+                />
               </td>
             ))}
           </tr>
