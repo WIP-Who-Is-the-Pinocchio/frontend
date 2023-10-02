@@ -11,6 +11,7 @@ interface TextInputProps {
   caption?: string;
   register: UseFormRegister<InputTypes>;
   errors: FieldErrors<InputTypes>;
+  validationRule?: RegExp;
 }
 
 const TextInputDiv: React.FC<TextInputProps> = ({
@@ -21,6 +22,7 @@ const TextInputDiv: React.FC<TextInputProps> = ({
   caption,
   register,
   errors,
+  validationRule,
 }) => {
   return (
     <div className="flex-1">
@@ -34,7 +36,7 @@ const TextInputDiv: React.FC<TextInputProps> = ({
         {...register(id, {
           required: required,
           pattern: {
-            value: id === "당선횟수" ? /^\d+$/ : /^[ㄱ-ㅎㅏ-ㅣ가-힣\s]*$/,
+            value: validationRule || /.*/,
             message: "입력 형식이 올바르지 않습니다.",
           },
         })}

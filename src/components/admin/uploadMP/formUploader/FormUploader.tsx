@@ -16,7 +16,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     resetField,
   } = useForm<InputTypes>();
   const onSubmit: SubmitHandler<InputTypes> = (data) => console.log(data);
-
+  console.log(watch());
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[24px]">
       <h1 className="px-[20px] text-[20px] font-semibold text-left text-gray-900 bg-white">
@@ -31,6 +31,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
             required
             register={register}
             errors={errors}
+            validationRule={/^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z]*$/}
           />
           <SelectDiv
             id="소속정당"
@@ -44,6 +45,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
             required
             register={register}
             errors={errors}
+            validationRule={/^\d+$/}
           />
         </div>
       </div>
