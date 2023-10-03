@@ -8,21 +8,16 @@ import Table from "./Table";
 interface FormUploaderProps {}
 
 const FormUploader: React.FC<FormUploaderProps> = () => {
-  const {
-    handleSubmit,
-    watch,
-    register,
-    formState: { errors },
-    resetField,
-  } = useForm<InputTypes>({ mode: "onChange" }); //실시간 validation을 위해 onChange 모드 설정
+  const { handleSubmit, watch, register, formState, resetField } = useForm<InputTypes>({
+    mode: "onChange", //실시간 validation을 위해 onChange 모드 설정
+  });
+  const { errors } = formState;
 
   const onSubmit: SubmitHandler<InputTypes> = (data) => {
     //미리보기 검사용
-    alert(JSON.stringify(data, null, 2));
+    alert(`제출! ${JSON.stringify(data, null, 2)}`);
     console.log(data);
   };
-
-  console.log(watch());
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[24px]">
@@ -101,10 +96,26 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           errors={errors}
         />
       </div>
-      <Table tableResource={formResource.공약이행현황} register={register} />
-      <Table tableResource={formResource.성격내용별완료현황} register={register} />
-      <Table tableResource={formResource.입법현황} register={register} />
-      <Table tableResource={formResource.재정현황} register={register} />
+      <Table
+        tableResource={formResource.공약이행현황}
+        register={register}
+        formState={formState}
+      />
+      <Table
+        tableResource={formResource.성격내용별완료현황}
+        register={register}
+        formState={formState}
+      />
+      <Table
+        tableResource={formResource.입법현황}
+        register={register}
+        formState={formState}
+      />
+      <Table
+        tableResource={formResource.재정현황}
+        register={register}
+        formState={formState}
+      />
       <div className="flex items-center justify-center">
         <input
           className="flex justify-center items-center w-[80px] px-[12px] py-[8px] rounded-lg bg-purple-400 text-[13px] text-white font-medium focus:outline-none hover:bg-gray-300 focus:ring-1 focus:ring-gray-200"

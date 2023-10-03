@@ -23,7 +23,6 @@ const TableInput: React.FC<TableInputProps> = ({
     if (type === "number" && value !== "") {
       return parseFloat(value);
     }
-
     return value;
   };
 

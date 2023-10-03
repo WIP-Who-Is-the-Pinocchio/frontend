@@ -1,16 +1,32 @@
-import React, { ChangeEventHandler, useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import React, { ChangeEventHandler, useEffect, useState } from "react";
+import { UseFormRegister, FormState } from "react-hook-form";
 import { InputTypes, TableType } from "./formUploaderResource";
 import TableInput from "./TableInput";
 
 interface TableProps {
   tableResource: TableType;
   register: UseFormRegister<InputTypes>;
+  formState: FormState<InputTypes>;
 }
-const Table: React.FC<TableProps> = ({ tableResource, register }) => {
+
+const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => {
   const [tableErrorMessage, setTableErrorMessage] = useState("");
   const { title, subtitle, theadList, tbody, unit, registerName, required } =
     tableResource;
+  const { errors } = formState;
+
+  //테이블 전체의 에러를 하나의 state로 관리
+  useEffect(() => {
+    for (let name of registerName) {
+      const tableName = name.split(".")[0];
+      const error = errors[tableName as keyof InputTypes];
+      if (error) {
+        setTableErrorMessage("필수 입력란을 작성해주세요.");
+        break;
+      }
+      setTableErrorMessage("");
+    }
+  }, [formState]);
 
   return (
     <div>
@@ -38,7 +54,7 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
               className="px-[24px] py-[16px] font-medium text-gray-900 whitespace-nowrap "
             >
               {tbody}
-              <span className="text-red-500 pl-[3px]">*</span>
+              {required && <span className="text-red-500 pl-[3px]">*</span>}
             </th>
             {registerName.map((name) => {
               const doubleInput = tbody === "완료 / 전체";
