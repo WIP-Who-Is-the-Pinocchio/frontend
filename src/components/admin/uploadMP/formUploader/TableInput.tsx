@@ -1,6 +1,6 @@
 import React from "react";
 import { UseFormRegister } from "react-hook-form";
-import { InputTypes } from "./formUploaderResource";
+import { InputTypes } from "../types";
 import { twMerge } from "tailwind-merge";
 
 interface TableInputProps {

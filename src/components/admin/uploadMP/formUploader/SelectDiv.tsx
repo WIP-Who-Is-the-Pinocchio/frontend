@@ -1,7 +1,7 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
-import { InputTypes } from "./formUploaderResource";
+import { InputTypes } from "../types";
 import Title from "./Title";
 
 interface CustomSelectProps {

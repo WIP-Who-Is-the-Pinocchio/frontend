@@ -1,6 +1,6 @@
-import React, { ChangeEventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UseFormRegister, FormState } from "react-hook-form";
-import { InputTypes, TableType } from "./formUploaderResource";
+import { InputTypes, TableType } from "../types";
 import TableInput from "./TableInput";
 
 interface TableProps {

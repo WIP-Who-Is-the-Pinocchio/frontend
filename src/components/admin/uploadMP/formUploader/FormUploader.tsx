@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { formResource, InputTypes } from "./formUploaderResource";
+import { formResource, InputTypes } from "../types";
 import ImageSelector from "./ImageSelector";
 import SelectDiv from "./SelectDiv";
 import TextInputDiv from "./TextInputDiv";
@@ -20,14 +20,16 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[24px]">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-[24px] lg:gap-[40px]"
+    >
       <h1 className="px-[20px] text-[20px] font-semibold text-left text-gray-900 bg-white">
         기본정보
       </h1>
-      <input type="number" />
-      <div className="flex justify-center gap-[30px] mb-[24px]">
+      <div className="flex justify-center gap-[70px] mb-[24px]">
         <ImageSelector register={register} resetField={resetField} />
-        <div className="flex flex-col gap-[24px] w-[300px]">
+        <div className="flex flex-col gap-[24px] w-[500px]">
           <TextInputDiv
             id="이름"
             placeholder="예) 홍길동"
@@ -54,7 +56,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           />
         </div>
       </div>
-      <div className="flex gap-[20px]">
+      <div className="flex gap-[20px] ">
         <SelectDiv
           id="상임위원회"
           optionList={formResource.상임위원회리스트}

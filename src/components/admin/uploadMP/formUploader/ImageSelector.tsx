@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, useState } from "react";
 import { UseFormRegister, UseFormResetField } from "react-hook-form";
-import { InputTypes } from "./formUploaderResource";
+import { InputTypes } from "../types";
 import Title from "./Title";
 
 interface ImageSelectorProps {
