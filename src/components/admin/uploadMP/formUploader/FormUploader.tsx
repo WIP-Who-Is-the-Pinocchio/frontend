@@ -15,13 +15,21 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     formState: { errors },
     resetField,
   } = useForm<InputTypes>({ mode: "onChange" }); //실시간 validation을 위해 onChange 모드 설정
-  const onSubmit: SubmitHandler<InputTypes> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<InputTypes> = (data) => {
+    //미리보기 검사용
+    alert(JSON.stringify(data, null, 2));
+    console.log(data);
+  };
+
   console.log(watch());
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[24px]">
       <h1 className="px-[20px] text-[20px] font-semibold text-left text-gray-900 bg-white">
         기본정보
       </h1>
+      <input type="number" />
       <div className="flex justify-center gap-[30px] mb-[24px]">
         <ImageSelector register={register} resetField={resetField} />
         <div className="flex flex-col gap-[24px] w-[300px]">
@@ -42,6 +50,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           />
           <TextInputDiv
             id="당선횟수"
+            type="number"
             placeholder="예) 1"
             required
             register={register}

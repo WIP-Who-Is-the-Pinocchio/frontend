@@ -6,6 +6,7 @@ import Title from "./Title";
 
 interface TextInputProps {
   id: keyof InputTypes;
+  type?: string;
   placeholder?: string;
   required?: boolean;
   tooltip?: string;
@@ -17,6 +18,7 @@ interface TextInputProps {
 
 const TextInputDiv: React.FC<TextInputProps> = ({
   id,
+  type = "string",
   placeholder,
   required,
   tooltip,
@@ -25,6 +27,14 @@ const TextInputDiv: React.FC<TextInputProps> = ({
   errors,
   validationRule,
 }) => {
+  const handleSetValue = (value: string, type: string) => {
+    if (type === "number") {
+      return parseFloat(value);
+    }
+
+    return value;
+  };
+
   return (
     <div className="flex-1">
       <Title isOptional={!required} tooltip={tooltip}>
@@ -32,6 +42,7 @@ const TextInputDiv: React.FC<TextInputProps> = ({
       </Title>
       <input
         id={id}
+        type={type}
         className={twMerge(
           "block w-full h-[44px] p-[10px] border border-gray-300 rounded-lg bg-gray-50 text-[12px] text-gray-900 outline-none",
           errors[id] && "border-red-400",
@@ -43,6 +54,7 @@ const TextInputDiv: React.FC<TextInputProps> = ({
             value: validationRule || /.*/,
             message: "입력 형식이 올바르지 않습니다.",
           },
+          setValueAs: (value) => handleSetValue(value, type),
         })}
       />
       {caption && (

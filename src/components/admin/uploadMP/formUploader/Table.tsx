@@ -1,6 +1,7 @@
 import React, { ChangeEventHandler, useState } from "react";
 import { UseFormRegister } from "react-hook-form";
 import { InputTypes, TableType } from "./formUploaderResource";
+import TableInput from "./TableInput";
 
 interface TableProps {
   tableResource: TableType;
@@ -8,17 +9,8 @@ interface TableProps {
 }
 const Table: React.FC<TableProps> = ({ tableResource, register }) => {
   const [tableErrorMessage, setTableErrorMessage] = useState("");
-  const { title, subtitle, theadList, tbody, unit, registerName } = tableResource;
-
-  //테이블 input error를 하나의 state로 관리하는 핸들러입니다.
-  const handleCheckError: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = e.target.value;
-    if (isNaN(Number(value))) {
-      setTableErrorMessage("숫자만 입력 가능합니다.");
-      return;
-    }
-    setTableErrorMessage("");
-  };
+  const { title, subtitle, theadList, tbody, unit, registerName, required } =
+    tableResource;
 
   return (
     <div>
@@ -46,6 +38,7 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
               className="px-[24px] py-[16px] font-medium text-gray-900 whitespace-nowrap "
             >
               {tbody}
+              <span className="text-red-500 pl-[3px]">*</span>
             </th>
             {registerName.map((name) => {
               const doubleInput = tbody === "완료 / 전체";
@@ -54,44 +47,28 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
                   <div className="flex">
                     {doubleInput ? (
                       <div className="flex">
-                        <input
-                          type="text"
-                          className="w-full text-center outline-none"
-                          {...register(`${name}.done` as keyof InputTypes, {
-                            required: true,
-                            pattern: {
-                              value: /^[0-9.]*$/,
-                              message: "입력 형식이 올바르지 않습니다.",
-                            },
-                            onChange: (e) => handleCheckError(e),
-                          })}
+                        <TableInput
+                          registerName={`${name}.done`}
+                          className="number-spinner-hide"
+                          required={required}
+                          register={register}
+                          type="number"
                         />
                         <span className="px-[5px]">/</span>
-                        <input
-                          type="text"
-                          className="w-full text-center outline-none"
-                          {...register(`${name}.total` as keyof InputTypes, {
-                            required: true,
-                            pattern: {
-                              value: /^[0-9.]*$/,
-                              message: "입력 형식이 올바르지 않습니다.",
-                            },
-                            onChange: (e) => handleCheckError(e),
-                          })}
+                        <TableInput
+                          registerName={`${name}.total`}
+                          className="number-spinner-hide"
+                          required={required}
+                          register={register}
+                          type="number"
                         />
                       </div>
                     ) : (
-                      <input
-                        type="text"
-                        className="w-full outline-none"
-                        {...register(`${name}.value` as keyof InputTypes, {
-                          required: true,
-                          pattern: {
-                            value: /^[0-9.]*$/,
-                            message: "입력 형식이 올바르지 않습니다.",
-                          },
-                          onChange: (e) => handleCheckError(e),
-                        })}
+                      <TableInput
+                        registerName={`${name}.value`}
+                        required={required}
+                        register={register}
+                        type="number"
                       />
                     )}
                     {unit && <span>{unit}</span>}
@@ -109,11 +86,7 @@ const Table: React.FC<TableProps> = ({ tableResource, register }) => {
             </th>
             {registerName.map((name) => (
               <td key={name} className="px-[15px] py-[16px] border">
-                <input
-                  type="text"
-                  className="w-full outline-none"
-                  {...register(`${name}.notes` as keyof InputTypes)}
-                />
+                <TableInput registerName={`${name}.notes`} register={register} />
               </td>
             ))}
           </tr>

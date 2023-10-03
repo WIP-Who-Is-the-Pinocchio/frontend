@@ -73,7 +73,7 @@ export interface InputTypes {
 
 //form 내부 table에 들어갈 자료 type입니다.
 export interface TableType {
-  title: keyof InputTypes;
+  title: string;
   subtitle: string;
   theadList:
     | (keyof InputTypes["입법현황"])[]
@@ -83,6 +83,7 @@ export interface TableType {
   tbody: string;
   unit: string;
   registerName: registerNameType[];
+  required: boolean;
 }
 
 type registerNameType =
@@ -143,7 +144,7 @@ export const formResource = {
   ],
   분구리스트: ["갑", "을", "병", "정", "무"],
   공약이행현황: <TableType>{
-    title: "공약이행현황",
+    title: "공약 이행 현황",
     subtitle:
       "총 공약수 = 완료 + 추진 중 + 보류 + 폐기 + 기타 공약 수 (합계가 일치해야 함)",
     theadList: ["총공약수", "완료", "추진중", "보류", "폐기", "기타"],
@@ -156,9 +157,10 @@ export const formResource = {
       "공약이행현황.폐기",
       "공약이행현황.기타",
     ],
+    required: true,
   },
   성격내용별완료현황: <TableType>{
-    title: "성격내용별완료현황",
+    title: "성격·내용별 완료 현황",
     subtitle:
       "각 분류별로 완료 공약 수 및 전체 공약수를 기입 (완료 공약수 / 전체 공약수)",
     theadList: [
@@ -182,17 +184,19 @@ export const formResource = {
       "성격내용별완료현황.지속사업",
       "성격내용별완료현황.신규사업",
     ],
+    required: true,
   },
   입법현황: <TableType>{
-    title: "입법현황",
+    title: "입법 현황",
     subtitle:
       "필요입법 공약 총 수: 입법이 필요한 공약의 총 수,\n*입법 의결 완료 공약 총 수: 입법을 모두 완료(의결)한 공약의 총 수",
     theadList: ["필요입법공약총수", "입법의결완료공약총수"],
     tbody: "공약수",
     registerName: ["입법현황.필요입법공약총수", "입법현황.입법의결완료공약총수"],
+    required: true,
   },
   재정현황: <TableType>{
-    title: "재정현황",
+    title: "재정 현황",
     subtitle: "전체 공약의 재정 현황 합계",
     theadList: ["필요재정총액", "확보재정총액", "집행재정총액"],
     tbody: "금액",
@@ -202,5 +206,6 @@ export const formResource = {
       "재정현황.확보재정총액",
       "재정현황.집행재정총액",
     ],
+    required: false,
   },
 };
