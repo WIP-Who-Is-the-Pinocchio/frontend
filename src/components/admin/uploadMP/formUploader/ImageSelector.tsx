@@ -28,11 +28,11 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) =
   return (
     <div className="flex flex-col">
       <Title isOptional={true}>프로필</Title>
-      <div className="flex justify-center items-center w-[150px] h-[200px] border bg-neutral-100">
+      <div className="flex justify-center items-center w-[150px] h-[200px] border rounded-lg bg-neutral-100">
         {profileImage ? (
           <img
             src={URL.createObjectURL(profileImage)}
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full rounded-lg"
           />
         ) : (
           <p className="text-[12px] text-gray-400 text-center">
