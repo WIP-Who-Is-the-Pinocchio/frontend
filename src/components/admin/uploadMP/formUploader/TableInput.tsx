@@ -4,16 +4,16 @@ import { InputTypes } from "../types";
 import { twMerge } from "tailwind-merge";
 
 interface TableInputProps {
-  registerName: string;
   register: UseFormRegister<InputTypes>;
+  registerName: string;
   className?: string;
   type?: string;
   required?: boolean;
 }
 
 const TableInput: React.FC<TableInputProps> = ({
-  registerName,
   register,
+  registerName,
   className,
   type = "string",
   required,

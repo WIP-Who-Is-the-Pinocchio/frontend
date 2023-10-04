@@ -6,6 +6,7 @@ import Title from "./Title";
 
 interface TextInputProps {
   id: keyof InputTypes;
+  title: string;
   type?: string;
   placeholder?: string;
   required?: boolean;
@@ -18,6 +19,7 @@ interface TextInputProps {
 
 const TextInputDiv: React.FC<TextInputProps> = ({
   id,
+  title,
   type = "string",
   placeholder,
   required,
@@ -38,10 +40,9 @@ const TextInputDiv: React.FC<TextInputProps> = ({
   return (
     <div className="flex-1">
       <Title isOptional={!required} tooltip={tooltip}>
-        {id}
+        {title}
       </Title>
       <input
-        id={id}
         type={type}
         className={twMerge(
           "block w-full h-[44px] p-[10px] border border-gray-300 rounded-lg bg-gray-50 text-[12px] text-gray-900 outline-none",

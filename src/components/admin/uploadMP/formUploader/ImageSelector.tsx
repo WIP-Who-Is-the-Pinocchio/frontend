@@ -22,7 +22,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) =
 
   const handleDeleteProfile = () => {
     setProfileImage(undefined);
-    resetField("프로필");
+    resetField("profile");
   };
 
   return (
@@ -54,7 +54,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) =
           type="file"
           accept="image/*"
           className="hidden"
-          {...register("프로필", {
+          {...register("profile", {
             onChange: (e) => handleSetProfile(e),
           })}
         />

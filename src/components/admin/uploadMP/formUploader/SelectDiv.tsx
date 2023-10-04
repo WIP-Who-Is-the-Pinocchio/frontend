@@ -6,6 +6,7 @@ import Title from "./Title";
 
 interface CustomSelectProps {
   id: keyof InputTypes;
+  title: string;
   optionList: string[];
   required?: boolean | false;
   tooltip?: string;
@@ -16,6 +17,7 @@ interface CustomSelectProps {
 
 const SelectDiv: React.FC<CustomSelectProps> = ({
   id,
+  title,
   optionList,
   required,
   tooltip,
@@ -26,7 +28,7 @@ const SelectDiv: React.FC<CustomSelectProps> = ({
   return (
     <div className="flex-1">
       <Title isOptional={!required} tooltip={tooltip}>
-        {id}
+        {title}
       </Title>
       <div
         className={twMerge(
@@ -35,7 +37,6 @@ const SelectDiv: React.FC<CustomSelectProps> = ({
         )}
       >
         <select
-          id={id}
           className="block w-full h-[43px] p-[10px] border-r-[16px] border-transparent rounded-lg text-[12px] text-gray-900 outline-none"
           {...register(id, {
             required: required && "필수 입력란입니다. 항목을 선택해주세요.",

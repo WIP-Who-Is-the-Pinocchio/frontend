@@ -64,26 +64,26 @@ const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => 
                     {doubleInput ? (
                       <div className="flex">
                         <TableInput
+                          register={register}
                           registerName={`${name}.done`}
                           className="number-spinner-hide"
                           required={required}
-                          register={register}
                           type="number"
                         />
                         <span className="px-[5px]">/</span>
                         <TableInput
+                          register={register}
                           registerName={`${name}.total`}
                           className="number-spinner-hide"
                           required={required}
-                          register={register}
                           type="number"
                         />
                       </div>
                     ) : (
                       <TableInput
+                        register={register}
                         registerName={`${name}.value`}
                         required={required}
-                        register={register}
                         type="number"
                       />
                     )}
@@ -102,7 +102,7 @@ const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => 
             </th>
             {registerName.map((name) => (
               <td key={name} className="px-[15px] py-[16px] border">
-                <TableInput registerName={`${name}.notes`} register={register} />
+                <TableInput register={register} registerName={`${name}.notes`} />
               </td>
             ))}
           </tr>
