@@ -1,7 +1,9 @@
-interface ButtonBoxProps {
+import { twMerge } from "tailwind-merge";
+
+interface ButtonProps {
   width: string;
-  btnName: string;
-  color?: string;
+  children: React.ReactNode;
+  color?: "light" | "dark";
   onClick: () => void;
 }
 
@@ -9,24 +11,22 @@ interface ColorClasses {
   [key: string]: string;
 }
 
-const ButtonBox: React.FC<ButtonBoxProps> = ({
-  width,
-  btnName,
-  color = "violet-300",
-  onClick,
-}) => {
+const Button: React.FC<ButtonProps> = ({ width, children, color = "light", onClick }) => {
   const colorClasses: ColorClasses = {
-    "violet-300": "bg-violet-300 hover:bg-violet-400",
-    "violet-500": "bg-violet-500 hover:bg-violet-600",
+    light: "bg-violet-300 hover:bg-violet-400",
+    dark: "bg-violet-500 hover:bg-violet-600",
   };
   return (
     <button
-      className={`${colorClasses[color]} text-white font-semibold  p-[5px] rounded ${width} text-sm`}
+      className={twMerge(
+        `text-white font-semibold  p-[5px] rounded ${width} text-sm`,
+        colorClasses[color],
+      )}
       onClick={onClick}
     >
-      {btnName}
+      {children}
     </button>
   );
 };
 
-export default ButtonBox;
+export default Button;
