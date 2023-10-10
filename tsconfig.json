@@ -84,7 +84,7 @@
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
-  "include": ["src", "src/**/**/*", "tailwind", "*.ts", "*.tsx", "src/type.d.ts"],
+  "include": ["src/**/**/*", "./index.d.ts"],
   "exclude": ["**/node_modules", "config", "build/"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
