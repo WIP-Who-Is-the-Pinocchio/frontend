@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoginFormInput from "@components/LoginFormInput";
-import ButtonBox from "@components/Button";
+import Button from "@components/Button";
 import logo from "@assets/wipLogo.svg";
 import ValidationMessage from "@components/ValidaionMessage";
 import { isEmpty } from "@utils/loginValidation";
@@ -22,25 +23,30 @@ const AdminLogin: React.FC = () => {
     };
 
   //로그인 로직
-  const handleLogin = () => {
-    setIsLoginAttempted(true);
-    const account = getUserData().find(
-      (account: User) => account.id === id && account.password === password,
-    );
+  const handleLogin = async () => {
+    // setIsLoginAttempted(true);
+    // const account = getUserData().find(
+    //   (account: User) => account.id === id && account.password === password,
+    // );
 
-    if (account) {
-      // 유효한 아이디와 비밀번호일 때 로그인 로직 수행
-      setIsLoginSuccess(true);
-      setShowMessages(true);
-      navigate("/");
+    // if (account) {
+    //   // 유효한 아이디와 비밀번호일 때 로그인 로직 수행
+    //   setIsLoginSuccess(true);
+    //   setShowMessages(true);
+    //   navigate("/");
 
-      //로그인 후 값 초기화
-      setId("");
-      setPassword("");
-    } else if (isEmpty(id) || isEmpty(password)) {
-      setShowMessages(true);
-      setIsLoginSuccess(false);
-    }
+    //   //로그인 후 값 초기화
+    //   setId("");
+    //   setPassword("");
+    // } else if (isEmpty(id) || isEmpty(password)) {
+    //   setShowMessages(true);
+    //   setIsLoginSuccess(false);
+    // }
+    const res = await axios.post("http://localhost:2309/admin/api/v1/auth/login", {
+      login_name: id,
+      password: password,
+    });
+    console.log(res);
   };
 
   const handleGoToSignUp = () => {
@@ -53,7 +59,6 @@ const AdminLogin: React.FC = () => {
         <div className="w-[90%] ">
           <img className="m-[8px]" src={logo} alt="wip logo" />
           <div className="font-semibold  text-[18px] m-[8px]">로그인</div>
-
           <LoginFormInput
             label="아이디"
             id="id"
@@ -66,7 +71,6 @@ const AdminLogin: React.FC = () => {
             check={isEmpty(id)}
             message={"* 아이디를 입력해주세요."}
           />
-
           <LoginFormInput
             label="비밀번호"
             id="password"
@@ -84,11 +88,11 @@ const AdminLogin: React.FC = () => {
               * 아이디와 비밀번호를 확인해주세요
             </div>
           )}
-
           <div className="m-[10px]">
-            <ButtonBox btnName="로그인" width="w-full" onClick={handleLogin} />
+            <Button className="w-full" onClick={handleLogin}>
+              로그인
+            </Button>
           </div>
-
           <div className=" w-full flex justify-center items-center ">
             <div className="w-[28%] h-[0]  mx-[7px] border-solid border-[1px] border-grey-100"></div>
             <div style={{ fontSize: "10px", zoom: 0.8 }}>
@@ -97,12 +101,9 @@ const AdminLogin: React.FC = () => {
             <div className="w-[28%] h-[0] mx-[7px] border-solid border-[1px] border-grey-100"></div>
           </div>
           <div className="m-[10px]">
-            <ButtonBox
-              btnName="회원가입"
-              width="w-full"
-              color="violet-500"
-              onClick={handleGoToSignUp}
-            />
+            <Button className="w-full" color="dark" onClick={handleGoToSignUp}>
+              회원가입
+            </Button>
           </div>
         </div>
       </div>
