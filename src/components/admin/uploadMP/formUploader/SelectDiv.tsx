@@ -13,6 +13,7 @@ interface CustomSelectProps {
   caption?: string;
   errors: FieldErrors<InputTypes>;
   register: UseFormRegister<InputTypes>;
+  onChange?: React.ChangeEventHandler<HTMLSelectElement> | undefined;
 }
 
 const SelectDiv: React.FC<CustomSelectProps> = ({
@@ -24,9 +25,10 @@ const SelectDiv: React.FC<CustomSelectProps> = ({
   caption,
   errors,
   register,
+  onChange,
 }) => {
   return (
-    <div className="flex-1">
+    <div>
       <Title isOptional={!required} tooltip={tooltip}>
         {title}
       </Title>
@@ -41,6 +43,7 @@ const SelectDiv: React.FC<CustomSelectProps> = ({
           {...register(id, {
             required: required && "필수 입력란입니다. 항목을 선택해주세요.",
           })}
+          onChange={onChange}
         >
           <option value={""}>선택해주세요.</option>
           {optionList.map((optionItem) => (

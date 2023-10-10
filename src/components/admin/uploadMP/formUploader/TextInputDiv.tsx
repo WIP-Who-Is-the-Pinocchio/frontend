@@ -38,14 +38,14 @@ const TextInputDiv: React.FC<TextInputProps> = ({
   };
 
   return (
-    <div className="flex-1">
+    <div className="">
       <Title isOptional={!required} tooltip={tooltip}>
         {title}
       </Title>
       <input
         type={type}
         className={twMerge(
-          "block w-full h-[44px] p-[10px] border border-gray-300 rounded-lg bg-gray-50 text-[12px] text-gray-900 outline-none",
+          "block w-full h-[44px] p-[10px] border border-gray-300 rounded-lg text-[12px] text-gray-900 outline-none",
           errors[id] && "border-red-400",
         )}
         placeholder={placeholder}
