@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import type { ChangeEventHandler } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoginFormInput from "@components/LoginFormInput";
@@ -9,18 +10,20 @@ import { isEmpty } from "@utils/loginValidation";
 import { getUserData, User } from "../../data/LoginTest";
 
 const AdminLogin: React.FC = () => {
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showMessages, setShowMessages] = useState(false);
   const [isLoginSuccess, setIsLoginSuccess] = useState(false);
   const [isLoginAttempted, setIsLoginAttempted] = useState(false);
   const navigate = useNavigate();
 
-  const getFormChanger =
-    (setter: React.Dispatch<React.SetStateAction<string>>) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setter(e.target.value);
-    };
+  const handleChangeId: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleChangePassword: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setPassword(e.target.value);
+  };
 
   //로그인 로직
   const handleLogin = async () => {
@@ -43,7 +46,7 @@ const AdminLogin: React.FC = () => {
     //   setIsLoginSuccess(false);
     // }
     const res = await axios.post("http://localhost:2309/admin/api/v1/auth/login", {
-      login_name: id,
+      login_name: email,
       password: password,
     });
     console.log(res);
@@ -64,11 +67,11 @@ const AdminLogin: React.FC = () => {
             id="id"
             type="text"
             placeholder="아이디를 입력해주세요"
-            onChange={getFormChanger(setId)}
+            onChange={handleChangeId}
           />
           <ValidationMessage
             show={showMessages}
-            check={isEmpty(id)}
+            check={isEmpty(email)}
             message={"* 아이디를 입력해주세요."}
           />
           <LoginFormInput
@@ -76,18 +79,21 @@ const AdminLogin: React.FC = () => {
             id="password"
             type="password"
             placeholder="비밀번호를 입력해주세요"
-            onChange={getFormChanger(setPassword)}
+            onChange={handleChangePassword}
           />
           <ValidationMessage
             show={showMessages}
             check={isEmpty(password)}
             message={"* 비밀번호를 입력해주세요."}
           />
-          {!isLoginSuccess && !isEmpty(id) && !isEmpty(password) && isLoginAttempted && (
-            <div className="text-red-500 text-[10px] font-medium">
-              * 아이디와 비밀번호를 확인해주세요
-            </div>
-          )}
+          {!isLoginSuccess &&
+            !isEmpty(email) &&
+            !isEmpty(password) &&
+            isLoginAttempted && (
+              <div className="text-red-500 text-[10px] font-medium">
+                * 아이디와 비밀번호를 확인해주세요
+              </div>
+            )}
           <div className="m-[10px]">
             <Button className="w-full" onClick={handleLogin}>
               로그인
