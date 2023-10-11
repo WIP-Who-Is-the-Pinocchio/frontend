@@ -50,7 +50,7 @@ const AdminSignUp: React.FC = () => {
       <form className="flex flex-col items-center justify-center w-[358px] min-h-200 bg-[#faf5ff] p-4 rounded">
         <div className="w-[90%] p-[8px]">
           <img src={logo} alt="wip logo" className="px-[8px]" />
-          <div className="font-semibold  text-[18px] my-[10px] px-[8px]">회원가입</div>
+          <div className="my-[10px] px-[8px] font-semibold text-[18px] ">회원가입</div>
           <LoginFormInput
             label="이메일"
             id="email"

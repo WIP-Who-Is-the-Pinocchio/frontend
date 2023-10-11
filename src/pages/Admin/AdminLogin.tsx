@@ -56,13 +56,9 @@ const AdminLogin: React.FC = () => {
     // console.log(res);
   };
 
-  const handleGoToSignUp = () => {
-    navigate("/admin/signup");
-  };
-
   return (
     <div className="flex justify-center items-center min-h-[100vh] ">
-      <div className="flex flex-col items-center p-4 justify-center w-[358px] min-h-200 bg-[#faf5ff] rounded">
+      <div className="flex flex-col items-center justify-center w-[358px] min-h-200 p-4 bg-[#faf5ff] rounded">
         <div className="w-[90%] ">
           <img className="m-[8px]" src={logo} alt="wip logo" />
           <div className="font-semibold  text-[18px] m-[8px]">로그인</div>
@@ -113,7 +109,7 @@ const AdminLogin: React.FC = () => {
           <div className="m-[10px]">
             <a
               href="/admin/signup"
-              className="w-full text-white  text-center text-sm p-[5px] block bg-violet-500  rounded  font-semibold"
+              className="w-full text-white text-center text-sm p-[5px] block bg-violet-500 rounded font-semibold"
             >
               회원가입
             </a>

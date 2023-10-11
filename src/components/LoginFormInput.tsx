@@ -8,7 +8,7 @@ interface LoginFormInput {
 
 const LoginFormInput: React.FC<LoginFormInput> = ({
   label,
-  type,
+  type = "text",
   id,
   placeholder,
   onChange,
@@ -19,7 +19,7 @@ const LoginFormInput: React.FC<LoginFormInput> = ({
         {label}
       </label>
       <input
-        className="rounded p-[5px] h-[25px] placeholder:text-[10px]  focus:outline-none"
+        className="p-[5px] h-[25px] placeholder:text-[10px] rounded focus:outline-none"
         type={type}
         id={id}
         placeholder={placeholder}
