@@ -69,11 +69,9 @@ const AdminLogin: React.FC = () => {
             placeholder="아이디를 입력해주세요"
             onChange={handleChangeId}
           />
-          <ValidationMessage
-            show={showMessages}
-            check={isEmpty(email)}
-            message={"* 아이디를 입력해주세요."}
-          />
+          <ValidationMessage isValid={showMessages && isEmpty(password)}>
+            * 아이디를 입력해주세요.
+          </ValidationMessage>
           <LoginFormInput
             label="비밀번호"
             id="password"
@@ -81,11 +79,9 @@ const AdminLogin: React.FC = () => {
             placeholder="비밀번호를 입력해주세요"
             onChange={handleChangePassword}
           />
-          <ValidationMessage
-            show={showMessages}
-            check={isEmpty(password)}
-            message={"* 비밀번호를 입력해주세요."}
-          />
+          <ValidationMessage isValid={showMessages && isEmpty(password)}>
+            * 비밀번호를 입력해주세요.
+          </ValidationMessage>
           {!isLoginSuccess &&
             !isEmpty(email) &&
             !isEmpty(password) &&
