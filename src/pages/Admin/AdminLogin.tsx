@@ -6,7 +6,7 @@ import LoginFormInput from "@components/LoginFormInput";
 import Button from "@components/Button";
 import logo from "@assets/wipLogo.svg";
 import ValidationMessage from "@components/ValidaionMessage";
-import { isEmpty } from "@utils/loginValidation";
+import { isEmpty } from "@utils/isEmpty";
 import { getUserData, User } from "../../data/LoginTest";
 
 const AdminLogin: React.FC = () => {
@@ -27,29 +27,33 @@ const AdminLogin: React.FC = () => {
 
   //로그인 로직
   const handleLogin = async () => {
-    // setIsLoginAttempted(true);
-    // const account = getUserData().find(
-    //   (account: User) => account.id === id && account.password === password,
-    // );
+    setIsLoginAttempted(true);
+    const user = getUserData().find(
+      (u: User) => u.email === email && u.password === password,
+    );
 
-    // if (account) {
-    //   // 유효한 아이디와 비밀번호일 때 로그인 로직 수행
-    //   setIsLoginSuccess(true);
-    //   setShowMessages(true);
-    //   navigate("/");
+    if (user) {
+      // 유효한 아이디와 비밀번호일 때 로그인 로직 수행
+      setIsLoginSuccess(true);
+      setShowMessages(true);
 
-    //   //로그인 후 값 초기화
-    //   setId("");
-    //   setPassword("");
-    // } else if (isEmpty(id) || isEmpty(password)) {
-    //   setShowMessages(true);
-    //   setIsLoginSuccess(false);
-    // }
-    const res = await axios.post("http://localhost:2309/admin/api/v1/auth/login", {
-      login_name: email,
-      password: password,
-    });
-    console.log(res);
+      //로그인 후 값 초기화
+      setEmail("");
+      setPassword("");
+
+      navigate("/");
+      return;
+    }
+
+    if (isEmpty(email) || isEmpty(password)) {
+      setShowMessages(true);
+      setIsLoginSuccess(false);
+    }
+    // const res = await axios.post("http://localhost:2309/admin/api/v1/auth/login", {
+    //   login_name: email,
+    //   password: password,
+    // });
+    // console.log(res);
   };
 
   const handleGoToSignUp = () => {
@@ -100,16 +104,19 @@ const AdminLogin: React.FC = () => {
             </Button>
           </div>
           <div className=" w-full flex justify-center items-center ">
-            <div className="w-[28%] h-[0]  mx-[7px] border-solid border-[1px] border-grey-100"></div>
+            <div className="w-[28%] h-0 mx-[7px] border-solid border-[1px] border-grey-100"></div>
             <div style={{ fontSize: "10px", zoom: 0.8 }}>
               <p className="text-slate-400">아직 회원이 아니신가요?</p>
             </div>
-            <div className="w-[28%] h-[0] mx-[7px] border-solid border-[1px] border-grey-100"></div>
+            <div className="w-[28%] h-0 mx-[7px] border-solid border-[1px] border-grey-100"></div>
           </div>
           <div className="m-[10px]">
-            <Button className="w-full" color="dark" onClick={handleGoToSignUp}>
+            <a
+              href="/admin/signup"
+              className="w-full text-white  text-center text-sm p-[5px] block bg-violet-500  rounded  font-semibold"
+            >
               회원가입
-            </Button>
+            </a>
           </div>
         </div>
       </div>
