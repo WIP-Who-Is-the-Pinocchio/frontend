@@ -19,9 +19,12 @@ const SelectRegion: React.FC<CustomSelectProps> = ({
 }) => {
   return (
     <div>
-      <Title isOptional={!required} tooltip={tooltip}>
-        {title}
-      </Title>
+      <div className="flex items-center justify-between">
+        <Title isOptional={!required} tooltip={tooltip}>
+          {title}
+        </Title>
+        <p className="mb-[8px] mr-[8px] text-gray-500 cursor-pointer">&times;</p>
+      </div>
       <div className={"border border-gray-300 rounded-lg bg-gray-50"}>
         <select
           className="block w-full h-[43px] p-[10px] border-r-[16px] border-transparent rounded-lg text-[12px] text-gray-900 outline-none"
