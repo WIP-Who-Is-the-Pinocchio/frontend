@@ -18,6 +18,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
   const [selectedRegion, setSelectedRegion] = useState<string>();
   const [cityComponents, setCityComponents] = useState<JSX.Element[]>([]);
   const [committeesComponents, setCommitteesComponents] = useState<JSX.Element[]>([]);
+  const [districtList, setDistrictList] = useState<string[]>([]);
 
   const onSubmit: SubmitHandler<InputTypes> = (data) => {
     //미리보기 검사용
@@ -29,19 +30,29 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     setSelectedRegion(event.target.value);
   };
 
+  const handleSelectDistrict = (
+    index: number,
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setDistrictList((prev) => {
+      const updatedDistrictList = [...prev];
+      updatedDistrictList[index] = event.target.value;
+      return updatedDistrictList;
+    });
+  };
+
   const handleClickAddCityComponent = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
-    if (!selectedRegion) return;
-    setCityComponents([
-      ...cityComponents,
-      <SelectRegion
-        //이 부분 수정 예정
-        title={`세부 지역구 ${cityComponents.length + 2}`}
-        optionList={regionData[selectedRegion]}
-      />,
-    ]);
+    if (!selectedRegion) {
+      return;
+    }
+    setDistrictList((prev) => [...prev, ""]);
+  };
+
+  const handleClickDeleteCityComponent = (index: number) => {
+    setDistrictList((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
   };
 
   const handleClickAddStandingCommitteeComponent = (
@@ -116,27 +127,31 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           {selectedRegion && (
             <SelectDiv
               id="subRegion" //이 부분 수정 예정
-              title="세부 지역구 1"
+              title="세부 지역구"
               optionList={regionData[selectedRegion]}
               required
               register={register}
               errors={errors}
             />
           )}
-          {/* <TextInputDiv
-            id="subRegion"
-            title="세부지역구"
-            placeholder="예) 안양시 동안구"
-            register={register}
-            errors={errors}
-          /> */}
-          {cityComponents}
+          {selectedRegion &&
+            districtList.map((selected, index) => (
+              <SelectRegion
+                //이 부분 수정 예정
+                title={`세부 지역구`}
+                optionList={regionData[selectedRegion]}
+                selected={selected}
+                index={index}
+                onSelectDistrict={handleSelectDistrict}
+                onClickDeleteCityComponent={handleClickDeleteCityComponent}
+              />
+            ))}
           {selectedRegion && (
             <button
               className="py-[6px] px-[12px] mt-[10px] border border-gray-200 rounded-lg text-[12px] font-medium text-gray-900 bg-neutral-50 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
               onClick={(e) => handleClickAddCityComponent(e)}
             >
-              세부 지역구 추가
+              + 세부 지역구 추가
             </button>
           )}
           <SelectDiv
@@ -174,7 +189,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
             className="py-[6px] px-[12px] mt-[10px] border border-gray-200 rounded-lg text-[12px] font-medium text-gray-900 bg-neutral-50 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
             onClick={(e) => handleClickAddStandingCommitteeComponent(e)}
           >
-            상임위원회 추가
+            + 상임위원회 추가
           </button>
         </div>
       </div>
