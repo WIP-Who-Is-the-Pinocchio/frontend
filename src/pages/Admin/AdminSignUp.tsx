@@ -1,10 +1,10 @@
 import React from "react";
-import LoginFormInput from "@components/LoginFormInput";
+import LoginFormInput from "@components/AdminAuthFormInput";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import Button from "@components/Button";
-import logo from "@assets/wipLogo.svg";
+import logo from "@assets/icon/wipLogo.svg";
 import Modal from "@components/Modal/Modal";
 import { AdminAuthFormInputs } from "@utils/Types/adminAuthTypes";
 

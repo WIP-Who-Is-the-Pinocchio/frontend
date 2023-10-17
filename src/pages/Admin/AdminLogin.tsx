@@ -3,7 +3,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import LoginFormInput from "@components/LoginFormInput";
+import LoginFormInput from "@components/AdminAuthFormInput";
 import Button from "@components/Button";
 import logo from "@assets/wipLogo.svg";
 import { AdminAuthFormInputs } from "@utils/Types/adminAuthTypes";
