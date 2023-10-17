@@ -3,8 +3,9 @@ import { twMerge } from "tailwind-merge";
 interface ButtonProps {
   className?: string;
   children: React.ReactNode;
+  type: "button" | "submit";
   color?: "light" | "dark";
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 interface ColorClasses {
@@ -15,6 +16,7 @@ const Button: React.FC<ButtonProps> = ({
   className,
   children,
   color = "light",
+  type = "button",
   onClick,
 }) => {
   const colorClasses: ColorClasses = {
@@ -29,6 +31,7 @@ const Button: React.FC<ButtonProps> = ({
         className,
       )}
       onClick={onClick}
+      type={type}
     >
       {children}
     </button>
