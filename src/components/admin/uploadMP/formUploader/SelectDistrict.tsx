@@ -1,7 +1,7 @@
 import React from "react";
 import Title from "./Title";
 
-interface CustomSelectProps {
+interface SelectDistrictProps {
   title: string;
   optionList: string[];
   selected: string;
@@ -9,19 +9,17 @@ interface CustomSelectProps {
   required?: boolean | false;
   tooltip?: string;
   caption?: string;
-  onChange?: React.ChangeEventHandler<HTMLSelectElement> | undefined;
   onSelectDistrict: (index: number, event: React.ChangeEvent<HTMLSelectElement>) => void;
   onClickDeleteCityComponent: (index: number) => void;
 }
 
-const SelectRegion: React.FC<CustomSelectProps> = ({
+const SelectDistrict: React.FC<SelectDistrictProps> = ({
   title,
   optionList,
   selected,
   index,
   required,
   tooltip,
-  onChange,
   onSelectDistrict,
   onClickDeleteCityComponent,
 }) => {
@@ -59,4 +57,4 @@ const SelectRegion: React.FC<CustomSelectProps> = ({
   );
 };
 
-export default SelectRegion;
+export default SelectDistrict;

@@ -6,7 +6,8 @@ import TextInputDiv from "./TextInputDiv";
 import Table from "./Table";
 import { regionData } from "./regionList";
 import { useState } from "react";
-import SelectRegion from "./SelectRegion";
+import SelectRegion from "./SelectDistrict";
+import AdditionalCommitteeTextInputContainer from "./AdditionalCommitteeTextInputContainer";
 
 interface FormUploaderProps {}
 
@@ -16,10 +17,8 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
   });
   const { errors } = formState;
   const [selectedRegion, setSelectedRegion] = useState<string>();
-  const [cityComponents, setCityComponents] = useState<JSX.Element[]>([]);
-  const [committeesComponents, setCommitteesComponents] = useState<JSX.Element[]>([]);
   const [districtList, setDistrictList] = useState<string[]>([]);
-
+  const [additionalCommitteeList, setAdditionalCommitteeList] = useState<string[]>([]);
   const onSubmit: SubmitHandler<InputTypes> = (data) => {
     //미리보기 검사용
     alert(`제출! ${JSON.stringify(data, null, 2)}`);
@@ -30,20 +29,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     setSelectedRegion(event.target.value);
   };
 
-  const handleSelectDistrict = (
-    index: number,
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setDistrictList((prev) => {
-      const updatedDistrictList = [...prev];
-      updatedDistrictList[index] = event.target.value;
-      return updatedDistrictList;
-    });
-  };
-
-  const handleClickAddCityComponent = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const handleClickAddDistrict = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (!selectedRegion) {
       return;
@@ -51,25 +37,43 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     setDistrictList((prev) => [...prev, ""]);
   };
 
+  const handleSelectDistrict = (
+    index: number,
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setDistrictList((prev) => {
+      const updatedList = [...prev];
+      updatedList[index] = event.target.value;
+      return updatedList;
+    });
+  };
+
   const handleClickDeleteCityComponent = (index: number) => {
     setDistrictList((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
   };
 
-  const handleClickAddStandingCommitteeComponent = (
+  const handleClickAddAdditionalCommitteeList = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
-    if (!selectedRegion) return;
-    setCommitteesComponents([
-      ...committeesComponents,
-      <TextInputDiv
-        //이 부분 수정 예정
+    setAdditionalCommitteeList((prev) => [...prev, ""]);
+  };
 
-        id="additionalStandingCommittees"
-        title={`추가상임위원회${committeesComponents.length + 1}`}
-        register={register}
-        errors={errors}
-      />,
+  const handleChangeAdditionalCommitteeValue = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setAdditionalCommitteeList((prev) => {
+      const updatedList = [...prev];
+      updatedList[index] = e.target.value;
+      return updatedList;
+    });
+  };
+
+  const handleDeleteAdditionalCommittee = (index: number) => {
+    setAdditionalCommitteeList((prev) => [
+      ...prev.slice(0, index),
+      ...prev.slice(index + 1),
     ]);
   };
 
@@ -149,7 +153,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           {selectedRegion && (
             <button
               className="py-[6px] px-[12px] mt-[10px] border border-gray-200 rounded-lg text-[12px] font-medium text-gray-900 bg-neutral-50 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-              onClick={(e) => handleClickAddCityComponent(e)}
+              onClick={(e) => handleClickAddDistrict(e)}
             >
               + 세부 지역구 추가
             </button>
@@ -177,17 +181,21 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
             register={register}
             errors={errors}
           />
-          {/* <TextInputDiv
-            id="additionalStandingCommittees"
-            title="추가상임위원회"
-            caption="겸직 위원의 경우에만 작성. 2개 이상은 띄어쓰기로 구분"
-            register={register}
-            errors={errors}
-          /> */}
-          {committeesComponents}
+          {additionalCommitteeList.map((value, index) => (
+            <AdditionalCommitteeTextInputContainer
+              //이 부분 수정 예정
+              id="additionalStandingCommittees"
+              title={"추가상임위원회"}
+              value={value}
+              errors={errors}
+              index={index}
+              onChangeValue={handleChangeAdditionalCommitteeValue}
+              onClickDelete={handleDeleteAdditionalCommittee}
+            />
+          ))}
           <button
             className="py-[6px] px-[12px] mt-[10px] border border-gray-200 rounded-lg text-[12px] font-medium text-gray-900 bg-neutral-50 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-            onClick={(e) => handleClickAddStandingCommitteeComponent(e)}
+            onClick={(e) => handleClickAddAdditionalCommitteeList(e)}
           >
             + 상임위원회 추가
           </button>
