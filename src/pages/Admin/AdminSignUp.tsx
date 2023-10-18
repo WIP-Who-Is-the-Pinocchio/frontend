@@ -8,6 +8,7 @@ import logo from "@assets/icon/wipLogo.svg";
 import { createPortal } from "react-dom";
 import Modal from "@components/Modal/Modal";
 import { AdminAuthFormInputs } from "@utils/Types/adminAuthTypes";
+import EmailAuthBtn from "@components/EmailAuthBtn";
 
 const AdminSignUp: React.FC = () => {
   const {
@@ -19,12 +20,13 @@ const AdminSignUp: React.FC = () => {
     criteriaMode: "all",
   });
 
-  const [showModal, setShowModal] = useState(false);
+  const [showSignupCompleteModal, setShowSignupCompleteModal] = useState(false);
+  const [showEmailAuthModal, setShowEmailAuthModal] = useState(false);
   const [_, setShouldNavigate] = useState(false);
 
   const onSubmit = async (data: AdminAuthFormInputs) => {
     console.log(data);
-    setShowModal(true);
+    setShowSignupCompleteModal(true);
     setShouldNavigate(true);
 
     // const signupRes = await axios.post("http://localhost:2309/admin/api/v1/auth/signup", {
@@ -35,18 +37,41 @@ const AdminSignUp: React.FC = () => {
 
     // console.log(signupRes);
   };
+  const handleClickEmailAuth = () => {
+    setShowEmailAuthModal(true);
+  };
 
   return (
     <div className="flex justify-center items-center min-h-[100vh] ">
       <form
-        className="flex flex-col items-center justify-center w-[358px] min-h-200 bg-[#faf5ff] p-4 rounded"
+        className="flex flex-col items-center justify-evenly w-[358px] min-h-200 bg-[#faf5ff] p-4 rounded"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {showModal &&
+        {showSignupCompleteModal &&
           createPortal(
-            <Modal onClose={() => setShowModal(false)} shouldNavigate>
+            <Modal onClose={() => setShowSignupCompleteModal(false)} shouldNavigate>
               <div className="w-[150px] p-[10px] text-[10px] text-center ">
                 회원가입이 완료되었습니다.
+              </div>
+            </Modal>,
+            document.body,
+          )}
+
+        {showEmailAuthModal &&
+          createPortal(
+            <Modal onClose={() => setShowSignupCompleteModal(false)} shouldNavigate>
+              <div className="flex flex-col justify-center items-center w-[200px] p-[10px] text-[10px] text-center ">
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    placeholder="인증번호를 입력해주세요"
+                    className="m-[15px] p-[10px] border rounded"
+                  />
+                  <div className="w-[50px] h-[30px] p-[10px] bg-slate-200"> 시간</div>
+                </div>
+                <button className="w-[50px] h-[25px] p-[5px] bg-violet-400 text-white font-semibold rounded ">
+                  확인
+                </button>
               </div>
             </Modal>,
             document.body,
@@ -66,13 +91,19 @@ const AdminSignUp: React.FC = () => {
               required: "이메일은 필수 항목입니다.",
             }}
             render={({ field }) => (
-              <LoginFormInput
-                {...field}
-                label="이메일"
-                id="email"
-                type="text"
-                placeholder="이메일을 입력해주세요"
-              />
+              <div className="flex items-center">
+                <LoginFormInput
+                  {...field}
+                  label="이메일"
+                  id="email"
+                  type="text"
+                  placeholder="이메일을 입력해주세요"
+                  className="w-[200px]"
+                />
+                <div className="translate-y-[10px]">
+                  <EmailAuthBtn type="button" onClick={handleClickEmailAuth} />
+                </div>
+              </div>
             )}
           />
           <ErrorMessage
@@ -99,13 +130,15 @@ const AdminSignUp: React.FC = () => {
               required: "닉네임은 필수 항목입니다.",
             }}
             render={({ field }) => (
-              <LoginFormInput
-                {...field}
-                label="닉네임"
-                id="nickname"
-                type="text"
-                placeholder="닉네임을 입력해주세요"
-              />
+              <div>
+                <LoginFormInput
+                  {...field}
+                  label="닉네임"
+                  id="nickname"
+                  type="text"
+                  placeholder="닉네임을 입력해주세요"
+                />
+              </div>
             )}
           />
           <ErrorMessage
