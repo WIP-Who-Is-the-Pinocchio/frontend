@@ -93,19 +93,6 @@ const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => 
               );
             })}
           </tr>
-          <tr className="bg-white border-b">
-            <th
-              scope="row"
-              className="px-[24px] py-[16px] font-medium text-gray-900 whitespace-nowrap "
-            >
-              비고
-            </th>
-            {registerName.map((name) => (
-              <td key={name} className="px-[15px] py-[16px] border">
-                <TableInput register={register} registerName={`${name}.notes`} />
-              </td>
-            ))}
-          </tr>
         </tbody>
       </table>
       <p className="pt-[10px] text-[11px] font-normal text-red-500 text-center">
