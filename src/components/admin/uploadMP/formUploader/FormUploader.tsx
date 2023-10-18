@@ -143,20 +143,20 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
             optionList={formResource.정당리스트}
             required
             onRegister={handleRegister(
-              "affiliatedParty",
+              "political_party",
               "text",
               true,
               /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z]*$/,
             )}
-            ErrorMessage={ErrorMessage("affiliatedParty")}
+            ErrorMessage={ErrorMessage("political_party")}
           />
           <TextInputDiv
             title="당선횟수"
             type="number"
             placeholder="예) 1"
             required
-            onRegister={handleRegister("numberOfElections", "number", true, /^\d+$/)}
-            ErrorMessage={ErrorMessage("numberOfElections")}
+            onRegister={handleRegister("elected_count", "number", true, /^\d+$/)}
+            ErrorMessage={ErrorMessage("elected_count")}
           />
         </div>
       </div>
@@ -175,8 +175,8 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
               title="세부 지역구"
               optionList={regionData[selectedRegion]}
               required
-              onRegister={handleRegister("subRegion", "text", true)}
-              ErrorMessage={ErrorMessage("subRegion")}
+              onRegister={handleRegister("district", "text", true)}
+              ErrorMessage={ErrorMessage("district")}
             />
           )}
           {selectedRegion &&
@@ -203,8 +203,8 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
             title="분구"
             optionList={formResource.분구리스트}
             caption="분구 지역인 경우에만 선택"
-            onRegister={handleRegister("division", "text", false)}
-            ErrorMessage={ErrorMessage("division")}
+            onRegister={handleRegister("section", "text", false)}
+            ErrorMessage={ErrorMessage("section")}
           />
         </div>
         <div className="flex flex-col gap-[20px]">
@@ -241,22 +241,22 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
         </div>
       </div>
       <Table
-        tableResource={formResource.statusOfPledge}
+        tableResource={formResource.status_of_promise}
         register={register}
         formState={formState}
       />
       <Table
-        tableResource={formResource.completionStatusByTheme}
+        tableResource={formResource.completion_status_by_theme}
         register={register}
         formState={formState}
       />
       <Table
-        tableResource={formResource.legislativeStatus}
+        tableResource={formResource.legislative_status}
         register={register}
         formState={formState}
       />
       <Table
-        tableResource={formResource.financialStatus}
+        tableResource={formResource.financial_status}
         register={register}
         formState={formState}
       />
