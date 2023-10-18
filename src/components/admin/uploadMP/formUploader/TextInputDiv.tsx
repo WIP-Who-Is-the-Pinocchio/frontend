@@ -1,42 +1,29 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
-import { InputTypes } from "../types";
+import { UseFormRegisterReturn } from "react-hook-form";
 import Title from "./Title";
 
 interface TextInputProps {
-  id: keyof InputTypes;
   title: string;
   type?: string;
   placeholder?: string;
   required?: boolean;
   tooltip?: string;
   caption?: string;
-  register: UseFormRegister<InputTypes>;
-  errors: FieldErrors<InputTypes>;
-  validationRule?: RegExp;
+  onRegister: UseFormRegisterReturn;
+  ErrorMessage: JSX.Element | undefined;
 }
 
 const TextInputDiv: React.FC<TextInputProps> = ({
-  id,
   title,
   type = "string",
   placeholder,
   required,
   tooltip,
   caption,
-  register,
-  errors,
-  validationRule,
+  onRegister,
+  ErrorMessage,
 }) => {
-  const handleSetValue = (value: string, type: string) => {
-    if (type === "number") {
-      return parseFloat(value);
-    }
-
-    return value;
-  };
-
   return (
     <div className="">
       <Title isOptional={!required} tooltip={tooltip}>
@@ -46,26 +33,15 @@ const TextInputDiv: React.FC<TextInputProps> = ({
         type={type}
         className={twMerge(
           "block w-full h-[44px] p-[10px] border border-gray-300 rounded-lg text-[12px] text-gray-900 outline-none",
-          errors[id] && "border-red-400",
+          ErrorMessage && "border-red-400",
         )}
         placeholder={placeholder}
-        {...register(id, {
-          required: required && "필수 입력란을 작성해주세요.",
-          pattern: {
-            value: validationRule || /.*/,
-            message: "입력 형식이 올바르지 않습니다.",
-          },
-          setValueAs: (value) => handleSetValue(value, type),
-        })}
+        {...onRegister}
       />
       {caption && (
         <p className="mt-[4px] text-[11px] font-normal text-gray-500">*{caption}</p>
       )}
-      {errors[id]?.message && (
-        <p className="mt-[4px] text-[11px] font-normal text-red-500">
-          {errors[id]?.message}
-        </p>
-      )}
+      {ErrorMessage}
     </div>
   );
 };

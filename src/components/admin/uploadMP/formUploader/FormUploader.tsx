@@ -25,6 +25,8 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     console.log(data);
   };
 
+  console.log(watch());
+
   const handleSelectRegion = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedRegion(event.target.value);
   };
@@ -77,6 +79,42 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     ]);
   };
 
+  const handleSetInputValue = (value: string, type: string) => {
+    if (type === "number") {
+      return parseFloat(value);
+    }
+
+    return value;
+  };
+
+  const handleRegister = (
+    id: keyof InputTypes,
+    type: string,
+    required: boolean,
+    validationRule?: RegExp,
+  ) => {
+    return {
+      ...register(id, {
+        required: required && "필수 입력란을 작성해주세요.",
+        pattern: {
+          value: validationRule || /.*/,
+          message: "입력 형식이 올바르지 않습니다.",
+        },
+        setValueAs: (value) => handleSetInputValue(value, type),
+      }),
+    };
+  };
+
+  const ErrorMessage = (id: keyof InputTypes) => {
+    if (errors[id]?.message) {
+      return (
+        <p className="mt-[4px] text-[11px] font-normal text-red-500">
+          {errors[id]?.message}
+        </p>
+      );
+    }
+  };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -89,53 +127,56 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
         <ImageSelector register={register} resetField={resetField} />
         <div className="flex flex-col gap-[24px] w-[500px]">
           <TextInputDiv
-            id="name"
             title="이름"
-            placeholder="예) 홍길동"
             required
-            register={register}
-            errors={errors}
-            validationRule={/^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z]*$/}
+            placeholder="예) 홍길동"
+            onRegister={handleRegister(
+              "name",
+              "text",
+              true,
+              /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z]*$/,
+            )}
+            ErrorMessage={ErrorMessage("name")}
           />
           <SelectDiv
-            id="affiliatedParty"
             title="소속정당"
             optionList={formResource.정당리스트}
             required
-            register={register}
-            errors={errors}
+            onRegister={handleRegister(
+              "affiliatedParty",
+              "text",
+              true,
+              /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z]*$/,
+            )}
+            ErrorMessage={ErrorMessage("affiliatedParty")}
           />
           <TextInputDiv
-            id="numberOfElections"
             title="당선횟수"
             type="number"
             placeholder="예) 1"
             required
-            register={register}
-            errors={errors}
-            validationRule={/^\d+$/}
+            onRegister={handleRegister("numberOfElections", "number", true, /^\d+$/)}
+            ErrorMessage={ErrorMessage("numberOfElections")}
           />
         </div>
       </div>
       <div className="grid grid-cols-2 gap-[30px]">
         <div className="flex flex-col gap-[20px]">
           <SelectDiv
-            id="region"
             title="지역구"
             optionList={Object.keys(regionData)}
             required
-            register={register}
-            errors={errors}
             onChange={handleSelectRegion}
+            onRegister={handleRegister("region", "text", true)}
+            ErrorMessage={ErrorMessage("region")}
           />
           {selectedRegion && (
             <SelectDiv
-              id="subRegion" //이 부분 수정 예정
               title="세부 지역구"
               optionList={regionData[selectedRegion]}
               required
-              register={register}
-              errors={errors}
+              onRegister={handleRegister("subRegion", "text", true)}
+              ErrorMessage={ErrorMessage("subRegion")}
             />
           )}
           {selectedRegion &&
@@ -159,17 +200,15 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
             </button>
           )}
           <SelectDiv
-            id="division"
             title="분구"
             optionList={formResource.분구리스트}
             caption="분구 지역인 경우에만 선택"
-            register={register}
-            errors={errors}
+            onRegister={handleRegister("division", "text", false)}
+            ErrorMessage={ErrorMessage("division")}
           />
         </div>
         <div className="flex flex-col gap-[20px]">
           <SelectDiv
-            id="standingCommittees"
             title="상임위원회"
             optionList={formResource.상임위원회리스트}
             tooltip="의장을 제외한 모든 의원은 하나의 상임위원회의 위원이 되며 다만
@@ -178,8 +217,8 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
                     일은 있을 수 없다. 다만 상임위원은 그 수에 제한없이 특별위원회의
                     위원을 겸직할 수 있다. -의회용어사전"
             required
-            register={register}
-            errors={errors}
+            onRegister={handleRegister("standingCommittees", "text", true)}
+            ErrorMessage={ErrorMessage("standingCommittees")}
           />
           {additionalCommitteeList.map((value, index) => (
             <AdditionalCommitteeTextInputContainer
