@@ -1,41 +1,23 @@
 //react-hook-form에 등록되는 input types입니다.
 export interface InputTypes {
-  profile_url: File;
+  profile_url: File | null;
   name: string;
   political_party: string; //소속정당
   elected_count: number; //당선횟수
   assembly_term: number; //몇대
   region: string; //지역구
-  district: string; //세부지역구
+  district: string[]; //세부지역구
   section: string; //분구
-  standingCommittees: string; //상임위원회
-  additionalStandingCommittees: string[]; //추가 상임«위원회
+  standing_committees: string; //상임위원회
+  additional_standing_committees: string[]; //추가 상임위원회
   status_of_promise: {
     //공약이행현황
-    total_promise_count: {
-      //총공약수
-      value: number;
-    };
-    completed_promise_count: {
-      //완료
-      value: number;
-    };
-    in_progress_promise_count: {
-      //추진중
-      value: number;
-    };
-    pending_promise_count: {
-      //보류
-      value: number;
-    };
-    discarded_promise_count: {
-      //폐기
-      value: number;
-    };
-    other_promise_count: {
-      //기타
-      value: number;
-    };
+    total_promise_count: number; //총공약수
+    completed_promise_count: number; //완료
+    in_progress_promise_count: number; //추진중
+    pending_promise_count: number; //보류
+    discarded_promise_count: number; //폐기
+    other_promise_count: number; //기타
   };
   completion_status_by_theme: {
     //성격내용별완료현황
@@ -50,29 +32,16 @@ export interface InputTypes {
   };
   legislative_status: {
     //입법현황
-    resolve_required_promise_count: {
-      //필요입법공약총수
-      value: number;
-    };
-    resolved_promise_count: {
-      //입법의결완료공약총수
-      value: number;
-    };
+    resolve_required_promise_count: number;
+    //필요입법공약총수
+    resolved_promise_count: number;
+    //입법의결완료공약총수
   };
   financial_status: {
     //재정현황
-    total_required_funds: {
-      //필요재정총액
-      value: number;
-    };
-    total_secured_funds: {
-      //확보재정총액
-      value: number;
-    };
-    total_executed_funds: {
-      //집행재정총액
-      value: number;
-    };
+    total_required_funds: number; //필요재정총액
+    total_secured_funds: number; //확보재정총액
+    total_executed_funds: number; //집행재정총액
   };
 }
 

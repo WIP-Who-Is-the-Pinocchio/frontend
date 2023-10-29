@@ -65,7 +65,7 @@ const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => 
                       <div className="flex">
                         <TableInput
                           register={register}
-                          registerName={`${name}.done`}
+                          registerName={`${name}.completed`}
                           className="number-spinner-hide"
                           required={required}
                           type="number"
@@ -82,7 +82,7 @@ const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => 
                     ) : (
                       <TableInput
                         register={register}
-                        registerName={`${name}.value`}
+                        registerName={`${name}`}
                         required={required}
                         type="number"
                       />
