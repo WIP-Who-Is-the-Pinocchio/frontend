@@ -6,15 +6,21 @@ import TextInputDiv from "./TextInputDiv";
 import Table from "./Table";
 import { regionData } from "./regionList";
 import { useState } from "react";
-import SelectRegion from "./SelectDistrict";
+import SelectDistrict from "./SelectDistrict";
 import AdditionalCommitteeTextInputContainer from "./AdditionalCommitteeTextInputContainer";
 
 interface FormUploaderProps {}
 
 const FormUploader: React.FC<FormUploaderProps> = () => {
-  const { handleSubmit, watch, register, formState, resetField } = useForm<InputTypes>({
-    mode: "onChange", //실시간 validation을 위해 onChange 모드 설정
-  });
+  const { handleSubmit, watch, register, getValues, setValue, formState, resetField } =
+    useForm<InputTypes>({
+      mode: "onChange", //실시간 validation을 위해 onChange 모드 설정
+    });
+
+  // const { fields, append, remove } = useFieldArray({
+  //   control,
+  //   name: "additional_standing_committees",
+  // });
   const { errors } = formState;
   const [selectedRegion, setSelectedRegion] = useState<string>();
   const [districtList, setDistrictList] = useState<string[]>([]);
@@ -48,6 +54,10 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
       updatedList[index] = event.target.value;
       return updatedList;
     });
+
+    const values = getValues("district"); // 현재 폼의 값 가져오기
+    const newArray = values.splice(index, 1); // 'item2'를 제외한 새로운 배열 생성
+    setValue("district", newArray); // 배열 필드 업데이트
   };
 
   const handleClickDeleteCityComponent = (index: number) => {
@@ -129,7 +139,6 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           <TextInputDiv
             title="이름"
             required
-            placeholder="예) 홍길동"
             onRegister={handleRegister(
               "name",
               "text",
@@ -138,9 +147,8 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
             )}
             ErrorMessage={ErrorMessage("name")}
           />
-          <SelectDiv
+          <TextInputDiv
             title="소속정당"
-            optionList={formResource.정당리스트}
             required
             onRegister={handleRegister(
               "political_party",
@@ -153,9 +161,8 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           <TextInputDiv
             title="당선횟수"
             type="number"
-            placeholder="예) 1"
             required
-            onRegister={handleRegister("elected_count", "number", true, /^\d+$/)}
+            onRegister={handleRegister("elected_count", "number", true, /^[1-9]\d*$/)}
             ErrorMessage={ErrorMessage("elected_count")}
           />
         </div>
@@ -175,18 +182,23 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
               title="세부 지역구"
               optionList={regionData[selectedRegion]}
               required
-              onRegister={handleRegister("district", "text", true)}
+              onRegister={handleRegister("district[0]" as keyof InputTypes, "text", true)}
               ErrorMessage={ErrorMessage("district")}
             />
           )}
           {selectedRegion &&
             districtList.map((selected, index) => (
-              <SelectRegion
-                //이 부분 수정 예정
+              <SelectDistrict
+                key={`district${index}`}
                 title={`세부 지역구`}
                 optionList={regionData[selectedRegion]}
                 selected={selected}
                 index={index}
+                onRegister={handleRegister(
+                  `district[${index + 1}]` as keyof InputTypes,
+                  "text",
+                  true,
+                )}
                 onSelectDistrict={handleSelectDistrict}
                 onClickDeleteCityComponent={handleClickDeleteCityComponent}
               />
@@ -208,22 +220,21 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           />
         </div>
         <div className="flex flex-col gap-[20px]">
-          <SelectDiv
+          <TextInputDiv
             title="상임위원회"
-            optionList={formResource.상임위원회리스트}
             tooltip="의장을 제외한 모든 의원은 하나의 상임위원회의 위원이 되며 다만
                     의회운영위원회의 위원을 겸할 수 있다. 따라서 어느 상임위원도
                     의회운영위원이 되는 경우를 제외하고는 다른 상임위원회의 의원이 되는
                     일은 있을 수 없다. 다만 상임위원은 그 수에 제한없이 특별위원회의
                     위원을 겸직할 수 있다. -의회용어사전"
             required
-            onRegister={handleRegister("standingCommittees", "text", true)}
-            ErrorMessage={ErrorMessage("standingCommittees")}
+            onRegister={handleRegister("standing_committees", "text", true)}
+            ErrorMessage={ErrorMessage("standing_committees")}
           />
           {additionalCommitteeList.map((value, index) => (
             <AdditionalCommitteeTextInputContainer
               //이 부분 수정 예정
-              id="additionalStandingCommittees"
+              id="additional_standing_committees"
               title={"추가상임위원회"}
               value={value}
               errors={errors}
