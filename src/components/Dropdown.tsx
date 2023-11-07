@@ -25,7 +25,7 @@ const Dropdown: FC<DropdownProps> = ({ items, selectedItem, onSelectedItem }) =>
         </button>
       </div>
       {isOpen && (
-        <div className="absolute mt-2 w-24 rounded-md bg-white z-10">
+        <div className="absolute mt-2 w-24 rounded-md bg-white z-30">
           <div className="rounded-md text-center ring-1 ring-black ring-opacity-5">
             {items.map((item, index) => (
               <div
