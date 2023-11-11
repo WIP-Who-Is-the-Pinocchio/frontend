@@ -92,7 +92,7 @@ const AdminSearch: FC<AdminSearchProps> = () => {
         <div className="font-semibold">국회의원 검색</div>
         <div>
           <Dropdown
-            items={["이름", "당선횟수", "소속정당", "지역구"]}
+            items={["이름", "소속정당", "지역구"]}
             selectedItem={selectedItem}
             onSelectedItem={handlerSelectItem}
           />
