@@ -1,6 +1,5 @@
 const colors = {
-  sk: "#e6e6e6",
-  hr: "#f6f6f6",
+  "light-grey": "#e6e6e6",
   dw: "#0224b3",
   "dw-100": "#94e8ff",
 };
