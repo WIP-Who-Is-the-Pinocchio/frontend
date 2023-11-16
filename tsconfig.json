@@ -54,6 +54,8 @@
     "paths": {
       "@router": ["./src/router"],
       "@router/*": ["./src/router/*"],
+      "@api": ["./src/api"],
+      "@api/*": ["./src/api/*"],
       "@assets": ["./src/assets"],
       "@assets/*": ["./src/assets/*"],
       "@components": ["./src/components"],
@@ -62,7 +64,10 @@
       "@styles/*": ["./src/styles/*"],
       "@pages": ["./src/pages"],
       "@pages/*": ["./src/pages/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils": ["./src/utils"],
+      "@utils/*": ["./src/utils/*"],
+      "@hooks": ["./src/hooks"],
+      "@hooks/*": ["./src/hooks/*"]
     } /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */,
     // "rootDir": "./" /* List of root folders whose combined content represents the structure of the project at runtime. */,
     // "typeRoots": [],                       /* List of folders to include type definitions from. */

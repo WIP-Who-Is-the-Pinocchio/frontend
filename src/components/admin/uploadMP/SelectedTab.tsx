@@ -1,5 +1,5 @@
-import FormUploader from "@components/admin/uploadMP/FormUploader";
-import ExcelUploader from "@components/admin/uploadMP/ExcelUploader";
+import FormUploader from "@components/admin/uploadMP/formUploader/FormUploader";
+import ExcelUploader from "@components/admin/uploadMP/excelUploader/ExcelUploader";
 import { TabType } from "./types";
 
 interface SelectedTabProps {

@@ -1,5 +1,5 @@
 import React from "react";
-import { MPDataType, MPDataKeys } from "./types";
+import { MPDataType, MPDataKeys } from "../types";
 
 interface UploadedExcelPreviewProps {
   excelData: MPDataType[];
@@ -103,7 +103,7 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
         </button>
         <button
           type="button"
-          className="flex justify-center items-center w-20 px-[12px] py-[6px] rounded-lg bg-purple-400 text-[13px] text-white font-medium focus:outline-none hover:bg-gray-300 focus:ring-1 focus:ring-gray-200"
+          className="flex justify-center items-center w-[80px] px-[12px] py-[6px] rounded-lg bg-purple-400 text-[13px] text-white font-medium focus:outline-none hover:bg-gray-300 focus:ring-1 focus:ring-gray-200"
           onClick={handleClickUploadButton}
         >
           업로드
