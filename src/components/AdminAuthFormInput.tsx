@@ -1,6 +1,6 @@
 import React, { forwardRef, Ref } from "react";
 import { Path } from "react-hook-form";
-import { AdminAuthFormInputs } from "@utils/Types/adminAuthTypes";
+import { AdminAuthFormInputs } from "../types/adminAuthTypes";
 import { twMerge } from "tailwind-merge";
 interface LoginFormInput {
   label: string;

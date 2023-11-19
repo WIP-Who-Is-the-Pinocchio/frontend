@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import LoginFormInput from "@components/AdminAuthFormInput";
 import Button from "@components/Button";
 import logo from "@assets/icon/wipLogo.svg";
-import { AdminAuthFormInputs } from "@utils/Types/adminAuthTypes";
+import { AdminAuthFormInputs } from "../../types/adminAuthTypes";
 
 const AdminLogin: React.FC = () => {
   const {

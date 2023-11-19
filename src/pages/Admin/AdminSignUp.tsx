@@ -7,8 +7,9 @@ import Button from "@components/Button";
 import logo from "@assets/icon/wipLogo.svg";
 import { createPortal } from "react-dom";
 import Modal from "@components/Modal/Modal";
-import { AdminAuthFormInputs } from "@utils/Types/adminAuthTypes";
+import { AdminAuthFormInputs } from "../../types/adminAuthTypes";
 import EmailAuthBtn from "@components/EmailAuthBtn";
+import EmailAuthTimer from "@components/EmailAuthTimer";
 
 const AdminSignUp: React.FC = () => {
   const {
@@ -37,7 +38,9 @@ const AdminSignUp: React.FC = () => {
 
     // console.log(signupRes);
   };
+
   const handleClickEmailAuth = () => {
+    // window.alert("입력하신 이메일 주소로 인증번호가 발송되었습니다.");
     setShowEmailAuthModal(true);
   };
 
@@ -57,25 +60,6 @@ const AdminSignUp: React.FC = () => {
             document.body,
           )}
 
-        {showEmailAuthModal &&
-          createPortal(
-            <Modal onClose={() => setShowSignupCompleteModal(false)} shouldNavigate>
-              <div className="flex flex-col justify-center items-center w-[200px] p-[10px] text-[10px] text-center ">
-                <div className="flex items-center">
-                  <input
-                    type="text"
-                    placeholder="인증번호를 입력해주세요"
-                    className="m-[15px] p-[10px] border rounded"
-                  />
-                  <div className="w-[50px] h-[30px] p-[10px] bg-slate-200"> 시간</div>
-                </div>
-                <button className="w-[50px] h-[25px] p-[5px] bg-violet-400 text-white font-semibold rounded ">
-                  확인
-                </button>
-              </div>
-            </Modal>,
-            document.body,
-          )}
         <div className="w-[90%] p-[8px]">
           <img src={logo} alt="wip logo" className="px-[8px]" />
           <div className="my-[10px] px-[8px] font-semibold text-[18px] ">회원가입</div>
@@ -91,18 +75,37 @@ const AdminSignUp: React.FC = () => {
               required: "이메일은 필수 항목입니다.",
             }}
             render={({ field }) => (
-              <div className="flex items-center">
-                <LoginFormInput
-                  {...field}
-                  label="이메일"
-                  id="email"
-                  type="text"
-                  placeholder="이메일을 입력해주세요"
-                  className="w-[200px]"
-                />
-                <div className="translate-y-[10px]">
-                  <EmailAuthBtn type="button" onClick={handleClickEmailAuth} />
+              <div className="flex flex-col">
+                <div className="flex items-center">
+                  <LoginFormInput
+                    {...field}
+                    label="이메일"
+                    id="email"
+                    type="text"
+                    placeholder="이메일을 입력해주세요"
+                    className="w-[200px]"
+                  />
+                  <div className="translate-y-[10px]">
+                    <EmailAuthBtn type="button" onClick={handleClickEmailAuth} />
+                  </div>
                 </div>
+                {showEmailAuthModal && (
+                  <div className="flex flex-col justify-center items-center w-[200px] p-[10px] text-[10px] text-center ">
+                    <div className="flex items-center">
+                      <input
+                        type="text"
+                        placeholder="인증번호를 입력해주세요"
+                        className="m-[15px] p-[10px] border rounded"
+                      />
+                      <div className="w-[50px] h-[30px] p-[10px] bg-slate-200">
+                        {showEmailAuthModal && <EmailAuthTimer />}
+                      </div>
+                    </div>
+                    <button className="w-[50px] h-[25px] p-[5px] bg-violet-400 text-white font-semibold rounded ">
+                      확인
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           />
