@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoginFormInput from "@components/AdminAuthFormInput";
 import Button from "@components/Button";
-import logo from "@assets/wipLogo.svg";
+import logo from "@assets/icon/wipLogo.svg";
 import { AdminAuthFormInputs } from "@utils/Types/adminAuthTypes";
 
 const AdminLogin: React.FC = () => {
@@ -21,7 +21,7 @@ const AdminLogin: React.FC = () => {
 
   const onSubmit = async (data: AdminAuthFormInputs) => {
     const loginRes = await axios.post("http://localhost:2309/admin/api/v1/auth/login", {
-      login_name: data.email,
+      email: data.email,
       password: data.password,
     });
     window.alert("로그인되었습니다:)");
