@@ -20,14 +20,23 @@ const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data: AdminAuthFormInputs) => {
-    const loginRes = await axios.post("http://localhost:2309/admin/api/v1/auth/login", {
-      email: data.email,
-      password: data.password,
-    });
-    window.alert("로그인되었습니다:)");
-    navigate("/");
-  };
+    try {
+      const loginRes = await axios.post("http://localhost:2309/admin/api/v1/auth/login", {
+        email: data.email,
+        password: data.password,
+      });
+      const { access_token, refresh_token } = loginRes.data;
+      // 토큰을 로컬스토리지에 저장
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token);
 
+      window.alert("로그인되었습니다:)");
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed:", error);
+      window.alert("로그인에 실패했습니다:(");
+    }
+  };
   return (
     <div className="flex justify-center items-center min-h-[100vh] ">
       <form
