@@ -39,6 +39,11 @@ const AdminSignUp: React.FC = () => {
     // console.log(signupRes);
   };
 
+  const handleTimerComplete = () => {
+    // 타이머가 완료되면 모달 닫기
+    setShowEmailAuthModal(false);
+  };
+
   const handleClickEmailAuth = () => {
     // window.alert("입력하신 이메일 주소로 인증번호가 발송되었습니다.");
     setShowEmailAuthModal(true);
@@ -98,7 +103,9 @@ const AdminSignUp: React.FC = () => {
                         className="m-[15px] p-[10px] border rounded"
                       />
                       <div className="w-[50px] h-[30px] p-[10px] bg-slate-200">
-                        {showEmailAuthModal && <EmailAuthTimer />}
+                        {showEmailAuthModal && (
+                          <EmailAuthTimer onComplete={handleTimerComplete} />
+                        )}
                       </div>
                     </div>
                     <button className="w-[50px] h-[25px] p-[5px] bg-violet-400 text-white font-semibold rounded ">
