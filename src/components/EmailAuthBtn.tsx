@@ -2,10 +2,15 @@ import React from "react";
 
 interface EmailAuthBtnProps {
   type: "submit" | "button";
+  children: string;
   onClick?: () => void;
 }
 
-const EmailAuthBtn: React.FC<EmailAuthBtnProps> = ({ type = "button", onClick }) => {
+const EmailAuthBtn: React.FC<EmailAuthBtnProps> = ({
+  type = "button",
+  onClick,
+  children,
+}) => {
   return (
     <>
       <button
@@ -13,7 +18,8 @@ const EmailAuthBtn: React.FC<EmailAuthBtnProps> = ({ type = "button", onClick })
         type={type}
         onClick={onClick}
       >
-        인증하기
+        {/* {showEmailAuthModal ? "재요청" : "인증하기"} */}
+        {children}
       </button>
     </>
   );

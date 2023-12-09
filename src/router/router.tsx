@@ -7,7 +7,6 @@ import AdminDashboard from "@pages/Admin/AdminDashboard";
 import AdminSignUp from "@pages/Admin/AdminSignUp";
 import AdminSearch from "@pages/Admin/AdminSearch";
 import UploadMP from "@pages/Admin/UploadMP";
-import HookFormStudy from "@pages/Admin/HookFormStudy";
 
 export const routers = createBrowserRouter([
   {
@@ -29,10 +28,6 @@ export const routers = createBrowserRouter([
       {
         path: "/admin/signup",
         element: <AdminSignUp />,
-      },
-      {
-        path: "/study",
-        element: <HookFormStudy />,
       },
     ],
   },
