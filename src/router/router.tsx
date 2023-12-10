@@ -1,4 +1,6 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
+
+import Header from "@components/Header/Header";
 import MainPage from "@pages/MainPage";
 import GomaoPage from "@pages/Gomao/Gomao";
 import AdminLogin from "@pages/Admin/AdminLogin";
@@ -68,6 +70,7 @@ export const routers = createBrowserRouter([
 function LayOutWrapper() {
   return (
     <div>
+      <Header />
       <Outlet />
     </div>
   );
