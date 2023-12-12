@@ -1,17 +1,12 @@
 import axios from "axios";
 
-const logout = async () => {
-  const adminId = localStorage.getItem("adminId");
-  const logout_res = await axios.post(
-    `http://localhost:2309/admin/api/v1/auth/logout?${adminId}`,
-  );
-  console.log(logout_res);
+const logout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
 
   // 로그인 페이지로 리디렉션
-  // window.location.href = "/login";
-  window.alert("로그아웃 되었습니다.");
+  window.alert("세션 만료로 로그아웃 되었습니다. 다시 로그인해주세요.");
+  // window.location.href = "/admin/login";
 };
 
 export default logout;

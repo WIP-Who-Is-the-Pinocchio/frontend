@@ -11,12 +11,12 @@ import Modal from "@components/Modal/Modal";
 import { AdminAuthFormInputs } from "../../types/adminAuthTypes";
 import EmailAuthBtn from "@components/EmailAuthBtn";
 import EmailAuthTimer from "@components/emailTimer";
+import { register } from "module";
 
 const AdminSignUp: React.FC = () => {
   const {
     getValues,
     control,
-    setError,
     formState: { errors },
     handleSubmit,
   } = useForm<AdminAuthFormInputs>({
@@ -42,6 +42,11 @@ const AdminSignUp: React.FC = () => {
 
   const onSubmit = async (data: AdminAuthFormInputs) => {
     console.log(data);
+    if (!isEmailValidate) {
+      window.alert("이메일 인증번호가 일치하지 않습니다.");
+      return;
+    }
+
     setShowSignupCompleteModal(true);
 
     // const signupRes = await axios.post("http://localhost:2309/admin/api/v1/auth/signup", {
@@ -89,7 +94,13 @@ const AdminSignUp: React.FC = () => {
     console.log(getValues("email"));
   }, 300);
 
-  const handleClickConfirmEmail = async () => {
+  const handleClickConfirmEmail = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (!emailValidNum) {
+      window.alert("인증번호를 입력해주세요");
+      return;
+    }
     //이메일 인증메일 값 일치확인
     await axios
       .get(
@@ -105,6 +116,7 @@ const AdminSignUp: React.FC = () => {
       .catch((e) => {
         console.log(e);
         console.log("틀림");
+        // setError('notValidEmailNum',{type:'custom'})
         window.alert("이메일 인증번호가 일치하지않습니다");
       });
   };
@@ -122,27 +134,29 @@ const AdminSignUp: React.FC = () => {
       .get(`http://localhost:2309/admin/api/v1/auth/nickname/${nickname}`)
       .then((response) => {
         console.log(response.data.detail);
-        console.log(response.status);
-        if (response.data.detail === "Nickname already exists.") {
+        console.log(response);
+        if (response.data.status !== 200) {
           setIsNicknameDuplicated(true);
           //hookform 에러 설정
-          if (isNicknameDuplicated) {
-            console.log("중복");
-            setError("nickname", {
-              type: "duplicated",
-              message: "닉네임이 중복되었습니다.",
-            });
-          } else {
-            setError("nickname", {
-              type: "duplicated",
-              message: "",
-            });
-          }
+          // if (isNicknameDuplicated) {
+          //   console.log("중복");
+          //   setError("nickname", {
+          //     type: "duplicated",
+          //     message: "닉네임이 중복되었습니다.",
+          //   });
+          // } else {
+          //   setError("nickname", {
+          //     type: "duplicated",
+          //     message: "",
+          //   });
+          // }
         }
       })
       .catch((error) => {
         console.error(error);
       });
+
+    field.onChange(e);
   }, 300);
 
   return (
@@ -249,7 +263,11 @@ const AdminSignUp: React.FC = () => {
                   id="nickname"
                   type="text"
                   placeholder="닉네임을 입력해주세요"
-                  onChange={handleChangeNickNameDuplication}
+                  onChange={(e) => {
+                    handleChangeNickNameDuplication(e);
+                    field.onChange(e);
+                    // 필드의 변경 사항을 React Hook Form에게 전달합니다.
+                  }}
                 />
               </div>
             )}
