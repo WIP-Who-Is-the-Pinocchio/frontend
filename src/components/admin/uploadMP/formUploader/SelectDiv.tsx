@@ -10,8 +10,8 @@ interface CustomSelectProps {
   tooltip?: string;
   caption?: string;
   onChange?: React.ChangeEventHandler<HTMLSelectElement> | undefined;
-  onRegister: UseFormRegisterReturn;
-  ErrorMessage: JSX.Element | undefined;
+  onRegister?: UseFormRegisterReturn;
+  ErrorMessage?: JSX.Element | undefined;
 }
 
 const SelectDiv: React.FC<CustomSelectProps> = ({

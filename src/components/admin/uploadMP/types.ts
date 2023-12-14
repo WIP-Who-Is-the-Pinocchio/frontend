@@ -5,9 +5,6 @@ export interface InputTypes {
   political_party: string; //소속정당
   elected_count: number; //당선횟수
   assembly_term: number; //몇대
-  region: string; //지역구
-  district: string[]; //세부지역구
-  section: string; //분구
   standing_committees: string; //상임위원회
   additional_standing_committees: string[]; //추가 상임위원회
   status_of_promise: {
@@ -43,6 +40,13 @@ export interface InputTypes {
     total_secured_funds: number; //확보재정총액
     total_executed_funds: number; //집행재정총액
   };
+  constituency: [
+    {
+      region: string;
+      district: string;
+      section: string;
+    },
+  ];
 }
 
 //form 내부 table에 들어갈 자료 type입니다.

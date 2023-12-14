@@ -1,29 +1,21 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { formResource, InputTypes } from "../types";
 import ImageSelector from "./ImageSelector";
-import SelectDiv from "./SelectDiv";
 import TextInputDiv from "./TextInputDiv";
 import Table from "./Table";
-import { regionData } from "./regionList";
 import { useState } from "react";
-import SelectDistrict from "./SelectDistrict";
 import AdditionalCommitteeTextInputContainer from "./AdditionalCommitteeTextInputContainer";
+import ConstituencyInputs from "./ConstituencyInputs";
 
 interface FormUploaderProps {}
 
 const FormUploader: React.FC<FormUploaderProps> = () => {
-  const { handleSubmit, watch, register, getValues, setValue, formState, resetField } =
+  const { handleSubmit, watch, register, formState, resetField, control } =
     useForm<InputTypes>({
       mode: "onChange", //실시간 validation을 위해 onChange 모드 설정
     });
 
-  // const { fields, append, remove } = useFieldArray({
-  //   control,
-  //   name: "additional_standing_committees",
-  // });
   const { errors } = formState;
-  const [selectedRegion, setSelectedRegion] = useState<string>();
-  const [districtList, setDistrictList] = useState<string[]>([]);
   const [additionalCommitteeList, setAdditionalCommitteeList] = useState<string[]>([]);
   const onSubmit: SubmitHandler<InputTypes> = (data) => {
     //미리보기 검사용
@@ -32,37 +24,6 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
   };
 
   console.log(watch());
-
-  const handleSelectRegion = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedRegion(event.target.value);
-  };
-
-  const handleClickAddDistrict = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    if (!selectedRegion) {
-      return;
-    }
-    setDistrictList((prev) => [...prev, ""]);
-  };
-
-  const handleSelectDistrict = (
-    index: number,
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setDistrictList((prev) => {
-      const updatedList = [...prev];
-      updatedList[index] = event.target.value;
-      return updatedList;
-    });
-
-    const values = getValues("district"); // 현재 폼의 값 가져오기
-    const newArray = values.splice(index, 1); // 'item2'를 제외한 새로운 배열 생성
-    setValue("district", newArray); // 배열 필드 업데이트
-  };
-
-  const handleClickDeleteCityComponent = (index: number) => {
-    setDistrictList((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
-  };
 
   const handleClickAddAdditionalCommitteeList = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -133,7 +94,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
       <h1 className="px-[20px] text-[20px] font-semibold text-left text-gray-900 bg-white">
         기본정보
       </h1>
-      <div className="flex justify-center gap-[70px] mb-[24px]">
+      <div className="flex justify-center gap-[70px] mb-[20px]">
         <ImageSelector register={register} resetField={resetField} />
         <div className="flex flex-col gap-[24px] w-[500px]">
           <TextInputDiv
@@ -167,89 +128,37 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-[30px]">
-        <div className="flex flex-col gap-[20px]">
-          <SelectDiv
-            title="지역구"
-            optionList={Object.keys(regionData)}
-            required
-            onChange={handleSelectRegion}
-            onRegister={handleRegister("region", "text", true)}
-            ErrorMessage={ErrorMessage("region")}
-          />
-          {selectedRegion && (
-            <SelectDiv
-              title="세부 지역구"
-              optionList={regionData[selectedRegion]}
-              required
-              onRegister={handleRegister("district[0]" as keyof InputTypes, "text", true)}
-              ErrorMessage={ErrorMessage("district")}
-            />
-          )}
-          {selectedRegion &&
-            districtList.map((selected, index) => (
-              <SelectDistrict
-                key={`district${index}`}
-                title={`세부 지역구`}
-                optionList={regionData[selectedRegion]}
-                selected={selected}
-                index={index}
-                onRegister={handleRegister(
-                  `district[${index + 1}]` as keyof InputTypes,
-                  "text",
-                  true,
-                )}
-                onSelectDistrict={handleSelectDistrict}
-                onClickDeleteCityComponent={handleClickDeleteCityComponent}
-              />
-            ))}
-          {selectedRegion && (
-            <button
-              className="py-[6px] px-[12px] mt-[10px] border border-gray-200 rounded-lg text-[12px] font-medium text-gray-900 bg-neutral-50 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-              onClick={(e) => handleClickAddDistrict(e)}
-            >
-              + 세부 지역구 추가
-            </button>
-          )}
-          <SelectDiv
-            title="분구"
-            optionList={formResource.분구리스트}
-            caption="분구 지역인 경우에만 선택"
-            onRegister={handleRegister("section", "text", false)}
-            ErrorMessage={ErrorMessage("section")}
-          />
-        </div>
-        <div className="flex flex-col gap-[20px]">
-          <TextInputDiv
-            title="상임위원회"
-            tooltip="의장을 제외한 모든 의원은 하나의 상임위원회의 위원이 되며 다만
+      <ConstituencyInputs control={control} />
+      <div className="flex flex-col gap-[20px]">
+        <TextInputDiv
+          title="상임위원회"
+          tooltip="의장을 제외한 모든 의원은 하나의 상임위원회의 위원이 되며 다만
                     의회운영위원회의 위원을 겸할 수 있다. 따라서 어느 상임위원도
                     의회운영위원이 되는 경우를 제외하고는 다른 상임위원회의 의원이 되는
                     일은 있을 수 없다. 다만 상임위원은 그 수에 제한없이 특별위원회의
                     위원을 겸직할 수 있다. -의회용어사전"
-            required
-            onRegister={handleRegister("standing_committees", "text", true)}
-            ErrorMessage={ErrorMessage("standing_committees")}
+          required
+          onRegister={handleRegister("standing_committees", "text", true)}
+          ErrorMessage={ErrorMessage("standing_committees")}
+        />
+        {additionalCommitteeList.map((value, index) => (
+          <AdditionalCommitteeTextInputContainer
+            //이 부분 수정 예정
+            id="additional_standing_committees"
+            title={"추가상임위원회"}
+            value={value}
+            errors={errors}
+            index={index}
+            onChangeValue={handleChangeAdditionalCommitteeValue}
+            onClickDelete={handleDeleteAdditionalCommittee}
           />
-          {additionalCommitteeList.map((value, index) => (
-            <AdditionalCommitteeTextInputContainer
-              //이 부분 수정 예정
-              id="additional_standing_committees"
-              title={"추가상임위원회"}
-              value={value}
-              errors={errors}
-              index={index}
-              onChangeValue={handleChangeAdditionalCommitteeValue}
-              onClickDelete={handleDeleteAdditionalCommittee}
-            />
-          ))}
-          <button
-            className="py-[6px] px-[12px] mt-[10px] border border-gray-200 rounded-lg text-[12px] font-medium text-gray-900 bg-neutral-50 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-            onClick={(e) => handleClickAddAdditionalCommitteeList(e)}
-          >
-            + 상임위원회 추가
-          </button>
-        </div>
+        ))}
+        <button
+          className="py-[6px] px-[12px] mt-[10px] border border-gray-200 rounded-lg text-[12px] font-medium text-gray-900 bg-neutral-50 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
+          onClick={(e) => handleClickAddAdditionalCommitteeList(e)}
+        >
+          + 상임위원회 추가
+        </button>
       </div>
       <Table
         tableResource={formResource.status_of_promise}
