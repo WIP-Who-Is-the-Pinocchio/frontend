@@ -1,12 +1,12 @@
 export interface MemberType {
   이름: string;
-  당선횟수: string;
+  당선횟수: number;
   지역구: string;
   소속정당: string;
   프로필: string;
   상임위원회: string;
   총공약수: number;
-  완료: number | null;
+  완료: number;
   추진중: number;
   보류: number;
   폐기: number;
@@ -24,13 +24,13 @@ export interface MemberType {
   필요재정총액: string;
   확보재정총액: string;
   집행재정총액: string;
-  [key: string]: string | number | null; // 문자열 인덱스 서명 추가
+  [key: string]: string | number; // 문자열 인덱스 서명 추가
 }
 
 export const memberData: MemberType[] = [
   {
     이름: "강병원",
-    당선횟수: "재선",
+    당선횟수: 2,
     지역구: "서울특별시 은평구을",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/60490713.jpg",
@@ -57,7 +57,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "강선우",
-    당선횟수: "초선",
+    당선횟수: 1,
     지역구: "서울특별시 강서구갑",
     소속정당: "더불어민주당",
     프로필:
@@ -85,13 +85,13 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "고민정",
-    당선횟수: "초선",
+    당선횟수: 1,
     지역구: "서울특별시 광진구을",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/WCD5518S.jpg",
     상임위원회: "과학기술방송정보통신위원회",
     총공약수: 18,
-    완료: null,
+    완료: 0,
     추진중: 2,
     보류: 13,
     폐기: 0,
@@ -112,7 +112,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "고용진",
-    당선횟수: "재선",
+    당선횟수: 2,
     지역구: "서울특별시 노원구갑",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/6V37131U.jpg",
@@ -139,7 +139,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "권영세",
-    당선횟수: "4선",
+    당선횟수: 4,
     지역구: "서울특별시 용산구",
     소속정당: "국민의힘",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/LG63087O.jpg",
@@ -166,7 +166,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "기동민",
-    당선횟수: "재선",
+    당선횟수: 2,
     지역구: "서울특별시 성북구을",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/B7R2742J.jpg",
@@ -193,7 +193,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "김민석",
-    당선횟수: "3선",
+    당선횟수: 3,
     지역구: "서울특별시 영등포구을",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/MLH1404S.jpg",
@@ -220,7 +220,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "김병기",
-    당선횟수: "재선",
+    당선횟수: 2,
     지역구: "서울특별시 동작구갑",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/8Q88373R.jpg",
@@ -247,7 +247,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "김성환",
-    당선횟수: "재선",
+    당선횟수: 2,
     지역구: "서울특별시 노원구병",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/XSP20229.jpg",
@@ -274,7 +274,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "김영배",
-    당선횟수: "초선",
+    당선횟수: 1,
     지역구: "서울특별시 성북구갑",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/B7D7534L.jpg",
@@ -301,7 +301,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "김영주",
-    당선횟수: "4선",
+    당선횟수: 4,
     지역구: "서울특별시 영등포구갑",
     소속정당: "더불어민주당",
     프로필:
@@ -329,7 +329,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "김웅",
-    당선횟수: "초선",
+    당선횟수: 1,
     지역구: "서울특별시 송파구갑",
     소속정당: "국민의힘",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/LQW3652K.jpg",
@@ -356,7 +356,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "남인순",
-    당선횟수: "3선",
+    당선횟수: 3,
     지역구: "서울특별시 송파구병",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/04T3751T.jpg",
@@ -383,7 +383,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "노웅래",
-    당선횟수: "4선",
+    당선횟수: 4,
     지역구: "서울특별시 마포구갑",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/0827740Q.jpg",
@@ -410,7 +410,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "박성준",
-    당선횟수: "초선",
+    당선횟수: 1,
     지역구: "서울특별시 중구·성동구을",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/IL74008M.jpg",
@@ -437,7 +437,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "박용진",
-    당선횟수: "재선",
+    당선횟수: 2,
     지역구: "서울특별시 강북구을",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/PEP6922S.jpg",
@@ -464,7 +464,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "박주민",
-    당선횟수: "재선",
+    당선횟수: 2,
     지역구: "서울특별시 은평구갑",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/6AU2417B.jpg",
@@ -491,7 +491,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "배현진",
-    당선횟수: "초선",
+    당선횟수: 1,
     지역구: "서울특별시 송파구을",
     소속정당: "국민의힘",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/4X525582.jpg",
@@ -518,7 +518,7 @@ export const memberData: MemberType[] = [
   },
   {
     이름: "서영교",
-    당선횟수: "3선",
+    당선횟수: 3,
     지역구: "서울특별시 중랑구갑",
     소속정당: "더불어민주당",
     프로필: "https://www.assembly.go.kr/static/portal/img/openassm/TKJ4800F.jpg",

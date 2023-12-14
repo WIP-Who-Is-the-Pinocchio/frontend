@@ -1,22 +1,17 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
-import { Router as RemixRouter } from "@remix-run/router/dist/router";
 import MainPage from "@pages/MainPage";
 import GomaoPage from "@pages/Gomao/Gomao";
 import AdminLogin from "@pages/Admin/AdminLogin";
 import AdminLayout from "@pages/Admin/AdminLayout";
 import AdminDashboard from "@pages/Admin/AdminDashboard";
+import AdminSignUp from "@pages/Admin/AdminSignUp";
 import AdminSearch from "@pages/Admin/AdminSearch";
 import UploadMP from "@pages/Admin/UploadMP";
 
-export const routers: RemixRouter = createBrowserRouter([
+export const routers = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <div>
-        <div>{window.location.pathname}</div>
-        <LayOutWrapper />
-      </div>
-    ),
+    element: <LayOutWrapper />,
     children: [
       {
         index: true,
@@ -27,8 +22,12 @@ export const routers: RemixRouter = createBrowserRouter([
         element: <GomaoPage />,
       },
       {
-        path: "adminLogin",
+        path: "/admin/login",
         element: <AdminLogin />,
+      },
+      {
+        path: "/admin/signup",
+        element: <AdminSignUp />,
       },
     ],
   },
@@ -69,7 +68,6 @@ export const routers: RemixRouter = createBrowserRouter([
 function LayOutWrapper() {
   return (
     <div>
-      <h1>헤더 ㄱㅁㅇ</h1>
       <Outlet />
     </div>
   );
