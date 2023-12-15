@@ -4,8 +4,8 @@ import ImageSelector from "./ImageSelector";
 import TextInputDiv from "./TextInputDiv";
 import Table from "./Table";
 import { useState } from "react";
-import AdditionalCommitteeTextInputContainer from "./AdditionalCommitteeTextInputContainer";
 import ConstituencyInputs from "./ConstituencyInputs";
+import CommitteeInputs from "./CommitteeInputs";
 
 interface FormUploaderProps {}
 
@@ -24,31 +24,6 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
   };
 
   console.log(watch());
-
-  const handleClickAddAdditionalCommitteeList = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    e.preventDefault();
-    setAdditionalCommitteeList((prev) => [...prev, ""]);
-  };
-
-  const handleChangeAdditionalCommitteeValue = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setAdditionalCommitteeList((prev) => {
-      const updatedList = [...prev];
-      updatedList[index] = e.target.value;
-      return updatedList;
-    });
-  };
-
-  const handleDeleteAdditionalCommittee = (index: number) => {
-    setAdditionalCommitteeList((prev) => [
-      ...prev.slice(0, index),
-      ...prev.slice(index + 1),
-    ]);
-  };
 
   const handleSetInputValue = (value: string, type: string) => {
     if (type === "number") {
@@ -95,8 +70,13 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
         기본정보
       </h1>
       <div className="flex justify-center gap-[70px] mb-[20px]">
-        <ImageSelector register={register} resetField={resetField} />
+        <ImageSelector register={register} resetField={resetField} control={control} />
         <div className="flex flex-col gap-[24px] w-[500px]">
+          <TextInputDiv
+            title="프로필"
+            onRegister={handleRegister("profile_url", "text", false)}
+            ErrorMessage={ErrorMessage("profile_url")}
+          />
           <TextInputDiv
             title="이름"
             required
@@ -129,37 +109,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
         </div>
       </div>
       <ConstituencyInputs control={control} />
-      <div className="flex flex-col gap-[20px]">
-        <TextInputDiv
-          title="상임위원회"
-          tooltip="의장을 제외한 모든 의원은 하나의 상임위원회의 위원이 되며 다만
-                    의회운영위원회의 위원을 겸할 수 있다. 따라서 어느 상임위원도
-                    의회운영위원이 되는 경우를 제외하고는 다른 상임위원회의 의원이 되는
-                    일은 있을 수 없다. 다만 상임위원은 그 수에 제한없이 특별위원회의
-                    위원을 겸직할 수 있다. -의회용어사전"
-          required
-          onRegister={handleRegister("standing_committees", "text", true)}
-          ErrorMessage={ErrorMessage("standing_committees")}
-        />
-        {additionalCommitteeList.map((value, index) => (
-          <AdditionalCommitteeTextInputContainer
-            //이 부분 수정 예정
-            id="additional_standing_committees"
-            title={"추가상임위원회"}
-            value={value}
-            errors={errors}
-            index={index}
-            onChangeValue={handleChangeAdditionalCommitteeValue}
-            onClickDelete={handleDeleteAdditionalCommittee}
-          />
-        ))}
-        <button
-          className="py-[6px] px-[12px] mt-[10px] border border-gray-200 rounded-lg text-[12px] font-medium text-gray-900 bg-neutral-50 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-          onClick={(e) => handleClickAddAdditionalCommitteeList(e)}
-        >
-          + 상임위원회 추가
-        </button>
-      </div>
+      <CommitteeInputs control={control} />
       <Table
         tableResource={formResource.status_of_promise}
         register={register}

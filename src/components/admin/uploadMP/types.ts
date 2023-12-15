@@ -1,12 +1,10 @@
 //react-hook-form에 등록되는 input types입니다.
 export interface InputTypes {
-  profile_url: File | null;
+  profile_url: string;
   name: string;
   political_party: string; //소속정당
   elected_count: number; //당선횟수
   assembly_term: number; //몇대
-  standing_committees: string; //상임위원회
-  additional_standing_committees: string[]; //추가 상임위원회
   status_of_promise: {
     //공약이행현황
     total_promise_count: number; //총공약수
@@ -45,6 +43,12 @@ export interface InputTypes {
       region: string;
       district: string;
       section: string;
+    },
+  ];
+  committee: [
+    {
+      is_main: boolean;
+      name: string;
     },
   ];
 }
