@@ -1,9 +1,8 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { formResource, InputTypes } from "../types";
-import ImageSelector from "./ImageSelector";
+import ProfilePreview from "./ProfilePreview";
 import TextInputDiv from "./TextInputDiv";
 import Table from "./Table";
-import { useState } from "react";
 import ConstituencyInputs from "./ConstituencyInputs";
 import CommitteeInputs from "./CommitteeInputs";
 
@@ -14,9 +13,8 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     useForm<InputTypes>({
       mode: "onChange", //실시간 validation을 위해 onChange 모드 설정
     });
-
   const { errors } = formState;
-  const [additionalCommitteeList, setAdditionalCommitteeList] = useState<string[]>([]);
+
   const onSubmit: SubmitHandler<InputTypes> = (data) => {
     //미리보기 검사용
     alert(`제출! ${JSON.stringify(data, null, 2)}`);
@@ -70,7 +68,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
         기본정보
       </h1>
       <div className="flex justify-center gap-[70px] mb-[20px]">
-        <ImageSelector register={register} resetField={resetField} control={control} />
+        <ProfilePreview register={register} resetField={resetField} control={control} />
         <div className="flex flex-col gap-[24px] w-[500px]">
           <TextInputDiv
             title="프로필"

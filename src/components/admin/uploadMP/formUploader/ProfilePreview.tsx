@@ -1,39 +1,25 @@
-import React, { ChangeEventHandler, useState } from "react";
-import { UseFormRegister, UseFormResetField } from "react-hook-form";
+import { Control, UseFormRegister, UseFormResetField, useWatch } from "react-hook-form";
 import { InputTypes } from "../types";
-import Title from "./Title";
 
 interface ImageSelectorProps {
   register: UseFormRegister<InputTypes>;
   resetField: UseFormResetField<InputTypes>;
+  control: Control<InputTypes, any>;
 }
 
-const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) => {
-  const [profileImage, setProfileImage] = useState<File>();
-
-  const handleSetProfile: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) {
-      alert("이미지를 선택해주세요.");
-      return;
-    }
-    setProfileImage(file);
-  };
-
-  const handleDeleteProfile = () => {
-    setProfileImage(undefined);
-    resetField("profile_url");
-  };
+const ProfilePreview: React.FC<ImageSelectorProps> = ({ control }) => {
+  const profile = useWatch({
+    control,
+    name: "profile_url", // without supply name will watch the entire form, or ['firstName', 'lastName'] to watch both
+    defaultValue: "", // default value before the render
+  });
 
   return (
     <div className="flex flex-col">
-      <Title isOptional={true}>프로필</Title>
+      <h3 className="mb-[8px] text-[15px] font-medium text-gray-900">프로필 미리보기</h3>
       <div className="flex justify-center items-center w-[150px] h-[200px] border rounded-lg bg-neutral-100">
-        {profileImage ? (
-          <img
-            src={URL.createObjectURL(profileImage)}
-            className="object-cover w-full h-full rounded-lg"
-          />
+        {profile ? (
+          <img src={profile} className="object-cover w-full h-full rounded-lg" />
         ) : (
           <p className="text-[12px] text-gray-400 text-center">
             프로필 이미지를
@@ -42,7 +28,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) =
           </p>
         )}
       </div>
-      <div className="flex justify-center gap-[5px]">
+      {/* <div className="flex justify-center gap-[5px]">
         <label
           htmlFor="profileInput"
           className="py-[6px] px-[12px] mt-[10px] border border-gray-200 rounded-lg text-[12px] font-medium text-gray-900 bg-neutral-50 hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
@@ -64,9 +50,9 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ register, resetField }) =
         >
           삭제
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default ImageSelector;
+export default ProfilePreview;
