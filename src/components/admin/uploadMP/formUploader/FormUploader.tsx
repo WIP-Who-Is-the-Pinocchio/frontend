@@ -1,3 +1,4 @@
+import { post } from "@api/instance";
 import { useForm, SubmitHandler, FieldError } from "react-hook-form";
 import { formResource, InputTypes } from "../types";
 import ProfilePreview from "./ProfilePreview";
@@ -15,10 +16,20 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     });
   const { errors } = formState;
 
-  const onSubmit: SubmitHandler<InputTypes> = (data) => {
+  const onSubmit: SubmitHandler<InputTypes> = async (data) => {
     //미리보기 검사용
-    alert(`제출! ${JSON.stringify(data, null, 2)}`);
-    console.log(data);
+    const isConfirmed = confirm(`제출! ${JSON.stringify(data, null, 2)}`);
+    const adminId = localStorage.getItem("adminId");
+
+    if (isConfirmed) {
+      try {
+        const res = await post(`/politician/${adminId}`, data);
+        console.log(res);
+      } catch (e) {
+        alert("등록에 실패하였습니다.");
+        console.log(e);
+      }
+    }
   };
 
   console.log(watch());

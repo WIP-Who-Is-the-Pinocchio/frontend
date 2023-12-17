@@ -132,7 +132,7 @@ export const formResource = {
       "base_info.discarded_promise_count",
       "base_info.other_promise_count",
     ],
-    required: true,
+    required: false,
   },
   completion_status_by_theme: <TableType>{
     title: "성격·내용별 완료 현황",
@@ -159,7 +159,7 @@ export const formResource = {
       "ongoing__promise_count",
       "new_business_promise_count",
     ],
-    required: true,
+    required: false,
   },
   legislative_status: <TableType>{
     title: "입법 현황",
@@ -171,7 +171,7 @@ export const formResource = {
       "base_info.resolve_required_promise_count",
       "base_info.resolved_promise_count",
     ],
-    required: true,
+    required: false,
   },
   financial_status: <TableType>{
     title: "재정 현황",
