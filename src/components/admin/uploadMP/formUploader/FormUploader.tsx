@@ -32,13 +32,13 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
   };
 
   const handleRegister = (
-    id: keyof InputTypes,
+    id: string,
     type: string,
     required: boolean,
     validationRule?: RegExp,
   ) => {
     return {
-      ...register(id, {
+      ...register(id as keyof InputTypes, {
         required: required && "필수 입력란을 작성해주세요.",
         pattern: {
           value: validationRule || /.*/,
@@ -49,11 +49,11 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     };
   };
 
-  const ErrorMessage = (id: keyof InputTypes) => {
-    if (errors[id]?.message) {
+  const ErrorMessage = (id: string) => {
+    if (errors[id as keyof InputTypes]?.message) {
       return (
         <p className="mt-[4px] text-[11px] font-normal text-red-500">
-          {errors[id]?.message}
+          {errors[id as keyof InputTypes]?.message}
         </p>
       );
     }
@@ -71,38 +71,50 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
         <ProfilePreview register={register} resetField={resetField} control={control} />
         <div className="flex flex-col gap-[24px] w-[500px]">
           <TextInputDiv
-            title="프로필"
-            onRegister={handleRegister("profile_url", "text", false)}
-            ErrorMessage={ErrorMessage("profile_url")}
+            title="대수"
+            type="number"
+            required
+            onRegister={handleRegister("assembly_term", "number", true, /^[1-9]\d*$/)}
+            ErrorMessage={ErrorMessage("assembly_term")}
+          />
+          <TextInputDiv
+            title="프로필 url"
+            onRegister={handleRegister("base_info.profile_url", "text", false)}
+            ErrorMessage={ErrorMessage("base_info.profile_url")}
           />
           <TextInputDiv
             title="이름"
             required
             onRegister={handleRegister(
-              "name",
+              "base_info.name",
               "text",
               true,
               /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z]*$/,
             )}
-            ErrorMessage={ErrorMessage("name")}
+            ErrorMessage={ErrorMessage("base_info.name")}
           />
           <TextInputDiv
             title="소속정당"
             required
             onRegister={handleRegister(
-              "political_party",
+              "base_info.political_party",
               "text",
               true,
               /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z]*$/,
             )}
-            ErrorMessage={ErrorMessage("political_party")}
+            ErrorMessage={ErrorMessage("base_info.political_party")}
           />
           <TextInputDiv
             title="당선횟수"
             type="number"
             required
-            onRegister={handleRegister("elected_count", "number", true, /^[1-9]\d*$/)}
-            ErrorMessage={ErrorMessage("elected_count")}
+            onRegister={handleRegister(
+              "base_info.elected_count",
+              "number",
+              true,
+              /^[1-9]\d*$/,
+            )}
+            ErrorMessage={ErrorMessage("base_info.elected_count")}
           />
         </div>
       </div>

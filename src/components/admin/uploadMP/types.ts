@@ -1,11 +1,12 @@
 //react-hook-form에 등록되는 input types입니다.
 export interface InputTypes {
-  profile_url: string;
-  name: string;
-  political_party: string; //소속정당
-  elected_count: number; //당선횟수
   assembly_term: number; //몇대
-  status_of_promise: {
+  base_info: {
+    //기본정보
+    profile_url: string;
+    name: string;
+    political_party: string; //소속정당
+    elected_count: number; //당선횟수
     //공약이행현황
     total_promise_count: number; //총공약수
     completed_promise_count: number; //완료
@@ -13,30 +14,32 @@ export interface InputTypes {
     pending_promise_count: number; //보류
     discarded_promise_count: number; //폐기
     other_promise_count: number; //기타
-  };
-  completion_status_by_theme: {
-    //성격내용별완료현황
-    national_promise_count: { completed: number; total: number }; //국정공약
-    local_promise_count: { completed: number; total: number }; //지역공약
-    legislative_promise_count: { completed: number; total: number }; //입법공약
-    financial_promise_count: { completed: number; total: number }; //재정공약
-    in_term_promise_count: { completed: number; total: number }; //임기내
-    after_term_promise_count: { completed: number; total: number }; //임기후
-    ongoing__promise_count: { completed: number; total: number }; //지속사업
-    new_business_promise_count: { completed: number; total: number }; //신규사업
-  };
-  legislative_status: {
     //입법현황
-    resolve_required_promise_count: number;
-    //필요입법공약총수
-    resolved_promise_count: number;
-    //입법의결완료공약총수
-  };
-  financial_status: {
+    resolve_required_promise_count: number; //필요입법공약총수
+    resolved_promise_count: number; //입법의결완료공약총수
     //재정현황
     total_required_funds: number; //필요재정총액
     total_secured_funds: number; //확보재정총액
     total_executed_funds: number; //집행재정총액
+  };
+  //성격내용별완료현황
+  promise_count_detail: {
+    completed_national_promise_count: number; //국정공약
+    total_national_promise_count: number;
+    completed_local_promise_count: number; //지역공약
+    total_local_promise_count: number;
+    completed_legislative_promise_count: number; //입법공약
+    total_legislative_promise_count: number;
+    completed_financial_promise_count: number; //재정공약
+    total_financial_promise_count: number;
+    completed_in_term_promise_count: number; //임기내
+    total_in_term_promise_count: number;
+    completed_after_term_promise_count: number; //임기후
+    total_after_term_promise_count: number;
+    completed_ongoing_business_promise_count: number; //지속사업
+    total_ongoing_business_promise_count: number;
+    completed_new_business_promise_count: number; //신규사업
+    total_new_business_promise_count: number;
   };
   constituency: [
     {
@@ -60,15 +63,15 @@ export interface TableType {
   theadList: string[];
   tbody: string;
   unit: string;
-  registerName: registerNameType[];
+  registerName: string[];
   required: boolean;
 }
 
-type registerNameType =
-  | `status_of_promise.${keyof InputTypes["status_of_promise"]}`
-  | `completion_status_by_theme.${keyof InputTypes["completion_status_by_theme"]}`
-  | `legislative_status.${keyof InputTypes["legislative_status"]}`
-  | `financial_status.${keyof InputTypes["financial_status"]}`;
+// type registerNameType =
+//   | `status_of_promise.${keyof InputTypes["status_of_promise"]}`
+//   | `completion_status_by_theme.${keyof InputTypes["completion_status_by_theme"]}`
+//   | `legislative_status.${keyof InputTypes["legislative_status"]}`
+//   | `financial_status.${keyof InputTypes["financial_status"]}`;
 
 //form에서 사용될 data입니다.
 export const formResource = {
@@ -128,12 +131,12 @@ export const formResource = {
     theadList: ["총공약수", "완료", "추진중", "보류", "폐기", "기타"],
     tbody: "공약수",
     registerName: [
-      "status_of_promise.total_promise_count",
-      "status_of_promise.completed_promise_count",
-      "status_of_promise.in_progress_promise_count",
-      "status_of_promise.pending_promise_count",
-      "status_of_promise.discarded_promise_count",
-      "status_of_promise.other_promise_count",
+      "base_info.total_promise_count",
+      "base_info.completed_promise_count",
+      "base_info.in_progress_promise_count",
+      "base_info.pending_promise_count",
+      "base_info.discarded_promise_count",
+      "base_info.other_promise_count",
     ],
     required: true,
   },
@@ -153,14 +156,14 @@ export const formResource = {
     ],
     tbody: "완료 / 전체",
     registerName: [
-      "completion_status_by_theme.national_promise_count",
-      "completion_status_by_theme.local_promise_count",
-      "completion_status_by_theme.legislative_promise_count",
-      "completion_status_by_theme.financial_promise_count",
-      "completion_status_by_theme.in_term_promise_count",
-      "completion_status_by_theme.after_term_promise_count",
-      "completion_status_by_theme.ongoing__promise_count",
-      "completion_status_by_theme.new_business_promise_count",
+      "national_promise_count",
+      "local_promise_count",
+      "legislative_promise_count",
+      "financial_promise_count",
+      "in_term_promise_count",
+      "after_term_promise_count",
+      "ongoing__promise_count",
+      "new_business_promise_count",
     ],
     required: true,
   },
@@ -171,8 +174,8 @@ export const formResource = {
     theadList: ["필요입법공약총수", "입법의결완료공약총수"],
     tbody: "공약수",
     registerName: [
-      "legislative_status.resolve_required_promise_count",
-      "legislative_status.resolved_promise_count",
+      "base_info.resolve_required_promise_count",
+      "base_info.resolved_promise_count",
     ],
     required: true,
   },
@@ -183,9 +186,9 @@ export const formResource = {
     tbody: "금액",
     unit: "원",
     registerName: [
-      "financial_status.total_required_funds",
-      "financial_status.total_secured_funds",
-      "financial_status.total_executed_funds",
+      "base_info.total_required_funds",
+      "base_info.total_secured_funds",
+      "base_info.total_executed_funds",
     ],
     required: false,
   },
