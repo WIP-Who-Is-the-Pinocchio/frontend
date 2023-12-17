@@ -44,8 +44,8 @@ export interface InputTypes {
   constituency: [
     {
       region: string;
-      district: string;
-      section: string;
+      district: null | string;
+      section: null | string;
     },
   ];
   committee: [
@@ -66,12 +66,6 @@ export interface TableType {
   registerName: string[];
   required: boolean;
 }
-
-// type registerNameType =
-//   | `status_of_promise.${keyof InputTypes["status_of_promise"]}`
-//   | `completion_status_by_theme.${keyof InputTypes["completion_status_by_theme"]}`
-//   | `legislative_status.${keyof InputTypes["legislative_status"]}`
-//   | `financial_status.${keyof InputTypes["financial_status"]}`;
 
 //form에서 사용될 data입니다.
 export const formResource = {

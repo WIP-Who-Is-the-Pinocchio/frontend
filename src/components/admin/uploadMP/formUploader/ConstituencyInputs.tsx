@@ -11,18 +11,23 @@ interface ConstituencyInputsPropsType {
 
 const initialConstituencyData = {
   region: "",
-  district: "",
-  section: "",
+  district: null,
+  section: null,
 };
+
+interface initialConstituencyDataType {
+  region: string;
+  district: string | null;
+  section: string | null;
+}
 
 const ConstituencyInputs = ({ control }: ConstituencyInputsPropsType) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "constituency",
   });
-  const [selectedConstituency, setSelectedConstituency] = useState(
-    initialConstituencyData,
-  );
+  const [selectedConstituency, setSelectedConstituency] =
+    useState<initialConstituencyDataType>(initialConstituencyData);
   const [isNewInputOpened, setIsNewInputOpend] = useState(true);
 
   const handleSelectRegion = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -42,6 +47,10 @@ const ConstituencyInputs = ({ control }: ConstituencyInputsPropsType) => {
 
   const handleClickAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+    if (selectedConstituency.region.length === 0) {
+      alert("지역구를 선택해주세요.");
+      return;
+    }
     append(selectedConstituency);
     setSelectedConstituency(initialConstituencyData);
     setIsNewInputOpend(false);

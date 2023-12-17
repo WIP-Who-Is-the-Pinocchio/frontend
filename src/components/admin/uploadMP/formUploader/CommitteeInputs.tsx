@@ -32,6 +32,10 @@ const CommitteeInputs = ({ control }: CommitteeInputsPropsType) => {
 
   const handleClickAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+    if (committee.name.trim().length === 0) {
+      alert("상임위원회 이름을 입력해주세요.");
+      return;
+    }
     append(committee);
     setCommittee(initialCommitteeData);
     setIsNewInputOpend(false);

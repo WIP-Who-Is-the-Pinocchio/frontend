@@ -16,17 +16,17 @@ const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => 
   const { errors } = formState;
 
   //테이블 전체의 에러를 하나의 state로 관리
-  useEffect(() => {
-    for (let name of registerName) {
-      const tableName = name.split(".")[0];
-      const error = errors[tableName as keyof InputTypes];
-      if (error) {
-        setTableErrorMessage("필수 입력란을 작성해주세요.");
-        break;
-      }
-      setTableErrorMessage("");
-    }
-  }, [formState]);
+  // useEffect(() => {
+  //   for (let name of registerName) {
+  //     const tableName = name.split(".")[0];
+  //     const error = errors[tableName as keyof InputTypes];
+  //     if (error) {
+  //       setTableErrorMessage("필수 입력란을 작성해주세요.");
+  //       break;
+  //     }
+  //     setTableErrorMessage("");
+  //   }
+  // }, [formState]);
 
   return (
     <div>
@@ -68,7 +68,6 @@ const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => 
                           registerName={`promise_count_detail.completed_${name}`}
                           className="number-spinner-hide"
                           required={required}
-                          type="number"
                         />
                         <span className="px-[5px]">/</span>
                         <TableInput
@@ -76,7 +75,6 @@ const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => 
                           registerName={`promise_count_detail.total_${name}`}
                           className="number-spinner-hide"
                           required={required}
-                          type="number"
                         />
                       </div>
                     ) : (
@@ -84,7 +82,6 @@ const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => 
                         register={register}
                         registerName={`${name}`}
                         required={required}
-                        type="number"
                       />
                     )}
                     {unit && <span>{unit}</span>}

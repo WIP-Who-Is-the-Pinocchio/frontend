@@ -1,4 +1,4 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, FieldError } from "react-hook-form";
 import { formResource, InputTypes } from "../types";
 import ProfilePreview from "./ProfilePreview";
 import TextInputDiv from "./TextInputDiv";
@@ -50,13 +50,15 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
   };
 
   const ErrorMessage = (id: string) => {
-    if (errors[id as keyof InputTypes]?.message) {
-      return (
-        <p className="mt-[4px] text-[11px] font-normal text-red-500">
-          {errors[id as keyof InputTypes]?.message}
-        </p>
-      );
+    let error = errors.base_info && errors.base_info[id as keyof InputTypes["base_info"]];
+
+    if (id === "assembly_term") {
+      error = errors[id as keyof InputTypes] as FieldError;
     }
+    if (error)
+      return (
+        <p className="mt-[4px] text-[11px] font-normal text-red-500">{error.message}</p>
+      );
   };
 
   return (
@@ -80,7 +82,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
           <TextInputDiv
             title="프로필 url"
             onRegister={handleRegister("base_info.profile_url", "text", false)}
-            ErrorMessage={ErrorMessage("base_info.profile_url")}
+            ErrorMessage={ErrorMessage("profile_url")}
           />
           <TextInputDiv
             title="이름"
@@ -91,7 +93,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
               true,
               /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z]*$/,
             )}
-            ErrorMessage={ErrorMessage("base_info.name")}
+            ErrorMessage={ErrorMessage("name")}
           />
           <TextInputDiv
             title="소속정당"
@@ -102,7 +104,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
               true,
               /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z]*$/,
             )}
-            ErrorMessage={ErrorMessage("base_info.political_party")}
+            ErrorMessage={ErrorMessage("political_party")}
           />
           <TextInputDiv
             title="당선횟수"
@@ -114,7 +116,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
               true,
               /^[1-9]\d*$/,
             )}
-            ErrorMessage={ErrorMessage("base_info.elected_count")}
+            ErrorMessage={ErrorMessage("elected_count")}
           />
         </div>
       </div>
