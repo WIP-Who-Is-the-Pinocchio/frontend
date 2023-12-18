@@ -3,7 +3,7 @@ import axios from "axios";
 const logout = async () => {
   const adminId = localStorage.getItem("adminId");
   const logout_res = await axios.post(
-    `http://localhost:2309/admin/api/v1/auth/logout?${adminId}`,
+    `http://localhost:2309/admin/api/v1/auth/logout?admin_id=${adminId}`,
   );
   console.log(logout_res);
   localStorage.removeItem("accessToken");
