@@ -5,7 +5,7 @@ import AdminLogin from "@pages/Admin/AdminLogin";
 import AdminLayout from "@pages/Admin/AdminLayout";
 import AdminDashboard from "@pages/Admin/AdminDashboard";
 import AdminSignUp from "@pages/Admin/AdminSignUp";
-import AdminSearch from "@pages/Admin/AdminSearch";
+import AdminSearch from "@pages/Admin/AdminSearh/AdminSearch";
 import UploadMP from "@pages/Admin/UploadMP";
 
 export const routers = createBrowserRouter([

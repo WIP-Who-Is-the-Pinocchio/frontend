@@ -1,15 +1,17 @@
 import { useState, FC } from "react";
 
+import { SearchConditionType } from "../types/searchCondition.type";
+
 interface DropdownProps {
-  items: string[];
+  items: SearchConditionType[];
   selectedItem: string;
-  onSelectedItem: (selectItem: string) => void;
+  onSelectedItem: (selectItem: SearchConditionType) => void;
 }
 
 const Dropdown: FC<DropdownProps> = ({ items, selectedItem, onSelectedItem }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSelect = (item: string) => {
+  const handleSelect = (item: SearchConditionType) => {
     onSelectedItem(item);
     setIsOpen(false);
   };
@@ -19,13 +21,13 @@ const Dropdown: FC<DropdownProps> = ({ items, selectedItem, onSelectedItem }) =>
       <div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-24 h-8 mr-10 text-black border rounded"
+          className="w-36 h-8 mr-10 text-black border rounded"
         >
           {selectedItem}
         </button>
       </div>
       {isOpen && (
-        <div className="absolute mt-2 w-24 rounded-md bg-white z-30">
+        <div className="absolute mt-2 w-36 rounded-md bg-white z-30">
           <div className="rounded-md text-center ring-1 ring-black ring-opacity-5">
             {items.map((item, index) => (
               <div

@@ -1,4 +1,6 @@
-import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import axios, { AxiosInstance, AxiosError } from "axios";
 import logout from "@components/admin/logout";
 
 // // 임시용 (후에 .env나 파일로 뺴야 함)
