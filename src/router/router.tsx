@@ -1,11 +1,13 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
+
+import Header from "@components/Header/Header";
 import MainPage from "@pages/MainPage";
 import GomaoPage from "@pages/Gomao/Gomao";
 import AdminLogin from "@pages/Admin/AdminLogin";
 import AdminLayout from "@pages/Admin/AdminLayout";
 import AdminDashboard from "@pages/Admin/AdminDashboard";
 import AdminSignUp from "@pages/Admin/AdminSignUp";
-import AdminSearch from "@pages/Admin/AdminSearch";
+import AdminSearch from "@pages/Admin/AdminSearh/AdminSearch";
 import UploadMP from "@pages/Admin/UploadMP";
 
 export const routers = createBrowserRouter([
@@ -68,6 +70,7 @@ export const routers = createBrowserRouter([
 function LayOutWrapper() {
   return (
     <div>
+      <Header />
       <Outlet />
     </div>
   );

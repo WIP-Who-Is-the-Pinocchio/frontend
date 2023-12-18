@@ -1,15 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
-import instance from "@api/instance";
+import { get } from "@api/instance";
 import { MPDataType } from "../../types/MPData.type";
 
 const useGetMPData = (assembleTerms: number) => {
   const { data: MPData } = useQuery<MPDataType[]>({
     queryKey: ["MPData"],
     queryFn: async () => {
-      const responseData = await instance.get(
-        `/admin/api/v1/politician/list/${assembleTerms}`,
-      );
+      const responseData = await get(`/politician/list/${assembleTerms}?page=0&size=10`);
       return responseData.data;
     },
     initialData: [],
