@@ -23,4 +23,6 @@ export interface MPDataType {
       section: string;
     },
   ];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any; // 문자열 인덱스 서명 추가
 }

@@ -39,17 +39,17 @@ const AdminLogin: React.FC = () => {
     }
   };
 
-  const handleTest = async () => {
-    try {
-      const res = await get("/admin-log");
-      console.log(res);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const handleTest = async () => {
+  //   try {
+  //     const res = await get("/admin-log");
+  //     console.log(res);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   return (
     <div className="flex justify-center items-center min-h-[100vh] ">
-      <button onClick={handleTest}>토큰테스트버튼</button>
+      {/* <button onClick={handleTest}>토큰테스트버튼</button> */}
       <form
         className="flex flex-col items-center justify-center w-[358px] min-h-200 p-4 bg-[#faf5ff] rounded"
         onSubmit={handleSubmit(onSubmit)}
