@@ -1,8 +1,8 @@
 //react-hook-form에 등록되는 input types입니다.
 export interface InputTypes {
-  assembly_term: number; //몇대
   base_info: {
     //기본정보
+    assembly_term: number; //몇대
     profile_url: string;
     name: string;
     political_party: string; //소속정당

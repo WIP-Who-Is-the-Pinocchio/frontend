@@ -63,9 +63,6 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
   const ErrorMessage = (id: string) => {
     let error = errors.base_info && errors.base_info[id as keyof InputTypes["base_info"]];
 
-    if (id === "assembly_term") {
-      error = errors[id as keyof InputTypes] as FieldError;
-    }
     if (error)
       return (
         <p className="mt-[4px] text-[11px] font-normal text-red-500">{error.message}</p>
