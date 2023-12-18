@@ -3,22 +3,6 @@
 import axios, { AxiosInstance, AxiosError } from "axios";
 import logout from "@components/admin/logout";
 
-// // 임시용 (후에 .env나 파일로 뺴야 함)
-// const instance = axios.create({
-//   baseURL: "http://localhost:2309",
-// });
-
-// instance.interceptors.response.use(
-//   async function (config) {
-//     return config;
-//   },
-//   function (error) {
-//     return error.response;
-//   },
-// );
-
-// export default instance;
-
 const instance: AxiosInstance = axios.create({
   baseURL: "http://localhost:2309/admin/api/v1",
 });
@@ -30,17 +14,13 @@ const instance: AxiosInstance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     const { url } = config;
-    console.log(config);
 
-    // refresh token으로 access token 을 갱신하려고하는 시도인지 확인
     // @ts-ignore
     if (url.includes("/refresh")) {
-      console.log("refresh token 으로 access token 갱신");
+      //요청확인
       return config;
     }
-
     const token = localStorage.getItem("accessToken");
-
     return {
       ...config,
       headers: {
@@ -49,65 +29,67 @@ instance.interceptors.request.use(
       },
     } as typeof config;
   },
-  () => {},
+  (error: AxiosError<any>) => {
+    //요청 오류가 있는 작업 수행
+    console.log("오류가 잇는 작업 : " + error);
+    return Promise.reject(error);
+  },
 );
 
 /**
  * 모든 response가 처리되기 직전에 실행되는 곳
  * access토큰 만료되었으면, 다시 refresh토큰 요청
  */
+
 instance.interceptors.response.use(
+  // 응답 데이터가 있는 작업 수행
   (response) => {
     if (response.data.admin) {
+      console.log(2);
       const { id: adminId } = response.data.admin;
       localStorage.setItem("adminId", adminId);
-      console.log(adminId);
     }
-
-    // 데이터 pre-serializing => 나중에 get요청이나 이런거 할때 데이터 어떻게 넘어오는지 depth 벗겨서주기
-    // return camalize(response);
-    // @ts-ignore
     return response;
   },
 
+  //응답 오류가 있는 작업 수행
+
   async (error: AxiosError<any>) => {
     const { config, response: { status = null } = {} } = error;
-    console.log(config);
+    const originalRequest = config;
 
+    if (!originalRequest) {
+      console.log(5);
+      console.log("refresh token이 없거나 요청 설정이 없습니다.");
+      console.log(error);
+      return Promise.reject(error);
+    }
     if (status === 401) {
-      //액세스토큰 만료시
-      if (!config) {
-        return Promise.reject(error);
-      }
-
-      const originalRequest = config;
       const adminId = localStorage.getItem("adminId");
       const refreshToken = localStorage.getItem("refreshToken");
 
-      if (!refreshToken) {
-        //리프레쉬 토큰도 만료되면 로그아웃
-        console.log("LOGOUT");
-        logout();
-        return Promise.reject(error);
-      }
-
       try {
-        //리프레쉬 토큰 이용해서 액세스토큰 갱신처리
+        //리프레쉬랑 액세스 둘다 만료면 로그아웃
+        if (originalRequest.url?.includes("/refresh") && status === 401) {
+          console.log("리프레쉬 토큰 액세스 둘다 만료");
+          logout();
+          return;
+        }
+        //액세스 만료면 리프레쉬 사용해서 갱신 요청
         const response = await instance.post(`/auth/refresh/${adminId}`, {
           refresh_token: refreshToken,
         });
-        //갱신된 토큰 저장
-        console.log(response);
-        localStorage.setItem("accessToken", response.data.accessToken);
-        originalRequest.headers["Authorization"] = `Bearer ${response.data.accessToken}`;
+        //로컬스토리지에 저장된 토큰 갱신
+        localStorage.setItem("accessToken", response.data.access_token);
+        localStorage.setItem("refreshToken", response.data.refresh_token);
+        originalRequest.headers["Authorization"] = `Bearer ${response.data.access_token}`;
 
-        return instance(originalRequest);
+        return Promise.reject(error);
       } catch (error) {
-        logout();
+        console.log(error);
         return Promise.reject(error);
       }
     }
-
     return Promise.reject(error);
   },
 );
