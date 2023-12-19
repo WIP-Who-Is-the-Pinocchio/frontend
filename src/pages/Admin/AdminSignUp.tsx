@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import LoginFormInput from "@components/AdminAuthFormInput";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm, Controller } from "react-hook-form";
-import axios from "axios";
-import { debounce, set } from "lodash";
+import { debounce } from "lodash";
 import Button from "@components/Button";
 import logo from "@assets/icon/wipLogo.svg";
 import { createPortal } from "react-dom";
@@ -11,12 +10,13 @@ import Modal from "@components/Modal/Modal";
 import { AdminAuthFormInputs } from "../../types/adminAuthTypes";
 import EmailAuthBtn from "@components/EmailAuthBtn";
 import EmailAuthTimer from "@components/emailTimer";
-import { register } from "module";
+import { post, get } from "../../api/instance";
 
 const AdminSignUp: React.FC = () => {
   const {
     getValues,
     control,
+    setError,
     formState: { errors },
     handleSubmit,
   } = useForm<AdminAuthFormInputs>({
@@ -25,9 +25,8 @@ const AdminSignUp: React.FC = () => {
 
   const [showSignupCompleteModal, setShowSignupCompleteModal] = useState(false);
   const [showEmailAuthModal, setShowEmailAuthModal] = useState(false);
-  const [nickname, setNickname] = useState("");
+  const [_, setNickname] = useState("");
   const [emailValidNum, setEmailValidNum] = useState("");
-  const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false);
   const [isEmailValidate, setIsEmailVlidate] = useState(false);
   const { remainingTime, startTimer, stopTimer, formatTime } = EmailAuthTimer({
     initialTime: 180,
@@ -41,31 +40,28 @@ const AdminSignUp: React.FC = () => {
   }, [remainingTime]);
 
   const onSubmit = async (data: AdminAuthFormInputs) => {
-    console.log(data);
+    // console.log(data);
     if (!isEmailValidate) {
-      window.alert("이메일 인증번호가 일치하지 않습니다.");
+      window.alert("이메일 인증번호를 확인해주세요.");
       return;
     }
 
     setShowSignupCompleteModal(true);
 
-    // const signupRes = await axios.post("http://localhost:2309/admin/api/v1/auth/signup", {
-    //   login_name: data.email,
-    //   password: data.password,
-    //   nickname: data.nickname,
-    // });
-
-    // console.log(signupRes);
+    await post("/auth/signup", {
+      email: data.email,
+      password: data.password,
+      nickname: data.nickname,
+    });
   };
 
   const resetTimer = () => {
-    // setIsEmailRequested(true);
-    console.log("재요청됨");
+    // console.log("재요청됨");
     stopTimer();
     startTimer();
   };
 
-  const handleClickEmailAuth = debounce(() => {
+  const handleClickEmailAuth = debounce(async () => {
     if (getValues("email").length == 0) {
       //이메일 입력값 x
       alert("이메일을 입력해주세요");
@@ -75,23 +71,15 @@ const AdminSignUp: React.FC = () => {
     if (showEmailAuthModal) {
       //이메일 인증 재요청시
       resetTimer();
-      axios.post(
-        `http://localhost:2309/admin/api/v1/auth/email/authorization/${getValues(
-          "email",
-        )}`,
-        { email: getValues("email") },
-      );
+      await post(`/auth/email/authorization/${getValues("email")}`);
     }
     //처음요청
     startTimer();
     setShowEmailAuthModal(true);
 
     alert("이메일 인증요청이 발송되었습니다");
-    axios.post(
-      `http://localhost:2309/admin/api/v1/auth/email/authorization/${getValues("email")}`,
-      { email: getValues("email") },
-    );
-    console.log(getValues("email"));
+    await post(`/auth/email/authorization/${getValues("email")}`);
+    // console.log(getValues("email"));
   }, 300);
 
   const handleClickConfirmEmail = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -102,21 +90,15 @@ const AdminSignUp: React.FC = () => {
       return;
     }
     //이메일 인증메일 값 일치확인
-    await axios
-      .get(
-        `http://localhost:2309/admin/api/v1/auth/email/verification?email=${getValues(
-          "email",
-        )}&auth_number=${emailValidNum}`,
-      )
+    await get(
+      `/auth/email/verification?email=${getValues("email")}&auth_number=${emailValidNum}`,
+    )
       .then(() => {
         window.alert("이메일 인증이 완료되었습니다");
-        console.log("ddd");
         setIsEmailVlidate(true);
       })
       .catch((e) => {
         console.log(e);
-        console.log("틀림");
-        // setError('notValidEmailNum',{type:'custom'})
         window.alert("이메일 인증번호가 일치하지않습니다");
       });
   };
@@ -125,38 +107,26 @@ const AdminSignUp: React.FC = () => {
     setEmailValidNum(e.target.value);
   };
 
-  const handleChangeNickNameDuplication = debounce((e) => {
+  const handleChangeNickNameDuplication = debounce(async (e) => {
     const nickname = e.target.value;
     setNickname(nickname);
-    console.log(nickname);
-    console.log("get" + nickname);
-    axios
-      .get(`http://localhost:2309/admin/api/v1/auth/nickname/${nickname}`)
+    //닉네임 중복여부 확인 요청
+    await get(`/auth/nickname/${nickname}`)
       .then((response) => {
-        console.log(response.data.detail);
-        console.log(response);
-        if (response.data.status !== 200) {
-          setIsNicknameDuplicated(true);
-          //hookform 에러 설정
-          // if (isNicknameDuplicated) {
-          //   console.log("중복");
-          //   setError("nickname", {
-          //     type: "duplicated",
-          //     message: "닉네임이 중복되었습니다.",
-          //   });
-          // } else {
-          //   setError("nickname", {
-          //     type: "duplicated",
-          //     message: "",
-          //   });
-          // }
+        const isAvaliable = response.data.is_available;
+        if (!isAvaliable) {
+          setError("nickname", {
+            type: "manual",
+            message: "중복된 이메일입니다.",
+            types: {
+              manual: "중복된 이메일입니다.",
+            },
+          });
         }
       })
       .catch((error) => {
         console.error(error);
       });
-
-    field.onChange(e);
   }, 300);
 
   return (
@@ -255,19 +225,21 @@ const AdminSignUp: React.FC = () => {
               },
               required: "닉네임은 필수 항목입니다.",
             }}
-            render={({ field }) => (
+            render={({ field: { onChange } }) => (
               <div>
                 <LoginFormInput
-                  {...field}
+                  // {...field}
                   label="닉네임"
                   id="nickname"
                   type="text"
                   placeholder="닉네임을 입력해주세요"
                   onChange={(e) => {
                     handleChangeNickNameDuplication(e);
-                    field.onChange(e);
+                    // field.onChange(e);
+                    onChange(e);
                     // 필드의 변경 사항을 React Hook Form에게 전달합니다.
                   }}
+                  // onChange={handleChangeNickNameDuplication}
                 />
               </div>
             )}
@@ -275,14 +247,21 @@ const AdminSignUp: React.FC = () => {
           <ErrorMessage
             errors={errors}
             name="nickname"
-            render={({ messages }) =>
-              messages &&
-              Object.entries(messages).map(([type, message]) => (
-                <p className="text-red-500 text-[10px] font-medium" key={type}>
-                  ⚠️{message}
-                </p>
-              ))
-            }
+            render={({ messages }) => {
+              {
+                console.log(errors);
+                console.log(messages);
+                console.log(errors.nickname?.message);
+              }
+              return (
+                messages &&
+                Object.entries(messages).map(([type, message]) => (
+                  <p className="text-red-500 text-[10px] font-medium" key={type}>
+                    ⚠️{message}
+                  </p>
+                ))
+              );
+            }}
           />
           <Controller
             name="password"
