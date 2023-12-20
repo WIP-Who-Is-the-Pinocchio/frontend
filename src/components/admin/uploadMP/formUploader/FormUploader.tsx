@@ -23,7 +23,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
 
     if (isConfirmed) {
       try {
-        const res = await post(`/politician/${adminId}`, data);
+        const res = await post("/politician", data);
         console.log(res);
       } catch (e) {
         alert("등록에 실패하였습니다.");
@@ -84,7 +84,12 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
             title="대수"
             type="number"
             required
-            onRegister={handleRegister("assembly_term", "number", true, /^[1-9]\d*$/)}
+            onRegister={handleRegister(
+              "base_info.assembly_term",
+              "number",
+              true,
+              /^[1-9]\d*$/,
+            )}
             ErrorMessage={ErrorMessage("assembly_term")}
           />
           <TextInputDiv
