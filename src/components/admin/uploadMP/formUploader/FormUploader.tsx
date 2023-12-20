@@ -1,5 +1,5 @@
 import { post } from "@api/instance";
-import { useForm, SubmitHandler, FieldError } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { formResource, InputTypes } from "../types";
 import ProfilePreview from "./ProfilePreview";
 import TextInputDiv from "./TextInputDiv";
@@ -19,7 +19,6 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
   const onSubmit: SubmitHandler<InputTypes> = async (data) => {
     //미리보기 검사용
     const isConfirmed = confirm(`제출! ${JSON.stringify(data, null, 2)}`);
-    const adminId = localStorage.getItem("adminId");
 
     if (isConfirmed) {
       try {

@@ -1,9 +1,10 @@
 import { Control, useFieldArray } from "react-hook-form";
-import { formResource, InputTypes } from "../types";
+import { InputTypes } from "../types";
 import SelectDiv from "./SelectDiv";
-import { regionData } from "./regionList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Title from "./Title";
+import { regionType } from "./regionList";
+import axios from "axios";
 
 interface ConstituencyInputsPropsType {
   control: Control<InputTypes, any>;
@@ -15,10 +16,15 @@ const initialConstituencyData = {
   section: null,
 };
 
-interface initialConstituencyDataType {
+interface ConstituencyDataType {
   region: string;
   district: string | null;
   section: string | null;
+}
+interface ConstituencyResType {
+  region: string;
+  district: string;
+  section: string;
 }
 
 const ConstituencyInputs = ({ control }: ConstituencyInputsPropsType) => {
@@ -26,9 +32,44 @@ const ConstituencyInputs = ({ control }: ConstituencyInputsPropsType) => {
     control,
     name: "constituency",
   });
-  const [selectedConstituency, setSelectedConstituency] =
-    useState<initialConstituencyDataType>(initialConstituencyData);
+  const [selectedConstituency, setSelectedConstituency] = useState<ConstituencyDataType>(
+    initialConstituencyData,
+  );
   const [isNewInputOpened, setIsNewInputOpend] = useState(true);
+  const [districtList, setDistrictList] = useState<string[]>([]);
+  const [sectionList, setSectionList] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (selectedConstituency.region.length === 0) {
+      return;
+    }
+    getConstituencyData(selectedConstituency.region);
+  }, [selectedConstituency.region]);
+
+  const getConstituencyData = async (region: string) => {
+    const regionInEn = regionType[region];
+    const baseURL = "http://localhost:2309/wip/public/api/v1";
+
+    axios
+      .get(`${baseURL}/constituency/${regionInEn}`, { withCredentials: true })
+      .then((res) => {
+        const constituencyData: ConstituencyResType[] = res.data;
+        const districtArray = constituencyData
+          .filter((item) => item.district !== null)
+          .map((item) => item.district);
+        const uniqueDistrictArray = [...new Set(districtArray)];
+        const sectionArray = constituencyData
+          .filter((item) => item.section !== null)
+          .map((item) => item.section);
+        const uniqueSectionArray = [...new Set(sectionArray)];
+        setDistrictList(uniqueDistrictArray);
+        setSectionList(uniqueSectionArray);
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("지역구 데이터를 불러오는데 실패했습니다.");
+      });
+  };
 
   const handleSelectRegion = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedRegion = event.target.value;
@@ -47,6 +88,9 @@ const ConstituencyInputs = ({ control }: ConstituencyInputsPropsType) => {
 
   const handleClickAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+    if (!selectedConstituency) {
+      return;
+    }
     if (selectedConstituency.region.length === 0) {
       alert("지역구를 선택해주세요.");
       return;
@@ -94,23 +138,25 @@ const ConstituencyInputs = ({ control }: ConstituencyInputsPropsType) => {
           <div className="grid grid-cols-3 gap-[10px]">
             <SelectDiv
               title="행정 구역"
-              optionList={Object.keys(regionData)}
+              optionList={Object.keys(regionType)}
               required
               onChange={handleSelectRegion}
             />
-            {selectedConstituency.region && (
+            {districtList.length > 0 && (
               <SelectDiv
                 title="세부 지역구"
-                optionList={regionData[selectedConstituency.region]}
+                optionList={districtList}
                 onChange={handleSelectDistrict}
               />
             )}
-            <SelectDiv
-              title="분구"
-              optionList={formResource.분구리스트}
-              onChange={handleSelectSection}
-              caption="분구 지역인 경우에만 선택"
-            />
+            {sectionList.length > 0 && (
+              <SelectDiv
+                title="분구"
+                optionList={sectionList}
+                onChange={handleSelectSection}
+                caption="분구 지역인 경우에만 선택"
+              />
+            )}
           </div>
           <div className="flex justify-center gap-[7px] mt-[10px]">
             <button
