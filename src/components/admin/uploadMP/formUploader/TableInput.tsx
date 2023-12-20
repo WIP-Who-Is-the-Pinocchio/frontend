@@ -7,21 +7,15 @@ interface TableInputProps {
   register: UseFormRegister<InputTypes>;
   registerName: string;
   className?: string;
-  required?: boolean;
 }
 
-const TableInput: React.FC<TableInputProps> = ({
-  register,
-  registerName,
-  className,
-  required,
-}) => {
+const TableInput: React.FC<TableInputProps> = ({ register, registerName, className }) => {
   const handleSetValue = (value: string) => {
     //Nan리턴 방지를 위해 공백 체크 후 number로 parsing
     if (value !== "") {
       return parseFloat(value);
     }
-    return value;
+    return null;
   };
 
   return (
