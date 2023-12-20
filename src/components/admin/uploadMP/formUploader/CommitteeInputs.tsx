@@ -51,7 +51,7 @@ const CommitteeInputs = ({ control }: CommitteeInputsPropsType) => {
   };
 
   const handleClickRemove = (index: number) => {
-    if (index === 0) {
+    if (index === 0 && fields.length > 1) {
       const newObj = {
         ...fields[1],
         is_main: true,
