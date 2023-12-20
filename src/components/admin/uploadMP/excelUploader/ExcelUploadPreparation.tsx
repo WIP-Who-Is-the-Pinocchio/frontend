@@ -3,7 +3,7 @@ import * as XLSX from "xlsx";
 import { MPDataType, MPDataKeys } from "../types";
 import uploadIcon from "@assets/icon/upload.svg";
 import checkIcon from "@assets/icon/check.svg";
-
+import { excelDataKeys } from "../resources";
 interface ExcelUploadPreparationProps {
   onUpdateExcelData: (excel: MPDataType[]) => void;
 }
@@ -51,7 +51,7 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
     }
 
     // 엑셀 데이터 객체에 필수 필드가 모두 포함되어있는지 확인
-    if (!MPDataKeys.every((key) => Object.keys(excelData[0]).includes(key))) {
+    if (!excelDataKeys.every((key) => Object.keys(excelData[0]).includes(key))) {
       alert("필수 포함 항목이 누락되었습니다. 업로드 유의사항을 확인해주세요.");
       return false;
     }
@@ -64,7 +64,7 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
     // 새로운 워크북(엑셀 파일) 생성
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     // 데이터를 담을 시트(테이블) 생성
-    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([MPDataKeys]);
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([excelDataKeys]);
     // 시트를 워크북에 추가
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
     // 엑셀 파일 다운로드
@@ -73,7 +73,7 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
 
   return (
     <div className="flex flex-col max-w-[768px]  m-auto">
-      <div className=" w-full">
+      <div className="w-full ">
         <label
           htmlFor="dropzone-file"
           className="flex flex-col justify-center items-center w-full h-[256px] border-[2px] border-gray-300 border-dashed rounded-lg bg-gray-50  hover:bg-gray-100 cursor-pointer"

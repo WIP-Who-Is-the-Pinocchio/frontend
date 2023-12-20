@@ -1,5 +1,6 @@
 import React from "react";
-import { MPDataType, MPDataKeys } from "../types";
+import { MPDataType } from "../types";
+import { excelDataKeys } from "../resources";
 
 interface UploadedExcelPreviewProps {
   excelData: MPDataType[];
@@ -36,9 +37,9 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
                 scope="col"
                 className="sticky left-0 bg-white px-[24px] py-[12px] whitespace-nowrap"
               >
-                {MPDataKeys[1]}
+                {excelDataKeys[1]}
               </th>
-              {MPDataKeys.slice(2).map((key) => (
+              {excelDataKeys.slice(2).map((key) => (
                 <th
                   key={key}
                   scope="col"
@@ -55,8 +56,8 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
           </thead>
           <tbody>
             {excelData.map((data, index) => {
-              const profile = data[MPDataKeys[0]];
-              const name = data[MPDataKeys[1]];
+              const profile = data[excelDataKeys[0]];
+              const name = data[excelDataKeys[1]];
               return (
                 <tr key={name + index} className="bg-white border-b">
                   <th
@@ -71,7 +72,7 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
                       <div className="text-[14px] font-semibold">{name}</div>
                     </div>
                   </th>
-                  {MPDataKeys.slice(2).map((key) => (
+                  {excelDataKeys.slice(2).map((key) => (
                     <td
                       key={key}
                       className="px-[24px] py-[12px] text-[12px] whitespace-nowrap"

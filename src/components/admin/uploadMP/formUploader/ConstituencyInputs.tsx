@@ -3,7 +3,7 @@ import { InputTypes } from "../types";
 import SelectDiv from "./SelectDiv";
 import { useEffect, useState } from "react";
 import Title from "./Title";
-import { regionType } from "./regionList";
+import { regionType } from "../regionList";
 import axios from "axios";
 
 interface ConstituencyInputsPropsType {
