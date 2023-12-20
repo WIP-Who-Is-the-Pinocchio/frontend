@@ -1,0 +1,102 @@
+import { TableType } from "./types";
+
+//form에서 사용될 data입니다.
+export const formResource = {
+  정당리스트: [
+    "더불어민주당",
+    "국민의힘",
+    "정의당",
+    "진보당",
+    "기본소득당",
+    "시대전환",
+    "한국의희망",
+    "무소속",
+  ],
+  상임위원회리스트: [
+    "국회운영위원회",
+    "법제사법위원회",
+    "정무위원회",
+    "기획재정위원회",
+    "교육위원회",
+    "과학기술정보방송통신위원회",
+    "외교통일위원회",
+    "국방위원회",
+    "행정안전위원회",
+    "문화체육관광위원회",
+    "농림축산식품해양수산위원회",
+    "산업통상자원중소벤처기업위원회",
+    "환경노동위원회",
+    "국토교통위원회",
+    "정보위원회",
+    "여성가족위원회",
+    "보건복지위원회",
+  ],
+  status_of_promise: <TableType>{
+    title: "공약 이행 현황",
+    subtitle:
+      "총 공약수 = 완료 + 추진 중 + 보류 + 폐기 + 기타 공약 수 (합계가 일치해야 함)\n*자료가 없는 경우 작성 X",
+    theadList: ["총공약수", "완료", "추진중", "보류", "폐기", "기타"],
+    tbody: "공약수",
+    registerName: [
+      "base_info.total_promise_count",
+      "base_info.completed_promise_count",
+      "base_info.in_progress_promise_count",
+      "base_info.pending_promise_count",
+      "base_info.discarded_promise_count",
+      "base_info.other_promise_count",
+    ],
+    required: false,
+  },
+  completion_status_by_theme: <TableType>{
+    title: "성격·내용별 완료 현황",
+    subtitle:
+      "각 분류별로 완료 공약 수 및 전체 공약수를 기입 (완료 공약수 / 전체 공약수)\n*자료가 없는 경우 작성 X",
+    theadList: [
+      "국정공약",
+      "지역공약",
+      "입법공약",
+      "재정공약",
+      "임기내",
+      "임기후",
+      "지속사업",
+      "신규사업",
+    ],
+    tbody: "완료 / 전체",
+    registerName: [
+      "national_promise_count",
+      "local_promise_count",
+      "legislative_promise_count",
+      "financial_promise_count",
+      "in_term_promise_count",
+      "after_term_promise_count",
+      "ongoing__promise_count",
+      "new_business_promise_count",
+    ],
+    required: false,
+  },
+  legislative_status: <TableType>{
+    title: "입법 현황",
+    subtitle:
+      "필요입법 공약 총 수: 입법이 필요한 공약의 총 수\n*입법 의결 완료 공약 총 수: 입법을 모두 완료(의결)한 공약의 총 수\n*자료가 없는 경우 작성 X",
+    theadList: ["필요입법공약총수", "입법의결완료공약총수"],
+    tbody: "공약수",
+    registerName: [
+      "base_info.resolve_required_promise_count",
+      "base_info.resolved_promise_count",
+    ],
+    required: false,
+  },
+  financial_status: <TableType>{
+    title: "재정 현황",
+    subtitle: "전체 공약의 재정 현황 합계\n*자료가 없는 경우 작성 X",
+    theadList: ["필요재정총액", "확보재정총액", "집행재정총액"],
+    tbody: "금액",
+    unit: "원",
+    registerName: [
+      "base_info.total_required_funds",
+      "base_info.total_secured_funds",
+      "base_info.total_executed_funds",
+    ],
+    required: false,
+  },
+};

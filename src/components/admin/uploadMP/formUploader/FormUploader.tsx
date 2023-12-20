@@ -1,11 +1,12 @@
 import { post } from "@api/instance";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { formResource, InputTypes } from "../types";
+import { InputTypes } from "../types";
+import { formResource } from "../resources";
 import ProfilePreview from "./ProfilePreview";
 import TextInputDiv from "./TextInputDiv";
-import Table from "./Table";
 import ConstituencyInputs from "./ConstituencyInputs";
 import CommitteeInputs from "./CommitteeInputs";
+import Table from "./Table";
 
 interface FormUploaderProps {}
 
@@ -15,6 +16,7 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
       mode: "onChange", //실시간 validation을 위해 onChange 모드 설정
     });
   const { errors } = formState;
+  console.log(watch());
 
   const onSubmit: SubmitHandler<InputTypes> = async (data) => {
     //미리보기 검사용
@@ -31,13 +33,10 @@ const FormUploader: React.FC<FormUploaderProps> = () => {
     }
   };
 
-  console.log(watch());
-
   const handleSetInputValue = (value: string, type: string) => {
     if (type === "number") {
       return parseFloat(value);
     }
-
     return value;
   };
 
