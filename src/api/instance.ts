@@ -45,7 +45,6 @@ instance.interceptors.response.use(
   // 응답 데이터가 있는 작업 수행
   (response) => {
     if (response.data.admin) {
-      console.log(2);
       const { id: adminId } = response.data.admin;
       localStorage.setItem("adminId", adminId);
     }
@@ -97,7 +96,7 @@ instance.interceptors.response.use(
 const get = async (url: string) => {
   return await instance.get(url);
 };
-const post = async (url: string, data: any) => {
+const post = async (url: string, data?: any) => {
   return await instance.post(url, data);
 };
 const put = async (url: string, data: any) => {
