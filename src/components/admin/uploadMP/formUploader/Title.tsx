@@ -9,7 +9,7 @@ interface InputTitleProps {
 
 const Title: React.FC<InputTitleProps> = ({ isOptional, children, tooltip }) => {
   return (
-    <h3 className="flex items-center gap-[3px] mb-[8px] text-[14px] font-medium text-gray-900 ">
+    <h3 className="flex items-center gap-[3px] mb-[8px] text-[15px] font-medium text-gray-900 ">
       {children}
       {isOptional ? (
         <span className=" text-blue-400 h-full align-middle font-normal text-[12px]">

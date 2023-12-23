@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { UseFormRegister, FormState } from "react-hook-form";
 import { InputTypes, TableType } from "../types";
 import TableInput from "./TableInput";
@@ -9,24 +9,9 @@ interface TableProps {
   formState: FormState<InputTypes>;
 }
 
-const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => {
-  const [tableErrorMessage, setTableErrorMessage] = useState("");
+const Table: React.FC<TableProps> = ({ tableResource, register }) => {
   const { title, subtitle, theadList, tbody, unit, registerName, required } =
     tableResource;
-  const { errors } = formState;
-
-  //테이블 전체의 에러를 하나의 state로 관리
-  useEffect(() => {
-    for (let name of registerName) {
-      const tableName = name.split(".")[0];
-      const error = errors[tableName as keyof InputTypes];
-      if (error) {
-        setTableErrorMessage("필수 입력란을 작성해주세요.");
-        break;
-      }
-      setTableErrorMessage("");
-    }
-  }, [formState]);
 
   return (
     <div>
@@ -65,27 +50,18 @@ const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => 
                       <div className="flex">
                         <TableInput
                           register={register}
-                          registerName={`${name}.done`}
+                          registerName={`promise_count_detail.completed_${name}`}
                           className="number-spinner-hide"
-                          required={required}
-                          type="number"
                         />
                         <span className="px-[5px]">/</span>
                         <TableInput
                           register={register}
-                          registerName={`${name}.total`}
+                          registerName={`promise_count_detail.total_${name}`}
                           className="number-spinner-hide"
-                          required={required}
-                          type="number"
                         />
                       </div>
                     ) : (
-                      <TableInput
-                        register={register}
-                        registerName={`${name}.value`}
-                        required={required}
-                        type="number"
-                      />
+                      <TableInput register={register} registerName={`${name}`} />
                     )}
                     {unit && <span>{unit}</span>}
                   </div>
@@ -93,24 +69,8 @@ const Table: React.FC<TableProps> = ({ tableResource, register, formState }) => 
               );
             })}
           </tr>
-          <tr className="bg-white border-b">
-            <th
-              scope="row"
-              className="px-[24px] py-[16px] font-medium text-gray-900 whitespace-nowrap "
-            >
-              비고
-            </th>
-            {registerName.map((name) => (
-              <td key={name} className="px-[15px] py-[16px] border">
-                <TableInput register={register} registerName={`${name}.notes`} />
-              </td>
-            ))}
-          </tr>
         </tbody>
       </table>
-      <p className="pt-[10px] text-[11px] font-normal text-red-500 text-center">
-        {tableErrorMessage}
-      </p>
     </div>
   );
 };
