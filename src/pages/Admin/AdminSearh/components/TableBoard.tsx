@@ -25,11 +25,13 @@ export const TableRows: FC<TableRowsProps> = ({ data, MPDataKeys, renderDataValu
               <div className="text-[14px] font-semibold">{dataItem.name}</div>
             </div>
           </th>
-          {Object.keys(MPDataKeys).map((key) => (
-            <td key={key} className="px-[24px] py-[12px] text-[12px] whitespace-nowrap">
-              {renderDataValue(dataItem, key)}
-            </td>
-          ))}
+          {Object.keys(MPDataKeys)
+            .filter((key) => key !== "name")
+            .map((key) => (
+              <td key={key} className="px-[24px] py-[12px] text-[12px] whitespace-nowrap">
+                {renderDataValue(dataItem, key)}
+              </td>
+            ))}
         </tr>
       ))}
     </>
