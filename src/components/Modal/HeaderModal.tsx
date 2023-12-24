@@ -30,6 +30,12 @@ const HeaderModal: React.FC<ModalProps> = ({ className, onClose }) => {
         >
           국회의원 검색
         </div>
+        <div
+          className="flex items-center px-5 h-20 text-white cursor-pointer hover:bg-purple-600"
+          onClick={() => navigate("/admin/uploadMP")}
+        >
+          국회의원 업로드
+        </div>
       </div>
     </div>
   );
