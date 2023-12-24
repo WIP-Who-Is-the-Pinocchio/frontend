@@ -4,11 +4,12 @@ import Dropdown from "@components/Dropdown";
 import ArrowButton from "@components/ArrowButton";
 import { MPDataKeys } from "@components/admin/uploadMP/types";
 import { TableRows } from "./components/TableBoard";
-import { MPDataType } from "../../../types/MPData.type";
 import useGetMPData from "@hooks/queries/useGetMPData";
 import useSearchCondition from "@hooks/queries/useSearchCondition";
+import { MPDataType } from "../../../types/MPData.type";
 import { SortState } from "../../../types/sortState.type";
 import { SearchConditionType } from "../../../types/searchCondition.type";
+import sortDataByKey from "@utils/sortDataByKey";
 
 interface AdminSearchProps {}
 
@@ -32,8 +33,6 @@ const AdminSearch: FC<AdminSearchProps> = () => {
   const [selectedItem, setSelectedItem] = useState<SearchConditionType>("이름");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [sortStates, setSortStates] = useState<{ [key: string]: SortState }>({});
-  // const [sortDisplayData, setSortDisplayData] = useState<SortDataType>(displayData);
-  // const [sortMemberData, setSortMemberData] = useState<SortDataType>(memberData);
   const [isSearchTrigger, setIsSearchTrigger] = useState(false);
 
   const { MPData } = useGetMPData(21);
@@ -88,6 +87,8 @@ const AdminSearch: FC<AdminSearchProps> = () => {
       return { ...{ [key]: newState } };
     });
   };
+
+  console.log(sortDataByKey(MPData, sortStates, Object.keys(sortStates)[0]));
 
   return (
     <div className="bg-purple-50 w-screen p-10">
@@ -156,7 +157,7 @@ const AdminSearch: FC<AdminSearchProps> = () => {
                 />
               ) : (
                 <TableRows
-                  data={MPData}
+                  data={sortDataByKey(MPData, sortStates, Object.keys(sortStates)[0])}
                   MPDataKeys={MPDataKeys}
                   renderDataValue={renderDataValue}
                 />
