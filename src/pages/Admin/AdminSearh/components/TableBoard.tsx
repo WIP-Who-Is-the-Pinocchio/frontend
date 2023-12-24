@@ -3,7 +3,7 @@ import { FC } from "react";
 import { MPDataType } from "../../../../types/MPData.type";
 
 interface TableRowsProps {
-  data: MPDataType[];
+  data: MPDataType[] | any[];
   MPDataKeys: Record<string, string>;
   renderDataValue: (data: MPDataType, key: string) => React.ReactNode;
 }
