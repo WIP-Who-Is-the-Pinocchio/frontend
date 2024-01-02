@@ -37,13 +37,19 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
                 scope="col"
                 className="sticky left-0 bg-white px-[24px] py-[12px] whitespace-nowrap"
               >
-                {excelDataKeys[1]}
+                이름
               </th>
-              {excelDataKeys.slice(2).map((key) => (
+              <th
+                scope="col"
+                className="sticky left-0 bg-white px-[24px] py-[12px] whitespace-nowrap"
+              >
+                지역구
+              </th>
+              {excelDataKeys.slice(5).map((key) => (
                 <th
                   key={key}
                   scope="col"
-                  className="px-[24px] py-[12px] whitespace-nowrap"
+                  className="sticky left-0 bg-white px-[24px] py-[12px] whitespace-nowrap"
                 >
                   {key}
                 </th>
@@ -56,10 +62,13 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
           </thead>
           <tbody>
             {excelData.map((data, index) => {
-              const profile = data[excelDataKeys[0]];
-              const name = data[excelDataKeys[1]];
+              const profile = data["프로필"];
+              const name = data["이름"];
+              const region = data["행정구역"];
+              const district = data["지역구"];
+              const section = data["분구"];
               return (
-                <tr key={name + index} className="bg-white border-b">
+                <tr key={index} className="bg-white border-b">
                   <th
                     scope="row"
                     className="flex items-center sticky left-0 z-10 px-[24px] py-[12px] bg-white text-gray-900 whitespace-nowrap shadow-[5px_0px_8px_-4px_rgba(0,0,0,.15)]"
@@ -72,7 +81,10 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
                       <div className="text-[14px] font-semibold">{name}</div>
                     </div>
                   </th>
-                  {excelDataKeys.slice(2).map((key) => (
+                  <td className="px-[24px] py-[12px] text-[12px] whitespace-nowrap">
+                    {region} {district} {section}
+                  </td>
+                  {excelDataKeys.slice(5).map((key) => (
                     <td
                       key={key}
                       className="px-[24px] py-[12px] text-[12px] whitespace-nowrap"

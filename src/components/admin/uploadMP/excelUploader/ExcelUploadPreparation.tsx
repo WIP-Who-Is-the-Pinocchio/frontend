@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler } from "react";
 import * as XLSX from "xlsx";
-import { MPDataType, MPDataKeys } from "../types";
+import { MPDataType } from "../types";
 import uploadIcon from "@assets/icon/upload.svg";
 import checkIcon from "@assets/icon/check.svg";
 import { excelDataKeys } from "../resources";
@@ -29,8 +29,11 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
       const sheetName = workbook.SheetNames[0]; // Assuming the first sheet is the one you want to read
       //워크북(엑셀파일) 첫번째 시트 읽어옴
       const worksheet = workbook.Sheets[sheetName];
+
       //선택한 첫번째 시트를 json 형식으로 변환 - 시트의 데이터를 객체의 배열로 변환함
-      const parsedData: MPDataType[] = XLSX.utils.sheet_to_json(worksheet);
+      const parsedData: MPDataType[] = XLSX.utils.sheet_to_json(worksheet, {
+        defval: "",
+      });
 
       if (validateFile(parsedData)) onUpdateExcelData(parsedData);
     };
@@ -42,6 +45,7 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
     }
     const file = e.target.files[0];
     importFile(file);
+    e.target.files = null;
   };
 
   const validateFile = (excelData: MPDataType[]) => {
@@ -104,10 +108,10 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
           <li className="max-w-[672px]">
             필수 포함 항목:
             <p className="ml-[20px] text-gray-500">
-              프로필, 이름, 지역구, 소속정당, 당선횟수, 상임위원회, 총공약수, 완료,
-              추진중, 보류, 폐기, 기타, 국정공약, 지역공약, 입법공약, 재정공약, 임기내,
-              임기후, 지속사업, 신규사업, 필요입법공약총수, 필요재정총액, 확보재정총액,
-              집행재정총액
+              프로필, 이름, 행정구역, 지역구, 분구, 소속정당, 대수, 당선횟수, 상임위원회,
+              특별위원회, 총공약수, 완료, 추진중, 보류, 폐기, 기타, 국정공약, 지역공약,
+              입법공약, 재정공약, 임기내, 임기후, 지속사업, 신규사업, 필요입법공약총수,
+              필요재정총액, 확보재정총액, 집행재정총액
             </p>
           </li>
         </ul>

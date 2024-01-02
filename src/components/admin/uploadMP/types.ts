@@ -73,7 +73,7 @@ export enum TabType {
 }
 
 export interface MPDataType {
-  [key: string]: string;
+  [key: string]: string | null | number;
 }
 
 export const MPDataKeys = {
