@@ -72,8 +72,39 @@ export enum TabType {
   EXCEL = "EXCEL",
 }
 
+// export interface MPDataType {
+//   [key: string]: string | null | number;
+// }
 export interface MPDataType {
-  [key: string]: string | null | number;
+  프로필: string;
+  이름: string;
+  행정구역: string;
+  지역구: string;
+  분구: string;
+  대수: number;
+  당선횟수: number;
+  소속정당: string;
+  상임위원회: string;
+  특별위원회: string | null;
+  총공약수: number | null;
+  완료: number | null;
+  추진중: number | null;
+  보류: number | null;
+  폐기: number | null;
+  기타: number | null;
+  국정공약: string | null;
+  지역공약: string | null;
+  입법공약: string | null;
+  재정공약: string | null;
+  임기내: string | null;
+  임기후: string | null;
+  지속사업: string | null;
+  신규사업: string | null;
+  필요입법공약총수: number | null;
+  입법의결완료공약총수: number | null;
+  필요재정총액: number | null;
+  확보재정총액: number | null;
+  집행재정총액: number | null;
 }
 
 export const MPDataKeys = {

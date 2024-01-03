@@ -32,7 +32,7 @@ const ExcelUploadPreparation: React.FC<ExcelUploadPreparationProps> = ({
 
       //선택한 첫번째 시트를 json 형식으로 변환 - 시트의 데이터를 객체의 배열로 변환함
       const parsedData: MPDataType[] = XLSX.utils.sheet_to_json(worksheet, {
-        defval: "",
+        defval: null,
       });
 
       if (validateFile(parsedData)) onUpdateExcelData(parsedData);
