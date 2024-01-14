@@ -6,7 +6,7 @@ import LoginFormInput from "@components/AdminAuthFormInput";
 import Button from "@components/Button";
 import logo from "@assets/icon/wipLogo.svg";
 import { AdminAuthFormInputs } from "../../types/adminAuthTypes";
-import { post } from "../../api/instance";
+import { post, get } from "../../api/instance";
 
 const AdminLogin: React.FC = () => {
   const {
@@ -37,9 +37,17 @@ const AdminLogin: React.FC = () => {
       window.alert("로그인에 실패했습니다:(");
     }
   };
-
+  // const handleTest = async () => {
+  //   try {
+  //     const res = await get("/admin-log");
+  //     console.log(res);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   return (
     <div className="flex justify-center items-center min-h-[100vh] ">
+      {/* <button onClick={handleTest}>토큰테스트버튼</button> */}
       <form
         className="flex flex-col items-center justify-center w-[358px] min-h-200 p-4 bg-[#faf5ff] rounded"
         onSubmit={handleSubmit(onSubmit)}

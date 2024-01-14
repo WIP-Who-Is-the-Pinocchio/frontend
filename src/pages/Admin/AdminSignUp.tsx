@@ -128,9 +128,18 @@ const AdminSignUp: React.FC = () => {
         console.error(error);
       });
   }, 300);
-
+  const handleTest = async () => {
+    try {
+      const res = await get("/admin-log");
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <div className="flex justify-center items-center min-h-[100vh] ">
+      <button onClick={handleTest}>토큰테스트버튼</button>
+
       <form
         className="flex flex-col items-center justify-evenly w-[358px] min-h-200 bg-[#faf5ff] p-4 rounded"
         onSubmit={handleSubmit(onSubmit)}
