@@ -1,6 +1,7 @@
 import React from "react";
 import { MPDataType } from "../types";
 import { excelDataKeys } from "../resources";
+import { post } from "@api/instance";
 
 interface UploadedExcelPreviewProps {
   excelData: MPDataType[];
@@ -23,8 +24,128 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
     onUpdateExcelData([]);
   };
 
-  const handleClickUploadButton = () => {
-    alert("작업 예정 😉");
+  const handleClickUploadButton = async () => {
+    const parsedExcelData = parseExcelData(excelData);
+    try {
+      const res = await post("/politician/bulk", parsedExcelData);
+      console.log(res);
+      console.log(parsedExcelData);
+    } catch (e) {
+      alert("등록에 실패하였습니다.");
+      console.log(e);
+      console.log(parsedExcelData);
+    }
+  };
+
+  const parseExcelData = (excelData: MPDataType[]) => {
+    const parsedExcelData = excelData.map((data) => {
+      const national_promise_count = checkPromiseCountDetail(data["국정공약"]);
+      const local_promise_count = checkPromiseCountDetail(data["지역공약"]);
+      const legislative_promise_count = checkPromiseCountDetail(data["입법공약"]);
+      const financial_promise_count = checkPromiseCountDetail(data["재정공약"]);
+      const in_term_promise_count = checkPromiseCountDetail(data["임기내"]);
+      const after_term_promise_count = checkPromiseCountDetail(data["임기후"]);
+      const ongoing_business_promise_count = checkPromiseCountDetail(data["지속사업"]);
+      const new_business_promise_count = checkPromiseCountDetail(data["신규사업"]);
+      const constituencies = data["지역구"]?.split(",").map((district) => {
+        return {
+          region: data["행정구역"],
+          district: district,
+          section: data["분구"],
+        };
+      }) || [
+        {
+          region: data["행정구역"],
+          district: null,
+          section: data["분구"],
+        },
+      ];
+      const committees = data["상임위원회"]?.split(",").map((committee) => {
+        return {
+          is_main: true,
+          name: committee,
+        };
+      });
+      const specialCommittees =
+        data["특별위원회"]?.split(",").map((committee) => {
+          return {
+            is_main: false,
+            name: committee,
+          };
+        }) || [];
+      const newdata = {
+        base_info: {
+          name: data["이름"],
+          assembly_term: data["대수"],
+          profile_url: data["프로필"],
+          political_party: data["소속정당"],
+          elected_count: data["당선횟수"],
+          total_promise_count: data["총공약수"],
+          completed_promise_count: data["완료"],
+          in_progress_promise_count: data["추진중"],
+          pending_promise_count: data["보류"],
+          discarded_promise_count: data["폐기"],
+          other_promise_count: data["기타"],
+          resolve_required_promise_count: data["필요입법공약총수"],
+          resolved_promise_count: data["입법의결완료공약총수"],
+          total_required_funds: data["필요재정총액"],
+          total_secured_funds: data["확보재정총액"],
+          total_executed_funds: data["집행재정총액"],
+        },
+        promise_count_detail: {
+          completed_national_promise_count: national_promise_count[0],
+          total_national_promise_count: national_promise_count[1],
+          completed_local_promise_count: local_promise_count[0],
+          total_local_promise_count: local_promise_count[1],
+          completed_legislative_promise_count: legislative_promise_count[0],
+          total_legislative_promise_count: legislative_promise_count[1],
+          completed_financial_promise_count: financial_promise_count[0],
+          total_financial_promise_count: financial_promise_count[1],
+          completed_in_term_promise_count: in_term_promise_count[0],
+          total_in_term_promise_count: in_term_promise_count[1],
+          completed_after_term_promise_count: after_term_promise_count[0],
+          total_after_term_promise_count: after_term_promise_count[1],
+          completed_ongoing_business_promise_count: ongoing_business_promise_count[0],
+          total_ongoing_business_promise_count: ongoing_business_promise_count[1],
+          completed_new_business_promise_count: new_business_promise_count[0],
+          total_new_business_promise_count: new_business_promise_count[1],
+        },
+        constituency: [...constituencies],
+        committee: [...committees, ...specialCommittees],
+      };
+      return newdata;
+    });
+
+    return parsedExcelData;
+  };
+
+  const checkPromiseCountDetail = (PromiseCount: string | number | null) => {
+    if (PromiseCount === 0) {
+      return [0, 0];
+    }
+
+    if (PromiseCount === null) {
+      return [null, null];
+    }
+
+    const PromiseCountArr = String(PromiseCount)
+      .split("/")
+      .map((el) => {
+        if (isNaN(Number(el))) {
+          return null;
+        }
+        parseInt(el);
+      });
+
+    if (PromiseCountArr.length === 1) {
+      return [PromiseCountArr[0], null];
+    }
+
+    if (String(PromiseCount)[0] === "/") {
+      return [null, PromiseCountArr[1]];
+    }
+
+    return PromiseCountArr;
   };
 
   return (
@@ -37,13 +158,19 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
                 scope="col"
                 className="sticky left-0 bg-white px-[24px] py-[12px] whitespace-nowrap"
               >
-                {excelDataKeys[1]}
+                이름
               </th>
-              {excelDataKeys.slice(2).map((key) => (
+              <th
+                scope="col"
+                className="sticky left-0 bg-white px-[24px] py-[12px] whitespace-nowrap"
+              >
+                지역구
+              </th>
+              {excelDataKeys.slice(5).map((key) => (
                 <th
                   key={key}
                   scope="col"
-                  className="px-[24px] py-[12px] whitespace-nowrap"
+                  className="sticky left-0 bg-white px-[24px] py-[12px] whitespace-nowrap"
                 >
                   {key}
                 </th>
@@ -56,10 +183,13 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
           </thead>
           <tbody>
             {excelData.map((data, index) => {
-              const profile = data[excelDataKeys[0]];
-              const name = data[excelDataKeys[1]];
+              const profile = data["프로필"];
+              const name = data["이름"];
+              const region = data["행정구역"];
+              const district = data["지역구"];
+              const section = data["분구"];
               return (
-                <tr key={name + index} className="bg-white border-b">
+                <tr key={index} className="bg-white border-b">
                   <th
                     scope="row"
                     className="flex items-center sticky left-0 z-10 px-[24px] py-[12px] bg-white text-gray-900 whitespace-nowrap shadow-[5px_0px_8px_-4px_rgba(0,0,0,.15)]"
@@ -72,12 +202,15 @@ const UploadedExcelPreview: React.FC<UploadedExcelPreviewProps> = ({
                       <div className="text-[14px] font-semibold">{name}</div>
                     </div>
                   </th>
-                  {excelDataKeys.slice(2).map((key) => (
+                  <td className="px-[24px] py-[12px] text-[12px] whitespace-nowrap">
+                    {region} {district} {section}
+                  </td>
+                  {excelDataKeys.slice(5).map((key) => (
                     <td
                       key={key}
                       className="px-[24px] py-[12px] text-[12px] whitespace-nowrap"
                     >
-                      {data[key]}
+                      {data[key as keyof MPDataType]}
                     </td>
                   ))}
                   <td className="sticky right-0 z-10 px-[24px] py-[12px] bg-white whitespace-nowrap">
